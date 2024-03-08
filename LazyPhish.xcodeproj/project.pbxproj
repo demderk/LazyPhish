@@ -1,0 +1,562 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		300367772B95CC1F00D3C84C /* LazyPhishApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300367762B95CC1F00D3C84C /* LazyPhishApp.swift */; };
+		300367792B95CC1F00D3C84C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300367782B95CC1F00D3C84C /* ContentView.swift */; };
+		3003677D2B95CC2400D3C84C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3003677C2B95CC2400D3C84C /* Assets.xcassets */; };
+		300367802B95CC2400D3C84C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3003677F2B95CC2400D3C84C /* Preview Assets.xcassets */; };
+		300367882B95CE5B00D3C84C /* URLInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300367872B95CE5B00D3C84C /* URLInfo.swift */; };
+		300367912B95D89700D3C84C /* LazyPhishTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300367902B95D89700D3C84C /* LazyPhishTests.swift */; };
+		300367992B97418600D3C84C /* SwiftWhois in Frameworks */ = {isa = PBXBuildFile; productRef = 300367982B97418600D3C84C /* SwiftWhois */; };
+		3003679C2B97452500D3C84C /* SwiftWhois in Frameworks */ = {isa = PBXBuildFile; productRef = 3003679B2B97452500D3C84C /* SwiftWhois */; };
+		30B9B9A12B997F4C0063ADB3 /* MainPageVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B9B9A02B997F4C0063ADB3 /* MainPageVM.swift */; };
+		30B9B9A42B9A0ABF0063ADB3 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 30B9B9A32B9A0ABF0063ADB3 /* SwiftSoup */; };
+		30B9B9A72B9A13410063ADB3 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 30B9B9A62B9A13410063ADB3 /* Alamofire */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		300367922B95D89700D3C84C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3003676B2B95CC1F00D3C84C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 300367722B95CC1F00D3C84C;
+			remoteInfo = LazyPhish;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		300367732B95CC1F00D3C84C /* LazyPhish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LazyPhish.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		300367762B95CC1F00D3C84C /* LazyPhishApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyPhishApp.swift; sourceTree = "<group>"; };
+		300367782B95CC1F00D3C84C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		3003677C2B95CC2400D3C84C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3003677F2B95CC2400D3C84C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		300367812B95CC2400D3C84C /* LazyPhish.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LazyPhish.entitlements; sourceTree = "<group>"; };
+		300367872B95CE5B00D3C84C /* URLInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLInfo.swift; sourceTree = "<group>"; };
+		3003678E2B95D89700D3C84C /* LazyPhishTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LazyPhishTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		300367902B95D89700D3C84C /* LazyPhishTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyPhishTests.swift; sourceTree = "<group>"; };
+		30B9B9A02B997F4C0063ADB3 /* MainPageVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageVM.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		300367702B95CC1F00D3C84C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30B9B9A72B9A13410063ADB3 /* Alamofire in Frameworks */,
+				300367992B97418600D3C84C /* SwiftWhois in Frameworks */,
+				30B9B9A42B9A0ABF0063ADB3 /* SwiftSoup in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3003678B2B95D89700D3C84C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3003679C2B97452500D3C84C /* SwiftWhois in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3003676A2B95CC1F00D3C84C = {
+			isa = PBXGroup;
+			children = (
+				300367752B95CC1F00D3C84C /* LazyPhish */,
+				3003678F2B95D89700D3C84C /* LazyPhishTests */,
+				300367742B95CC1F00D3C84C /* Products */,
+				3003679A2B97452500D3C84C /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		300367742B95CC1F00D3C84C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				300367732B95CC1F00D3C84C /* LazyPhish.app */,
+				3003678E2B95D89700D3C84C /* LazyPhishTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		300367752B95CC1F00D3C84C /* LazyPhish */ = {
+			isa = PBXGroup;
+			children = (
+				30B9B99F2B997F350063ADB3 /* ViewModels */,
+				300367762B95CC1F00D3C84C /* LazyPhishApp.swift */,
+				300367782B95CC1F00D3C84C /* ContentView.swift */,
+				3003677C2B95CC2400D3C84C /* Assets.xcassets */,
+				300367812B95CC2400D3C84C /* LazyPhish.entitlements */,
+				3003677E2B95CC2400D3C84C /* Preview Content */,
+				300367872B95CE5B00D3C84C /* URLInfo.swift */,
+			);
+			path = LazyPhish;
+			sourceTree = "<group>";
+		};
+		3003677E2B95CC2400D3C84C /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				3003677F2B95CC2400D3C84C /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		3003678F2B95D89700D3C84C /* LazyPhishTests */ = {
+			isa = PBXGroup;
+			children = (
+				300367902B95D89700D3C84C /* LazyPhishTests.swift */,
+			);
+			path = LazyPhishTests;
+			sourceTree = "<group>";
+		};
+		3003679A2B97452500D3C84C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		30B9B99F2B997F350063ADB3 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				30B9B9A02B997F4C0063ADB3 /* MainPageVM.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		300367722B95CC1F00D3C84C /* LazyPhish */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 300367842B95CC2400D3C84C /* Build configuration list for PBXNativeTarget "LazyPhish" */;
+			buildPhases = (
+				3003676F2B95CC1F00D3C84C /* Sources */,
+				300367702B95CC1F00D3C84C /* Frameworks */,
+				300367712B95CC1F00D3C84C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LazyPhish;
+			packageProductDependencies = (
+				300367982B97418600D3C84C /* SwiftWhois */,
+				30B9B9A32B9A0ABF0063ADB3 /* SwiftSoup */,
+				30B9B9A62B9A13410063ADB3 /* Alamofire */,
+			);
+			productName = LazyPhish;
+			productReference = 300367732B95CC1F00D3C84C /* LazyPhish.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3003678D2B95D89700D3C84C /* LazyPhishTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 300367942B95D89700D3C84C /* Build configuration list for PBXNativeTarget "LazyPhishTests" */;
+			buildPhases = (
+				3003678A2B95D89700D3C84C /* Sources */,
+				3003678B2B95D89700D3C84C /* Frameworks */,
+				3003678C2B95D89700D3C84C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				300367932B95D89700D3C84C /* PBXTargetDependency */,
+			);
+			name = LazyPhishTests;
+			packageProductDependencies = (
+				3003679B2B97452500D3C84C /* SwiftWhois */,
+			);
+			productName = LazyPhishTests;
+			productReference = 3003678E2B95D89700D3C84C /* LazyPhishTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3003676B2B95CC1F00D3C84C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1520;
+				LastUpgradeCheck = 1520;
+				TargetAttributes = {
+					300367722B95CC1F00D3C84C = {
+						CreatedOnToolsVersion = 15.2;
+					};
+					3003678D2B95D89700D3C84C = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = 300367722B95CC1F00D3C84C;
+					};
+				};
+			};
+			buildConfigurationList = 3003676E2B95CC1F00D3C84C /* Build configuration list for PBXProject "LazyPhish" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3003676A2B95CC1F00D3C84C;
+			packageReferences = (
+				300367972B97418600D3C84C /* XCRemoteSwiftPackageReference "SwiftWhois" */,
+				30B9B9A22B9A0ABF0063ADB3 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				30B9B9A52B9A101D0063ADB3 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
+			productRefGroup = 300367742B95CC1F00D3C84C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				300367722B95CC1F00D3C84C /* LazyPhish */,
+				3003678D2B95D89700D3C84C /* LazyPhishTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		300367712B95CC1F00D3C84C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				300367802B95CC2400D3C84C /* Preview Assets.xcassets in Resources */,
+				3003677D2B95CC2400D3C84C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3003678C2B95D89700D3C84C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3003676F2B95CC1F00D3C84C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30B9B9A12B997F4C0063ADB3 /* MainPageVM.swift in Sources */,
+				300367792B95CC1F00D3C84C /* ContentView.swift in Sources */,
+				300367772B95CC1F00D3C84C /* LazyPhishApp.swift in Sources */,
+				300367882B95CE5B00D3C84C /* URLInfo.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3003678A2B95D89700D3C84C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				300367912B95D89700D3C84C /* LazyPhishTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		300367932B95D89700D3C84C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 300367722B95CC1F00D3C84C /* LazyPhish */;
+			targetProxy = 300367922B95D89700D3C84C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		300367822B95CC2400D3C84C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		300367832B95CC2400D3C84C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		300367852B95CC2400D3C84C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LazyPhish/LazyPhish.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"LazyPhish/Preview Content\"";
+				DEVELOPMENT_TEAM = BX3ASU46J7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = LazyFusion.LazyPhish;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		300367862B95CC2400D3C84C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LazyPhish/LazyPhish.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"LazyPhish/Preview Content\"";
+				DEVELOPMENT_TEAM = BX3ASU46J7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = LazyFusion.LazyPhish;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		300367952B95D89700D3C84C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BX3ASU46J7;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = LazyFusion.LazyPhishTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LazyPhish.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LazyPhish";
+			};
+			name = Debug;
+		};
+		300367962B95D89700D3C84C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BX3ASU46J7;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = LazyFusion.LazyPhishTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LazyPhish.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LazyPhish";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3003676E2B95CC1F00D3C84C /* Build configuration list for PBXProject "LazyPhish" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				300367822B95CC2400D3C84C /* Debug */,
+				300367832B95CC2400D3C84C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		300367842B95CC2400D3C84C /* Build configuration list for PBXNativeTarget "LazyPhish" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				300367852B95CC2400D3C84C /* Debug */,
+				300367862B95CC2400D3C84C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		300367942B95D89700D3C84C /* Build configuration list for PBXNativeTarget "LazyPhishTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				300367952B95D89700D3C84C /* Debug */,
+				300367962B95D89700D3C84C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		300367972B97418600D3C84C /* XCRemoteSwiftPackageReference "SwiftWhois" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/isaced/SwiftWhois.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.2;
+			};
+		};
+		30B9B9A22B9A0ABF0063ADB3 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.7.1;
+			};
+		};
+		30B9B9A52B9A101D0063ADB3 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		300367982B97418600D3C84C /* SwiftWhois */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 300367972B97418600D3C84C /* XCRemoteSwiftPackageReference "SwiftWhois" */;
+			productName = SwiftWhois;
+		};
+		3003679B2B97452500D3C84C /* SwiftWhois */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 300367972B97418600D3C84C /* XCRemoteSwiftPackageReference "SwiftWhois" */;
+			productName = SwiftWhois;
+		};
+		30B9B9A32B9A0ABF0063ADB3 /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 30B9B9A22B9A0ABF0063ADB3 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+		30B9B9A62B9A13410063ADB3 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 30B9B9A52B9A101D0063ADB3 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 3003676B2B95CC1F00D3C84C /* Project object */;
+}

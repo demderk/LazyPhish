@@ -1,0 +1,32 @@
+{
+  "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire",
+      "state" : {
+        "revision" : "723fa5a6c65812aec4a0d7cc432ee198883b6e00",
+        "version" : "5.9.0"
+      }
+    },
+    {
+      "identity" : "swiftsoup",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/scinfu/SwiftSoup",
+      "state" : {
+        "revision" : "1d39e56d364cba79ce43b341f9661b534cccb18d",
+        "version" : "2.7.1"
+      }
+    },
+    {
+      "identity" : "swiftwhois",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/isaced/SwiftWhois.git",
+      "state" : {
+        "revision" : "3d1a55a20fcd39d98773520e4a72dd202f062eea",
+        "version" : "0.0.2"
+      }
+    }
+  ],
+  "version" : 2
+}
