@@ -26,8 +26,11 @@ struct ContentView: View {
                     Button("Get Info", action: vm.getData)
                     Spacer()
                 }
-                Text(vm.registrationDate)
-                Text(vm.yandexSQI)
+                Text("Registration: \(vm.registrationDate)")
+                Text("Yandex SQI: \(vm.yandexSQI)")
+                Text("OPR Grade \(vm.OPRGrade)")
+                Text("OPR Rank \(vm.OPRRank)")
+                
             }
         }
     }

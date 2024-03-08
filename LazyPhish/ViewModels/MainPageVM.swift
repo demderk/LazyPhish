@@ -14,12 +14,15 @@ class MainPageVM : ObservableObject {
     @Published var yandexSQI: String = ""
     @Published var errorInfo: String = ""
     @Published var isYearLong: Bool = true
+    @Published var OPRRank: String = ""
+    @Published var OPRGrade: String = ""
     
     
     private var urlInfo: URLInfo? = nil
     
     @MainActor
     func getData() {
+        errorInfo = ""
         self.urlInfo = URLInfo(URL(string: urlText)!)
         guard let url = self.urlInfo else {
             registrationDate = "URL Parse Error"
@@ -31,7 +34,7 @@ class MainPageVM : ObservableObject {
         } onError: { errorList in
             self.errorInfo = errorList.map { error in
                 error.localizedDescription
-            }.description
+            }.joined(separator: "\n")
             self.setAvailableData()
         }
     }
@@ -46,5 +49,16 @@ class MainPageVM : ObservableObject {
             self.yandexSQI = "Yandex SQI Error"
         }
         self.registrationDate = url.creationDate?.formatted() ?? "Whois Date Error"
+        if let rank = url.OPRRank {
+            self.OPRRank = String(rank)
+        } else {
+            self.OPRRank = "OPR RANK Error"
+        }
+        if let grade = url.OPRGrade {
+            self.OPRGrade = grade.description
+        } else {
+            self.OPRGrade = "OPR GRADE Error"
+        }
+
     }
 }

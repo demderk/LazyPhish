@@ -15,6 +15,10 @@
 		300367912B95D89700D3C84C /* LazyPhishTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300367902B95D89700D3C84C /* LazyPhishTests.swift */; };
 		300367992B97418600D3C84C /* SwiftWhois in Frameworks */ = {isa = PBXBuildFile; productRef = 300367982B97418600D3C84C /* SwiftWhois */; };
 		3003679C2B97452500D3C84C /* SwiftWhois in Frameworks */ = {isa = PBXBuildFile; productRef = 3003679B2B97452500D3C84C /* SwiftWhois */; };
+		3037D1542B9B651F0012104E /* Authority.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3037D1532B9B651E0012104E /* Authority.plist */; };
+		3037D1572B9B6C280012104E /* MLEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037D1562B9B6C280012104E /* MLEntry.swift */; };
+		3037D15A2B9B6C530012104E /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037D1592B9B6C530012104E /* RequestError.swift */; };
+		3037D15C2B9B6CA00012104E /* OPRInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037D15B2B9B6CA00012104E /* OPRInfo.swift */; };
 		30B9B9A12B997F4C0063ADB3 /* MainPageVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B9B9A02B997F4C0063ADB3 /* MainPageVM.swift */; };
 		30B9B9A42B9A0ABF0063ADB3 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 30B9B9A32B9A0ABF0063ADB3 /* SwiftSoup */; };
 		30B9B9A72B9A13410063ADB3 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 30B9B9A62B9A13410063ADB3 /* Alamofire */; };
@@ -40,6 +44,10 @@
 		300367872B95CE5B00D3C84C /* URLInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLInfo.swift; sourceTree = "<group>"; };
 		3003678E2B95D89700D3C84C /* LazyPhishTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LazyPhishTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		300367902B95D89700D3C84C /* LazyPhishTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyPhishTests.swift; sourceTree = "<group>"; };
+		3037D1532B9B651E0012104E /* Authority.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Authority.plist; sourceTree = "<group>"; };
+		3037D1562B9B6C280012104E /* MLEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLEntry.swift; sourceTree = "<group>"; };
+		3037D1592B9B6C530012104E /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
+		3037D15B2B9B6CA00012104E /* OPRInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OPRInfo.swift; sourceTree = "<group>"; };
 		30B9B9A02B997F4C0063ADB3 /* MainPageVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,13 +95,14 @@
 		300367752B95CC1F00D3C84C /* LazyPhish */ = {
 			isa = PBXGroup;
 			children = (
+				3037D1552B9B6C050012104E /* Models */,
 				30B9B99F2B997F350063ADB3 /* ViewModels */,
 				300367762B95CC1F00D3C84C /* LazyPhishApp.swift */,
 				300367782B95CC1F00D3C84C /* ContentView.swift */,
 				3003677C2B95CC2400D3C84C /* Assets.xcassets */,
 				300367812B95CC2400D3C84C /* LazyPhish.entitlements */,
 				3003677E2B95CC2400D3C84C /* Preview Content */,
-				300367872B95CE5B00D3C84C /* URLInfo.swift */,
+				3037D1532B9B651E0012104E /* Authority.plist */,
 			);
 			path = LazyPhish;
 			sourceTree = "<group>";
@@ -119,6 +128,17 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3037D1552B9B6C050012104E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				300367872B95CE5B00D3C84C /* URLInfo.swift */,
+				3037D1562B9B6C280012104E /* MLEntry.swift */,
+				3037D1592B9B6C530012104E /* RequestError.swift */,
+				3037D15B2B9B6CA00012104E /* OPRInfo.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		30B9B99F2B997F350063ADB3 /* ViewModels */ = {
@@ -225,6 +245,7 @@
 			files = (
 				300367802B95CC2400D3C84C /* Preview Assets.xcassets in Resources */,
 				3003677D2B95CC2400D3C84C /* Assets.xcassets in Resources */,
+				3037D1542B9B651F0012104E /* Authority.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,8 +264,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				30B9B9A12B997F4C0063ADB3 /* MainPageVM.swift in Sources */,
+				3037D15C2B9B6CA00012104E /* OPRInfo.swift in Sources */,
 				300367792B95CC1F00D3C84C /* ContentView.swift in Sources */,
+				3037D15A2B9B6C530012104E /* RequestError.swift in Sources */,
 				300367772B95CC1F00D3C84C /* LazyPhishApp.swift in Sources */,
+				3037D1572B9B6C280012104E /* MLEntry.swift in Sources */,
 				300367882B95CE5B00D3C84C /* URLInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

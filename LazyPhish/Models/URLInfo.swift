@@ -13,38 +13,12 @@ import RegexBuilder
 enum IPMode: Int {
     case url = -1
     case ip = 1
-    
 }
 
 enum RiskLevel {
     case common
     case suspicious
     case danger
-}
-
-struct MLEntry {
-    var isIP: Bool
-    var creationDate: RiskLevel
-    var urlLength: RiskLevel
-}
-
-enum RequestError: Error {
-    case dateFormatError
-    case yandexSQICaptchaError
-    case yandexSQIUnderfined(response: String)
-    
-    var localizedDescription: String {
-        switch self {
-        case .dateFormatError:
-            "Whois date formatted incorectly."
-        case .yandexSQICaptchaError:
-            "Yandex SQL provider requires Captcha."
-        case .yandexSQIUnderfined(let response):
-            "Yandex SQL underfined error."
-        default:
-            "..."
-        }
-    }
 }
 
 class URLInfo {
@@ -57,16 +31,19 @@ class URLInfo {
     private let URLIPv4RegexBinaryDiv = try!
     Regex(#"0[xX][0-9a-fA-F]{2}\W{0,}[.]\W{0,}0[xX][0-9a-fA-F]{2}\W{0,}[.]\W{0,}0[xX][0-9a-fA-F]{2}\W{0,}[.]\W{0,}0[xX][0-9a-fA-F]{2}"#)
     
+    public var whoisDomain: String { url.formatted().components(separatedBy: ["."]).suffix(2).joined(separator: ".") }
+    public var urlLength: Int { url.formatted().count }
+    public var prefixCount: Int { url.formatted().components(separatedBy: ["-"]).count - 1 }
+    public var subDomainCount: Int { url.formatted().components(separatedBy: ["."]).count - 2 }
+    
     private let url: URL
     
     private(set) var isIP: IPMode = .url
     private(set) var whoisData: WhoisData? = nil
     private(set) var creationDate: Date? = nil
     private(set) var yandexSQI: Int? = nil
-    
-    public var urlLength: Int { url.formatted().count }
-    public var prefixCount: Int { url.formatted().components(separatedBy: ["-"]).count - 1 }
-    public var subDomainCount: Int { url.formatted().components(separatedBy: ["."]).count - 2 }
+    private(set) var OPRRank: Int? = nil
+    private(set) var OPRGrade: Decimal? = nil
     
     private(set) var MLEntry: MLEntry?
     
@@ -80,9 +57,20 @@ class URLInfo {
         Task {
             var errors: [RequestError] = []
             
-            let whois: WhoisData? = await getWhois(url)
+            let whois: WhoisData? = await getWhois(whoisDomain)
+            
             if let date = whois?.creationDate {
                 creationDate = try? getDate(date)
+            }
+            
+            do {
+                let opr = try await getOPR()
+                if let oprRank = opr.rank {
+                    self.OPRRank = Int(oprRank)
+                }
+                self.OPRGrade = opr.page_rank_decimal
+            } catch let error as RequestError {
+                errors.append(error)
             }
             
             do {
@@ -125,12 +113,12 @@ class URLInfo {
         return result
     }
     
-    private func getWhois(_ url: URL) async -> WhoisData? {
-        return try? await SwiftWhois.lookup(domain: url.formatted())
+    private func getWhois(_ url: String) async -> WhoisData? {
+        return try? await SwiftWhois.lookup(domain: url)
     }
     
     private func getYandexSQI() async throws -> Int {
-        var response = try await AF.request("https://webmaster.yandex.ru/siteinfo/?host=\(url.formatted())", method: .get)
+        let response = try await AF.request("https://webmaster.yandex.ru/siteinfo/?host=\(url.formatted())", method: .get)
             .serializingString().value
         let valueAnchor = Reference<Substring>()
         let regex = Regex {
@@ -153,6 +141,41 @@ class URLInfo {
             return result
         } else {
             throw RequestError.yandexSQIUnderfined(response: response)
+        }
+    }
+    
+    private func getOPRKey() throws -> String {
+        if let path = Bundle.main.path(forResource: "Authority", ofType: "plist") {
+            if let data = try? Data(contentsOf: URL(filePath: path)) {
+                if let plist = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: String] {
+                    if let result = plist["OPRKey"] {
+                        return result
+                    }
+                }
+            }
+        }
+        throw RequestError.authorityAccessError
+    }
+    
+    private func getOPR() async throws -> OPRInfo {
+        let apiKey = try getOPRKey()
+        
+        let params: [String: String] = [
+            "domains[0]": url.formatted()
+        ]
+        
+        let headers: HTTPHeaders = [
+            "API-OPR": apiKey
+        ]
+        
+        let afResult = await AF.request("https://openpagerank.com/api/v1.0/getPageRank",parameters: params ,headers: headers).serializingDecodable(OPRResponse.self).result
+        
+        switch afResult {
+        case .success(let success):
+            return success.response[0]
+        case .failure(let failure):
+            print(failure)
+            throw RequestError.OPRError
         }
     }
 }
