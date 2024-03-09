@@ -9,6 +9,8 @@ import SwiftWhois
 import SwiftSoup
 import Alamofire
 import RegexBuilder
+import Vision
+import AlamofireImage
 
 enum IPMode: Int {
     case url = -1
@@ -50,6 +52,7 @@ class URLInfo {
     init(_ url: URL) {
         self.url = url
         self.isIP = getURLIPMode(url)
+        
     }
     
     @MainActor
@@ -62,6 +65,9 @@ class URLInfo {
             if let date = whois?.creationDate {
                 creationDate = try? getDate(date)
             }
+            
+            let x = try? await getYandexSQIImage()
+            print(x)
             
             do {
                 let opr = try await getOPR()
@@ -177,5 +183,27 @@ class URLInfo {
             print(failure)
             throw RequestError.OPRError
         }
+    }
+    
+    private func getYandexSQIImage() async throws -> Int {
+        let response = AF.request("https://yandex.ru/cycounter?\(self.url.formatted())").serializingImage(inflateResponseImage: false)
+        
+        if let image = try await response.value.cgImage(forProposedRect: .none, context: .none, hints: nil) {
+            let vision = VNImageRequestHandler(cgImage: image)
+            let imageRequest = VNRecognizeTextRequest()
+            try vision.perform([imageRequest])
+            if let result = imageRequest.results {
+                let data = result.compactMap { listC in
+                    listC.topCandidates(1).first?.string
+                }
+                guard !data.isEmpty else {
+                    throw RequestError.yandexSQIImageParseError
+                }
+                if let sqi = Int(data[0].replacing(" ", with: "")) {
+                    return sqi
+                }
+            }
+        }
+        throw RequestError.yandexSQIImageParseError
     }
 }

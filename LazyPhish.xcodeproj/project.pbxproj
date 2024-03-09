@@ -19,6 +19,7 @@
 		3037D1572B9B6C280012104E /* MLEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037D1562B9B6C280012104E /* MLEntry.swift */; };
 		3037D15A2B9B6C530012104E /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037D1592B9B6C530012104E /* RequestError.swift */; };
 		3037D15C2B9B6CA00012104E /* OPRInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037D15B2B9B6CA00012104E /* OPRInfo.swift */; };
+		3037D15F2B9CA1B00012104E /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 3037D15E2B9CA1B00012104E /* AlamofireImage */; };
 		30B9B9A12B997F4C0063ADB3 /* MainPageVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B9B9A02B997F4C0063ADB3 /* MainPageVM.swift */; };
 		30B9B9A42B9A0ABF0063ADB3 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 30B9B9A32B9A0ABF0063ADB3 /* SwiftSoup */; };
 		30B9B9A72B9A13410063ADB3 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 30B9B9A62B9A13410063ADB3 /* Alamofire */; };
@@ -57,6 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				30B9B9A72B9A13410063ADB3 /* Alamofire in Frameworks */,
+				3037D15F2B9CA1B00012104E /* AlamofireImage in Frameworks */,
 				300367992B97418600D3C84C /* SwiftWhois in Frameworks */,
 				30B9B9A42B9A0ABF0063ADB3 /* SwiftSoup in Frameworks */,
 			);
@@ -169,6 +171,7 @@
 				300367982B97418600D3C84C /* SwiftWhois */,
 				30B9B9A32B9A0ABF0063ADB3 /* SwiftSoup */,
 				30B9B9A62B9A13410063ADB3 /* Alamofire */,
+				3037D15E2B9CA1B00012104E /* AlamofireImage */,
 			);
 			productName = LazyPhish;
 			productReference = 300367732B95CC1F00D3C84C /* LazyPhish.app */;
@@ -227,6 +230,7 @@
 				300367972B97418600D3C84C /* XCRemoteSwiftPackageReference "SwiftWhois" */,
 				30B9B9A22B9A0ABF0063ADB3 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				30B9B9A52B9A101D0063ADB3 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				3037D15D2B9CA1B00012104E /* XCRemoteSwiftPackageReference "AlamofireImage" */,
 			);
 			productRefGroup = 300367742B95CC1F00D3C84C /* Products */;
 			projectDirPath = "";
@@ -541,6 +545,14 @@
 				minimumVersion = 0.0.2;
 			};
 		};
+		3037D15D2B9CA1B00012104E /* XCRemoteSwiftPackageReference "AlamofireImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/AlamofireImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.3.0;
+			};
+		};
 		30B9B9A22B9A0ABF0063ADB3 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
@@ -569,6 +581,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 300367972B97418600D3C84C /* XCRemoteSwiftPackageReference "SwiftWhois" */;
 			productName = SwiftWhois;
+		};
+		3037D15E2B9CA1B00012104E /* AlamofireImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3037D15D2B9CA1B00012104E /* XCRemoteSwiftPackageReference "AlamofireImage" */;
+			productName = AlamofireImage;
 		};
 		30B9B9A32B9A0ABF0063ADB3 /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;

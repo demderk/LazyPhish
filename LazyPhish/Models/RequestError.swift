@@ -11,6 +11,7 @@ enum RequestError: Error {
     case dateFormatError
     case yandexSQICaptchaError
     case yandexSQIUnderfined(response: String)
+    case yandexSQIImageParseError
     case authorityAccessError
     case OPRError
     
