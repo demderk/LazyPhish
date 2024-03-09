@@ -11,6 +11,7 @@ import Alamofire
 import RegexBuilder
 import Vision
 import AlamofireImage
+import Combine
 
 enum IPMode: Int {
     case url = -1
@@ -40,12 +41,14 @@ class URLInfo {
     
     private let url: URL
     
-    private(set) var isIP: IPMode = .url
-    private(set) var whoisData: WhoisData? = nil
-    private(set) var creationDate: Date? = nil
-    private(set) var yandexSQI: Int? = nil
-    private(set) var OPRRank: Int? = nil
-    private(set) var OPRGrade: Decimal? = nil
+    public var publicSubscriptions = Set<AnyCancellable>()
+    
+    @Published private(set) var isIP: IPMode = .url
+    @Published private(set) var whoisData: WhoisData? = nil
+    @Published private(set) var creationDate: Date? = nil
+    @Published private(set) var yandexSQI: Int? = nil
+    @Published private(set) var OPRRank: Int? = nil
+    @Published private(set) var OPRGrade: Decimal? = nil
     
     private(set) var MLEntry: MLEntry?
     
@@ -58,6 +61,8 @@ class URLInfo {
     @MainActor
     public func refreshRemoteData(onComplete: @escaping () -> Void, onError: @escaping ([RequestError]) -> Void) {
         Task {
+            
+            
             var errors: [RequestError] = []
             
             let whois: WhoisData? = await getWhois(whoisDomain)
@@ -66,8 +71,7 @@ class URLInfo {
                 creationDate = try? getDate(date)
             }
             
-            let x = try? await getYandexSQIImage()
-            print(x)
+//            let x = try? await getYandexSQIImage()
             
             do {
                 let opr = try await getOPR()
@@ -135,6 +139,7 @@ class URLInfo {
                 }
             }
         }
+        
         guard let found = try? regex.firstMatch(in: response) else {
             let cRegex = Regex { "Captcha" }
             if let _ = try? cRegex.firstMatch(in: response) {
