@@ -20,7 +20,7 @@ class MainPageVM : ObservableObject {
     @Published var OPRRank: String = ""
     @Published var OPRGrade: String = ""
         
-    private var urlInfo: URLInfo? = nil
+    private var urlInfo: PhishRequestBase? = nil
     
     init() {
 
@@ -29,7 +29,7 @@ class MainPageVM : ObservableObject {
     @MainActor
     func getData() {
         errorInfo = ""
-        self.urlInfo = URLInfo(URL(string: urlText)!)
+        self.urlInfo = PhishRequestBase(URL(string: urlText)!)
         guard let url = self.urlInfo else {
             creationDate = "URL Parse Error"
             return
@@ -38,63 +38,55 @@ class MainPageVM : ObservableObject {
         creationDate = "Pinging..."
         setupSubscriptions()
         url.refreshRemoteData {
-//            self.setAvailableData()
-        } onError: { errorList in
-            self.errorInfo = errorList.map { error in
-                error.localizedDescription
-            }.joined(separator: "\n")
-//            self.setAvailableData()
+            self.setAvailableData()
+        } onError: { _ in
+            
         }
+//        } onError: { errorList in
+//            self.errorInfo = errorList.map { error in
+//                error.localizedDescription
+//            }.joined(separator: "\n")
+////            self.setAvailableData()
+//        }
     }
     
     func setupSubscriptions() {
         
         guard let url = urlInfo else { return }
-        
-        url.$creationDate.sink {
-            if let date = $0 {
-                self.creationDate = date.formatted()
-            }
-        }.store(in: &url.publicSubscriptions)
-        
-        url.$OPRRank.sink {
-            if let rank = $0 {
-                self.OPRRank = rank.description
-            }
-        }.store(in: &url.publicSubscriptions)
-        
-        url.$OPRGrade.sink {
-            if let grade = $0 {
-                self.OPRGrade = grade.description
-            }
-        }.store(in: &url.publicSubscriptions)
-        
-        url.$yandexSQI.sink {
-            if let sqi = $0 {
-                self.yandexSQI = sqi.description
-            }
-        }.store(in: &url.publicSubscriptions)
+//        
+//        url.$creationDate.sink {
+//            if let date = $0 {
+//                self.creationDate = date.formatted()
+//            }
+//        }.store(in: &url.publicSubscriptions)
+//        
+//        url.$OPRRank.sink {
+//            if let rank = $0 {
+//                self.OPRRank = rank.description
+//            }
+//        }.store(in: &url.publicSubscriptions)
+//        
+//        url.$OPRGrade.sink {
+//            if let grade = $0 {
+//                self.OPRGrade = grade.description
+//            }
+//        }.store(in: &url.publicSubscriptions)
+//        
+//        url.$yandexSQI.sink {
+//            if let sqi = $0 {
+//                self.yandexSQI = sqi.description
+//            }
+//        }.store(in: &url.publicSubscriptions)
     }
     
     func setAvailableData() {
         guard let url = self.urlInfo else {
             return
         }
-        if let sqi = url.yandexSQI {
-            self.yandexSQI = String(sqi)
-        } else {
-            self.yandexSQI = "Yandex SQI Error"
-        }
-        self.creationDate = url.creationDate?.formatted() ?? "Whois Date Error"
-        if let rank = url.OPRRank {
-            self.OPRRank = rank.description
-        } else {
-            self.OPRRank = "OPR RANK Error"
-        }
-        if let grade = url.OPRGrade {
-            self.OPRGrade = grade.description
-        } else {
-            self.OPRGrade = "OPR GRADE Error"
-        }
+        self.OPRGrade = (url.phishInfo.OPRGrade ?? -1).description
+        self.yandexSQI = (url.phishInfo.yandexSQI ?? -1).description
+        self.creationDate = (url.phishInfo.creationDate ?? Date(timeIntervalSince1970: 0)).formatted()
+        self.OPRRank = (url.phishInfo.OPRRank ?? -1).description
+        
     }
 }

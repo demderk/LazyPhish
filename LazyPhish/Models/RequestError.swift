@@ -14,6 +14,8 @@ enum RequestError: Error {
     case yandexSQIImageParseError
     case authorityAccessError
     case OPRError
+    case unknownError(parent: Error)
+    case concatCollision
     
     var localizedDescription: String {
         switch self {
