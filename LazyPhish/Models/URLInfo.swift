@@ -24,6 +24,8 @@ enum RiskLevel {
     case danger
 }
 
+
+
 class URLInfo {
     private let URLIPv4Regex = try!
     Regex(#"(\d{1,3}\W{0,}[.]\W{0,}\d{1,3}\W{0,}[.]\W{0,}\d{1,3}\W{0,}[.]\W{0,}\d{1,3})"#)
@@ -61,40 +63,44 @@ class URLInfo {
     @MainActor
     public func refreshRemoteData(onComplete: @escaping () -> Void, onError: @escaping ([RequestError]) -> Void) {
         Task {
-            
-            
-            var errors: [RequestError] = []
-            
-            let whois: WhoisData? = await getWhois(whoisDomain)
-            
-            if let date = whois?.creationDate {
-                creationDate = try? getDate(date)
-            }
-            
-//            let x = try? await getYandexSQIImage()
-            
-            do {
-                let opr = try await getOPR()
-                if let oprRank = opr.rank {
-                    self.OPRRank = Int(oprRank)
-                }
-                self.OPRGrade = opr.page_rank_decimal
-            } catch let error as RequestError {
-                errors.append(error)
-            }
-            
-            do {
-                self.yandexSQI = try await getYandexSQI()
-            } catch let error as RequestError {
-                errors.append(error)
-            }
-            guard errors.isEmpty else {
+            let result = await refreshRemoteData()
+            if let errors = result {
                 onError(errors)
                 return
             }
             onComplete()
         }
     }
+    
+    @MainActor
+    public func refreshRemoteData() async -> [RequestError]? {
+        var errors: [RequestError] = []
+        async let whois: WhoisData? = getWhois(whoisDomain)
+        async let sqi = getYandexSQIImage()
+        async let opr = getOPR()
+        
+        do {
+            let result = try await (whois: whois, sqi: sqi, opr: opr)
+            self.yandexSQI = result.sqi
+            if let date = result.whois?.creationDate {
+                creationDate = try getDate(date)
+            }
+            if let oprRank = result.opr.rank {
+                self.OPRRank = Int(oprRank)
+            }
+            self.OPRGrade = result.opr.page_rank_decimal
+        } catch let error as RequestError {
+            errors.append(error)
+        } catch {
+            
+        }
+        guard errors.isEmpty else {
+            return errors
+        }
+        return nil
+    }
+    
+    
     
     private func getURLIPMode(_ url: URL) -> IPMode {
         if let _ = try? URLIPv4Regex.firstMatch(in: url.formatted()) {
