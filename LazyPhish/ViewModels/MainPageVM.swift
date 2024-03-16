@@ -20,7 +20,7 @@ class MainPageVM : ObservableObject {
     @Published var OPRRank: String = ""
     @Published var OPRGrade: String = ""
         
-    private var urlInfo: PhishRequestBase? = nil
+    private var urlInfo: PhishRequest? = nil
     
     init() {
 
@@ -29,55 +29,20 @@ class MainPageVM : ObservableObject {
     @MainActor
     func getData() {
         errorInfo = ""
-        self.urlInfo = PhishRequestBase(URL(string: urlText)!)
+        self.urlInfo = PhishRequest(URL(string: urlText)!)
         guard let url = self.urlInfo else {
             creationDate = "URL Parse Error"
             return
         }
         
         creationDate = "Pinging..."
-        setupSubscriptions()
         url.refreshRemoteData {
             self.setAvailableData()
         } onError: { _ in
             
         }
-//        } onError: { errorList in
-//            self.errorInfo = errorList.map { error in
-//                error.localizedDescription
-//            }.joined(separator: "\n")
-////            self.setAvailableData()
-//        }
     }
     
-    func setupSubscriptions() {
-        
-        guard let url = urlInfo else { return }
-//        
-//        url.$creationDate.sink {
-//            if let date = $0 {
-//                self.creationDate = date.formatted()
-//            }
-//        }.store(in: &url.publicSubscriptions)
-//        
-//        url.$OPRRank.sink {
-//            if let rank = $0 {
-//                self.OPRRank = rank.description
-//            }
-//        }.store(in: &url.publicSubscriptions)
-//        
-//        url.$OPRGrade.sink {
-//            if let grade = $0 {
-//                self.OPRGrade = grade.description
-//            }
-//        }.store(in: &url.publicSubscriptions)
-//        
-//        url.$yandexSQI.sink {
-//            if let sqi = $0 {
-//                self.yandexSQI = sqi.description
-//            }
-//        }.store(in: &url.publicSubscriptions)
-    }
     
     func setAvailableData() {
         guard let url = self.urlInfo else {
