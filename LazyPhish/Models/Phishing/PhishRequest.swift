@@ -12,29 +12,6 @@ import Vision
 import AlamofireImage
 
 class PhishRequest {
-    private(set) var MLEntry: MLEntry?
-    private(set) var phishInfo: PhishInfo
-    private let url: URL
-    
-    init(_ url: URL) {
-        self.url = url
-        phishInfo = PhishInfo(url: url)
-    }
-    
-    @MainActor
-    public func refreshRemoteData(onComplete: @escaping () -> Void, onError: @escaping (RequestError) -> Void) {
-        Task {
-            let result = await refreshRemoteData(phishInfo)
-            switch result {
-            case .success(let success):
-                phishInfo = success
-                onComplete()
-            case .failure(let failure):
-                onError(failure)
-            }
-        }
-    }
-    
     public func refreshRemoteData(_ base: PhishInfo) async -> Result<PhishInfo,RequestError> {
         let remote = try! await withThrowingTaskGroup(of: PhishInfoRemote.self, returning: PhishInfoRemote.self) { taskGroup in
             var result = PhishInfoRemote()
@@ -120,10 +97,10 @@ class PhishRequest {
     }
     
     internal func getOPR(_ url: URL) async throws -> OPRInfo {
-        return try await getOPR([url])[0]
+        return try await getOPR(urls: [url])[0]
     }
     
-    internal func getOPR(_ url: [URL]) async throws -> [OPRInfo] {
+    internal func getOPR(urls url: [URL]) async throws -> [OPRInfo] {
         let apiKey = try getOPRKey()
         
         var params: [String: String] = [:]
