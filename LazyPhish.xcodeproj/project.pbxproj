@@ -17,7 +17,11 @@
 		3003679C2B97452500D3C84C /* SwiftWhois in Frameworks */ = {isa = PBXBuildFile; productRef = 3003679B2B97452500D3C84C /* SwiftWhois */; };
 		300396612BA5BCD0001B6C2C /* MetricStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300396602BA5BCD0001B6C2C /* MetricStatus.swift */; };
 		300396632BA5BD00001B6C2C /* RiskLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300396622BA5BD00001B6C2C /* RiskLevel.swift */; };
-		300396652BA5BF07001B6C2C /* PhishRequestQuerry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300396642BA5BF07001B6C2C /* PhishRequestQuerry.swift */; };
+		300396652BA5BF07001B6C2C /* PhishRequestQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300396642BA5BF07001B6C2C /* PhishRequestQueue.swift */; };
+		3003966C2BA7489F001B6C2C /* MultiRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003966B2BA7489F001B6C2C /* MultiRequestView.swift */; };
+		3003966E2BA7494E001B6C2C /* MultiRequestVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003966D2BA7494E001B6C2C /* MultiRequestVM.swift */; };
+		300396702BA74B3D001B6C2C /* PhishTableEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3003966F2BA74B3D001B6C2C /* PhishTableEntry.swift */; };
+		300396722BA74FEE001B6C2C /* PhishRequestSingle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300396712BA74FEE001B6C2C /* PhishRequestSingle.swift */; };
 		3037D1542B9B651F0012104E /* Authority.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3037D1532B9B651E0012104E /* Authority.plist */; };
 		3037D1572B9B6C280012104E /* MLEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037D1562B9B6C280012104E /* MLEntry.swift */; };
 		3037D15A2B9B6C530012104E /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037D1592B9B6C530012104E /* RequestError.swift */; };
@@ -52,7 +56,11 @@
 		300367902B95D89700D3C84C /* LazyPhishTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyPhishTests.swift; sourceTree = "<group>"; };
 		300396602BA5BCD0001B6C2C /* MetricStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricStatus.swift; sourceTree = "<group>"; };
 		300396622BA5BD00001B6C2C /* RiskLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiskLevel.swift; sourceTree = "<group>"; };
-		300396642BA5BF07001B6C2C /* PhishRequestQuerry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishRequestQuerry.swift; sourceTree = "<group>"; };
+		300396642BA5BF07001B6C2C /* PhishRequestQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishRequestQueue.swift; sourceTree = "<group>"; };
+		3003966B2BA7489F001B6C2C /* MultiRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiRequestView.swift; sourceTree = "<group>"; };
+		3003966D2BA7494E001B6C2C /* MultiRequestVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiRequestVM.swift; sourceTree = "<group>"; };
+		3003966F2BA74B3D001B6C2C /* PhishTableEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishTableEntry.swift; sourceTree = "<group>"; };
+		300396712BA74FEE001B6C2C /* PhishRequestSingle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishRequestSingle.swift; sourceTree = "<group>"; };
 		3037D1532B9B651E0012104E /* Authority.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Authority.plist; sourceTree = "<group>"; };
 		3037D1562B9B6C280012104E /* MLEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLEntry.swift; sourceTree = "<group>"; };
 		3037D1592B9B6C530012104E /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
@@ -146,10 +154,11 @@
 			isa = PBXGroup;
 			children = (
 				307A27022BA5BA7F00B9D14A /* PhishInfo.swift */,
-				3037D15B2B9B6CA00012104E /* OPRInfo.swift */,
 				3037D1592B9B6C530012104E /* RequestError.swift */,
 				300367872B95CE5B00D3C84C /* PhishRequest.swift */,
-				300396642BA5BF07001B6C2C /* PhishRequestQuerry.swift */,
+				300396642BA5BF07001B6C2C /* PhishRequestQueue.swift */,
+				300396712BA74FEE001B6C2C /* PhishRequestSingle.swift */,
+				3037D15B2B9B6CA00012104E /* OPRInfo.swift */,
 				307A27042BA5BABC00B9D14A /* PhishInfoRemote.swift */,
 				300396602BA5BCD0001B6C2C /* MetricStatus.swift */,
 			);
@@ -160,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				300367782B95CC1F00D3C84C /* ContentView.swift */,
+				3003966B2BA7489F001B6C2C /* MultiRequestView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -170,6 +180,7 @@
 				3037D1562B9B6C280012104E /* MLEntry.swift */,
 				300396622BA5BD00001B6C2C /* RiskLevel.swift */,
 				3003965F2BA5BC1F001B6C2C /* Phishing */,
+				3003966F2BA74B3D001B6C2C /* PhishTableEntry.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -178,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				30B9B9A02B997F4C0063ADB3 /* MainPageVM.swift */,
+				3003966D2BA7494E001B6C2C /* MultiRequestVM.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -298,15 +310,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3003966C2BA7489F001B6C2C /* MultiRequestView.swift in Sources */,
 				30B9B9A12B997F4C0063ADB3 /* MainPageVM.swift in Sources */,
 				300396632BA5BD00001B6C2C /* RiskLevel.swift in Sources */,
 				3037D15C2B9B6CA00012104E /* OPRInfo.swift in Sources */,
 				307A27052BA5BABC00B9D14A /* PhishInfoRemote.swift in Sources */,
 				307A27032BA5BA7F00B9D14A /* PhishInfo.swift in Sources */,
+				3003966E2BA7494E001B6C2C /* MultiRequestVM.swift in Sources */,
 				300367792B95CC1F00D3C84C /* ContentView.swift in Sources */,
 				3037D15A2B9B6C530012104E /* RequestError.swift in Sources */,
+				300396702BA74B3D001B6C2C /* PhishTableEntry.swift in Sources */,
+				300396722BA74FEE001B6C2C /* PhishRequestSingle.swift in Sources */,
 				300367772B95CC1F00D3C84C /* LazyPhishApp.swift in Sources */,
-				300396652BA5BF07001B6C2C /* PhishRequestQuerry.swift in Sources */,
+				300396652BA5BF07001B6C2C /* PhishRequestQueue.swift in Sources */,
 				3037D1572B9B6C280012104E /* MLEntry.swift in Sources */,
 				300367882B95CE5B00D3C84C /* PhishRequest.swift in Sources */,
 				300396612BA5BCD0001B6C2C /* MetricStatus.swift in Sources */,

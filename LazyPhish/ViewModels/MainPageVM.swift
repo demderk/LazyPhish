@@ -20,7 +20,7 @@ class MainPageVM : ObservableObject {
     @Published var OPRRank: String = ""
     @Published var OPRGrade: String = ""
         
-    private var urlInfo: PhishRequest? = nil
+    private var urlInfo: PhishRequestSingle? = nil
     
     init() {
 
@@ -29,7 +29,7 @@ class MainPageVM : ObservableObject {
     @MainActor
     func getData() {
         errorInfo = ""
-        self.urlInfo = PhishRequest(URL(string: urlText)!)
+        self.urlInfo = PhishRequestSingle(URL(string: urlText)!)
         guard let url = self.urlInfo else {
             creationDate = "URL Parse Error"
             return

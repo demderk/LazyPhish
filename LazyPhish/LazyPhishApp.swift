@@ -21,7 +21,7 @@ struct LazyPhishApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MultiRequestView()
                 .frame(minWidth: 1000, minHeight: 600)
         }
     }
