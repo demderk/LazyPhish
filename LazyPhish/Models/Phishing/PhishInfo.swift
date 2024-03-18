@@ -21,7 +21,7 @@ struct PhishInfo {
     var creationDate: Date? { whois?.creationDate != nil ? try? getDate(whois!.creationDate!) : nil }
     var OPRRank: Int? { OPR?.rank != nil ? Int((OPR?.rank)!) : nil }
     var OPRGrade: Decimal? { OPR?.page_rank_decimal }
-    var whoisDomain: String { url.formatted().components(separatedBy: ["."]).suffix(2).joined(separator: ".") }
+    var host: String? { url.host() }
     var urlLength: Int { url.formatted().count }
     var prefixCount: Int { url.formatted().components(separatedBy: ["-"]).count - 1 }
     var subDomainCount: Int { url.formatted().components(separatedBy: ["."]).count - 2 }

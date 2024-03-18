@@ -115,9 +115,9 @@
 		300367752B95CC1F00D3C84C /* LazyPhish */ = {
 			isa = PBXGroup;
 			children = (
-				3003966A2BA6020C001B6C2C /* Views */,
-				30B9B99F2B997F350063ADB3 /* ViewModels */,
 				3037D1552B9B6C050012104E /* Models */,
+				30B9B99F2B997F350063ADB3 /* ViewModels */,
+				3003966A2BA6020C001B6C2C /* Views */,
 				300367762B95CC1F00D3C84C /* LazyPhishApp.swift */,
 				3003677C2B95CC2400D3C84C /* Assets.xcassets */,
 				300367812B95CC2400D3C84C /* LazyPhish.entitlements */,

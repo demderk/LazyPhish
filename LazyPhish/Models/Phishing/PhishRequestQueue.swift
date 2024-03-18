@@ -41,15 +41,26 @@ class PhishRequestQueue : PhishRequest {
     override func getOPR(urls url: [URL]) async throws -> [OPRInfo] {
         return try await self.getOPR(urls: url, ignoreCache: false)
     }
-    // TODO: Init
     
-    // TODO: refreshRemoteData Closure
-    // TODO: refreshRemoteData Combine
+    // TODO: refreshRemoteData Closure on Error
     
     public func refreshRemoteData(onTaskComplete: ((PhishInfo) -> Void)?) {
         Task {
             let result = await refreshRemoteData(phishInfo, requestCompleted: onTaskComplete)
         }
+    }
+    
+    var lastRequest: UInt64 = 0
+    
+    var requestLock: NSLock = NSLock()
+    
+    override func refreshRemoteData(_ base: PhishInfo) async -> Result<PhishInfo, RequestError> {
+        requestLock.withLock {
+            lastRequest += 250
+        }
+        print(lastRequest)
+        try! await Task.sleep(nanoseconds: lastRequest * 1000000)
+        return await super.refreshRemoteData(base)
     }
     
     func refreshRemoteData(_ base: [PhishInfo], requestCompleted: ((PhishInfo) -> Void)? = nil) async -> [PhishInfo] {
@@ -61,7 +72,6 @@ class PhishRequestQueue : PhishRequest {
         let res = await withTaskGroup(of: PhishInfo.self) { taskGroup in
             for item in base {
                 taskGroup.addTask {
-                    print(Date().formatted())
                     let response = await self.refreshRemoteData(item)
                     switch response {
                     case .success(let success):
@@ -82,7 +92,6 @@ class PhishRequestQueue : PhishRequest {
             }
             return responses
         }
-        
         return res
     }
     

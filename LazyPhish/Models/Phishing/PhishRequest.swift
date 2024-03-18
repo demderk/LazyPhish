@@ -10,6 +10,7 @@ import Alamofire
 import RegexBuilder
 import Vision
 import AlamofireImage
+import AppKit
 
 class PhishRequest {
     public func refreshRemoteData(_ base: PhishInfo) async -> Result<PhishInfo,RequestError> {
@@ -18,7 +19,10 @@ class PhishRequest {
             taskGroup.addTask { [self] in
                 print(Date().formatted())
                 do {
-                    let whois: WhoisData? = try await getWhois(base.whoisDomain)
+                    guard let host = base.host else {
+                        throw RequestError.urlHostIsInvalid(url: base.url)
+                    }
+                    let whois: WhoisData? = try await getWhois(host)
                     return PhishInfoRemote(whois: .success(value: whois))
                 } catch let error as RequestError{
                     return PhishInfoRemote(whois: .failed(error: error))
@@ -53,7 +57,6 @@ class PhishRequest {
             }
             return result
         }
-        print("done")
         return .success(PhishInfo(url: base.url, remote: remote))
     }
     
@@ -62,11 +65,17 @@ class PhishRequest {
     }
     
     internal func getYandexSQI(_ url: URL) async throws -> Int {
-        let response = AF.request("https://yandex.ru/cycounter?\(url.formatted())").serializingImage(inflateResponseImage: false)
+        guard let host = url.host() else {
+            throw RequestError.urlHostIsInvalid(url: url)
+        }
         
+        let response = AF.request("https://yandex.ru/cycounter?\(host)")
+            .serializingImage(inflateResponseImage: false)
         if let image = try await response.value.cgImage(forProposedRect: .none, context: .none, hints: nil) {
             let vision = VNImageRequestHandler(cgImage: image)
             let imageRequest = VNRecognizeTextRequest()
+            imageRequest.recognitionLevel = .fast
+            imageRequest.usesLanguageCorrection = false
             try vision.perform([imageRequest])
             if let result = imageRequest.results {
                 let data = result.compactMap { listC in
@@ -106,7 +115,10 @@ class PhishRequest {
         var params: [String: String] = [:]
         
         for (n,item) in url.enumerated() {
-            params["domains[\(n)]"] = item.formatted()
+            guard let host = item.host() else {
+                throw RequestError.urlHostIsInvalid(url: item)
+            }
+            params["domains[\(n)]"] = host
         }
         
         let headers: HTTPHeaders = [
@@ -115,8 +127,10 @@ class PhishRequest {
         
         let afResult = await AF.request("https://openpagerank.com/api/v1.0/getPageRank",parameters: params ,headers: headers).serializingDecodable(OPRResponse.self).result
         
+        
         switch afResult {
         case .success(let success):
+            print(success.response)
             return success.response
         case .failure(let failure):
             print(failure)

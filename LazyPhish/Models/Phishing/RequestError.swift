@@ -16,6 +16,7 @@ enum RequestError: Error {
     case OPRError
     case unknownError(parent: Error)
     case concatCollision
+    case urlHostIsInvalid(url: URL)
     
     var localizedDescription: String {
         switch self {

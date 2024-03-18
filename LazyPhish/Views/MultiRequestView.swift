@@ -28,6 +28,9 @@ struct MultiRequestView: View {
                     TableColumn("OPR Rank") { type in
                         Text(type.phishInfo.OPRRank?.formatted() ?? "Ureachable")
                     }
+                    TableColumn("Creation Date") { type in
+                        Text(type.phishInfo.creationDate?.formatted() ?? "Ureachable")
+                    }
                 } rows: {
                     ForEach(vm.tableContent) { data in
                         TableRow(data)
