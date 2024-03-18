@@ -17,7 +17,6 @@ class PhishRequest {
         let remote = try! await withThrowingTaskGroup(of: PhishInfoRemote.self, returning: PhishInfoRemote.self) { taskGroup in
             var result = PhishInfoRemote()
             taskGroup.addTask { [self] in
-                print(Date().formatted())
                 do {
                     guard let host = base.host else {
                         throw RequestError.urlHostIsInvalid(url: base.url)
@@ -31,7 +30,6 @@ class PhishRequest {
                 }
             }
             taskGroup.addTask { [self] in
-                print(Date().formatted())
                 do {
                     let YSQI: Int = try await getYandexSQI(base.url)
                     return PhishInfoRemote(yandexSQI: .success(value: YSQI))
@@ -42,7 +40,6 @@ class PhishRequest {
                 }
             }
             taskGroup.addTask { [self] in
-                print(Date().formatted())
                 do {
                     let OPR: OPRInfo = try await getOPR(base.url)
                     return PhishInfoRemote(OPR: .success(value: OPR))
@@ -64,32 +61,65 @@ class PhishRequest {
         return try await SwiftWhois.lookup(domain: url)
     }
     
-    internal func getYandexSQI(_ url: URL) async throws -> Int {
+    internal func getYandexSQI(_ url: URL, andAccurate: Bool = false) async throws -> Int {
         guard let host = url.host() else {
             throw RequestError.urlHostIsInvalid(url: url)
         }
         
-        let response = AF.request("https://yandex.ru/cycounter?\(host)")
-            .serializingImage(inflateResponseImage: false)
-        if let image = try await response.value.cgImage(forProposedRect: .none, context: .none, hints: nil) {
-            let vision = VNImageRequestHandler(cgImage: image)
-            let imageRequest = VNRecognizeTextRequest()
-            imageRequest.recognitionLevel = .fast
-            imageRequest.usesLanguageCorrection = false
-            try vision.perform([imageRequest])
-            if let result = imageRequest.results {
-                let data = result.compactMap { listC in
-                    listC.topCandidates(1).first?.string
+        let response = await AF.request("https://yandex.ru/cycounter?\(host)")
+            .serializingImage(inflateResponseImage: false).result
+        
+        switch response {
+        case .success(let success):
+            if let input = success.cgImage(forProposedRect: .none, context: .none, hints: nil) {
+                guard let image = input.cropping(to: CGRect(x: 30, y: 0, width: 58, height: 31))?.increaseContrast() else {
+                    throw RequestError.yandexSQICroppingError
                 }
-                guard !data.isEmpty else {
-                    throw RequestError.yandexSQIImageParseError
+                let vision = VNImageRequestHandler(cgImage: image)
+                
+                //Fast algorithm check
+                let imageRequest = VNRecognizeTextRequest()
+                imageRequest.recognitionLevel = .fast
+                var recognized: String? = nil
+                try vision.perform([imageRequest])
+                if let result = imageRequest.results {
+                    let data = result.compactMap { listC in
+                        return listC.topCandidates(1).first?.string
+                    }
+                    if !data.isEmpty {
+                        recognized = data[0]
+                    }
                 }
-                if let sqi = Int(data[0].replacing(" ", with: "")) {
+                
+                // Accurate algorithm check if enabled
+                if recognized == nil && andAccurate {
+                    let accurateRequest = VNRecognizeTextRequest()
+                    accurateRequest.recognitionLevel = .accurate
+                    try vision.perform([accurateRequest])
+                    if let result = accurateRequest.results {
+                        let data = result.compactMap { listC in
+                            return listC.topCandidates(1).first?.string
+                        }
+                        if !data.isEmpty {
+                            recognized = data[0]
+                        }
+                    }
+                }
+                
+                guard let output = recognized else {
+                    throw RequestError.yandexSQIVisionNotRecognized(image: NSImage(cgImage: image, size: .zero))
+                }
+                
+                if let sqi = Int(output.replacing(" ", with: "")) {
                     return sqi
+                } else {
+                    throw RequestError.yandexSQIVisionNotRecognized(image: NSImage(cgImage: image, size: .zero))
                 }
             }
+            throw RequestError.yandexSQIVisionNotRecognizedUnknown
+        case .failure(let failure):
+            throw RequestError.yandexSQIRequestError(parent: failure)
         }
-        throw RequestError.yandexSQIImageParseError
     }
     
     internal func getOPRKey() throws -> String {
@@ -130,11 +160,23 @@ class PhishRequest {
         
         switch afResult {
         case .success(let success):
-            print(success.response)
             return success.response
         case .failure(let failure):
-            print(failure)
             throw RequestError.OPRError
         }
+    }
+}
+
+extension CGImage {
+    func increaseContrast() -> CGImage {
+        let inputImage = CIImage(cgImage: self)
+        let parameters = [
+            "inputContrast": NSNumber(value: 2)
+        ]
+        let outputImage = inputImage.applyingFilter("CIColorControls", parameters: parameters)
+
+        let context = CIContext(options: nil)
+        let img = context.createCGImage(outputImage, from: outputImage.extent)!
+        return img
     }
 }

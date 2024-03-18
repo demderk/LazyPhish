@@ -23,13 +23,23 @@ struct MultiRequestView: View {
                         Text(type.phishInfo.url.formatted())
                     }
                     TableColumn("yandexSQI") { type in
-                        Text(type.phishInfo.yandexSQI?.formatted() ?? "Ureachable")
+                        VStack {
+                            Text(type.phishInfo.yandexSQI?.formatted() ?? (type.phishInfo.remote.yandexSQI.error?.localizedDescription ?? "Ureachable"))
+                            if let img = type.phishInfo.remote.yandexSQI.error {
+                                switch img {
+                                case .yandexSQIVisionNotRecognized(let image):
+                                    Image(nsImage: image)
+                                default:
+                                    VStack {}
+                                }
+                            }
+                        }
                     }
                     TableColumn("OPR Rank") { type in
-                        Text(type.phishInfo.OPRRank?.formatted() ?? "Ureachable")
+                        Text(type.phishInfo.OPRRank?.formatted() ?? (type.phishInfo.remote.OPR.error?.localizedDescription ?? "Ureachable"))
                     }
                     TableColumn("Creation Date") { type in
-                        Text(type.phishInfo.creationDate?.formatted() ?? "Ureachable")
+                        Text(type.phishInfo.creationDate?.formatted() ?? (type.phishInfo.remote.whois.error?.localizedDescription ?? "Ureachable"))
                     }
                 } rows: {
                     ForEach(vm.tableContent) { data in

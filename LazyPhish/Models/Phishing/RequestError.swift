@@ -6,12 +6,14 @@
 //
 
 import Foundation
+import AppKit
 
 enum RequestError: Error {
     case dateFormatError
-    case yandexSQICaptchaError
-    case yandexSQIUnderfined(response: String)
-    case yandexSQIImageParseError
+    case yandexSQICroppingError
+    case yandexSQIVisionNotRecognizedUnknown
+    case yandexSQIVisionNotRecognized(image: NSImage)
+    case yandexSQIRequestError(parent: Error)
     case authorityAccessError
     case OPRError
     case unknownError(parent: Error)
@@ -22,10 +24,16 @@ enum RequestError: Error {
         switch self {
         case .dateFormatError:
             "Whois date formatted incorectly."
-        case .yandexSQICaptchaError:
-            "Yandex SQI provider requires Captcha."
-        case .yandexSQIUnderfined:
-            "Yandex SQI underfined error."
+        case .yandexSQIVisionNotRecognizedUnknown:
+            "Unknown error. Yandex SQI Vision OCR did not recognized anything."
+        case .yandexSQIVisionNotRecognized:
+            "Yandex SQI Vision OCR did not recognized anything."
+        case .yandexSQIRequestError(let parent):
+            "Yandex SQI request error. Parent \(parent)."
+        case .urlHostIsInvalid(let url):
+            "Yandex SQI underfined error. \(url)"
+        case .unknownError(let parent):
+            "Unknown error \(parent)"
         default:
             "..."
         }

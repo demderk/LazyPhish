@@ -69,7 +69,7 @@ class PhishRequestQueue : PhishRequest {
         // FIXME: Check errors please 👉👈
         try! await cacheOPR(urls: requestOPR)
         
-        let res = await withTaskGroup(of: PhishInfo.self) { taskGroup in
+        return await withTaskGroup(of: PhishInfo.self) { taskGroup in
             for item in base {
                 taskGroup.addTask {
                     let response = await self.refreshRemoteData(item)
@@ -90,9 +90,12 @@ class PhishRequestQueue : PhishRequest {
             for await response in taskGroup {
                 responses.append(response)
             }
+            defer {
+                oprCache.removeAll()
+                lastRequest = 0
+            }
             return responses
         }
-        return res
     }
     
     func getOPR(_ url: URL, ignoreCache: Bool) async throws -> OPRInfo {
