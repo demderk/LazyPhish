@@ -36,7 +36,7 @@ struct MultiRequestView: View {
                         }
                     }
                     TableColumn("OPR Rank") { type in
-                        Text(type.phishInfo.OPRRank?.formatted() ?? (type.phishInfo.remote.OPR.error?.localizedDescription ?? "Ureachable"))
+                        Text(type.phishInfo.OPR?.rank?.description ?? (type.phishInfo.remote.OPR.error?.localizedDescription ?? "Ureachable"))
                     }
                     TableColumn("Creation Date") { type in
                         Text(type.phishInfo.creationDate?.formatted() ?? (type.phishInfo.remote.whois.error?.localizedDescription ?? "Ureachable"))

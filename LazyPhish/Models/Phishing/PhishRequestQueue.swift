@@ -8,7 +8,7 @@
 import Foundation
 
 class PhishRequestQueue : PhishRequest {
-    var oprCache: [URL:OPRInfo] = [:]
+    var oprCache: [String:OPRInfo] = [:]
     var phishInfo: [PhishInfo] = []
     
     var phishURLS: [URL] {
@@ -119,29 +119,45 @@ class PhishRequestQueue : PhishRequest {
     func getOPRCached(urls requested: [URL]) async throws -> [OPRInfo] {
         var cache: [OPRInfo] = []
         var send: [URL] = []
-        for (n,item) in requested.enumerated() {
+        // MARK: ERROR
+        let hosts = requested.map({ $0.host()! })
+        for item in hosts {
             if let found = oprCache[item] {
                 cache.append(found)
                 continue
             }
-            send.append(item)
+            send.append(URL(string: "http://\(item)")!)
         }
         guard !send.isEmpty else {
             return cache
         }
         let resultwurl = try await getOPRURL(urls: send)
-        oprCache.merge(resultwurl) { (_, new) in new }
-        return oprCache.values.map({$0})
+        for i in resultwurl {
+            if oprCache[i.key] == nil {
+                oprCache[i.key] = i.value
+            }
+        }
+        for item in resultwurl {
+            cache.append(item.value)
+        }
+        return cache
+        
     }
     
-    func getOPRURL(urls url: [URL]) async throws -> [URL:OPRInfo] {
-        let res = try await super.getOPR(urls: url)
-        var dict: [URL:OPRInfo] = [:]
+    func getOPRURL(urls url: [URL]) async throws -> [String:OPRInfo] {
+        let response = try await super.getOPR(urls: url)
+                
+        var result: [String: OPRInfo] = [:]
         
-        for (n,item) in url.enumerated() {
-            dict[item] = res[n]
+        for item in response {
+            result[item.domain] = item
         }
         
-        return dict
+        print(result.count)
+//        for (n,item) in url.enumerated() {
+//            dict[item] = res[n]
+//        }
+        
+        return result
     }
 }

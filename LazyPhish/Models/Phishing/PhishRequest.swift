@@ -151,6 +151,8 @@ class PhishRequest {
             params["domains[\(n)]"] = host
         }
         
+        print(params)
+        
         let headers: HTTPHeaders = [
             "API-OPR": apiKey
         ]
