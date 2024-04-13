@@ -10,13 +10,13 @@ import SwiftData
 
 struct ContentView: View {
     @ObservedObject var vm = MainPageVM()
-    
+
     var body: some View {
-        HStack{
+        HStack {
             Text(vm.errorInfo)
-            VStack(alignment: .center){
+            VStack(alignment: .center) {
                 Text("URL")
-                HStack{
+                HStack {
                     Spacer()
                     TextField("URL", text: $vm.urlText)
                         .frame(width: 256)
@@ -30,7 +30,7 @@ struct ContentView: View {
                 Text("Yandex SQI: \(vm.yandexSQI)")
                 Text("OPR Grade \(vm.OPRGrade)")
                 Text("OPR Rank \(vm.OPRRank)")
-                
+
             }
         }
     }

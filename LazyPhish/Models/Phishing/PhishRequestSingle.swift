@@ -9,11 +9,11 @@ import Foundation
 
 class PhishRequestSingle: PhishRequest {
     private(set) var phishInfo: PhishInfo
-    
+
     init(_ url: URL) {
         phishInfo = PhishInfo(url: url)
     }
-    
+
     @MainActor
     public func refreshRemoteData(onComplete: @escaping () -> Void, onError: @escaping (RequestError) -> Void) {
         Task {

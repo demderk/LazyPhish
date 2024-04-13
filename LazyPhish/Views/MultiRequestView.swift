@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MultiRequestView: View {
     @ObservedObject var vm = MultiRequestVM()
-    
+
     var body: some View {
         VStack {
             HStack {

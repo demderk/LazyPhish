@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PhishTableEntry : Identifiable {
+struct PhishTableEntry: Identifiable {
     var uuid: UUID { UUID() }
     var id: Int
     var phishInfo: PhishInfo

@@ -8,16 +8,16 @@
 import Foundation
 
 struct OPRInfo: Codable {
-    var status_code: Int
+    var statusCode: Int
     var error: String
-    var page_rank_integer: Int
-    var page_rank_decimal: Decimal
+    var pageRankInteger: Int
+    var pageRankDecimal: Decimal
     var rank: String?
     var domain: String
 }
 
 struct OPRResponse: Codable {
-    var status_code: Int
+    var statusCode: Int
     var response: [OPRInfo]
-    var last_updated: String
+    var lastUpdated: String
 }

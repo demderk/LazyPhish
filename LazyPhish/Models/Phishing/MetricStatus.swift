@@ -11,7 +11,7 @@ enum MetricStatus<T> {
     case planned
     case success(value: T)
     case failed(error: RequestError)
-    
+
     var value: T? {
         switch self {
         case .planned:
@@ -22,7 +22,7 @@ enum MetricStatus<T> {
             return nil
         }
     }
-    
+
     var error: RequestError? {
         switch self {
         case .planned:

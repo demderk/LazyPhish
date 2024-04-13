@@ -8,10 +8,8 @@
 import Foundation
 import Combine
 
-class MainPageVM : ObservableObject {
-    
-    
-    
+class MainPageVM: ObservableObject {
+
     @Published var urlText: String = ""
     @Published var creationDate: String = ""
     @Published var yandexSQI: String = ""
@@ -19,13 +17,13 @@ class MainPageVM : ObservableObject {
     @Published var isYearLong: Bool = true
     @Published var OPRRank: String = ""
     @Published var OPRGrade: String = ""
-        
-    private var urlInfo: PhishRequestSingle? = nil
-    
+
+    private var urlInfo: PhishRequestSingle?
+
     init() {
 
     }
-    
+
     @MainActor
     func getData() {
         errorInfo = ""
@@ -34,16 +32,15 @@ class MainPageVM : ObservableObject {
             creationDate = "URL Parse Error"
             return
         }
-        
+
         creationDate = "Pinging..."
         url.refreshRemoteData {
             self.setAvailableData()
         } onError: { _ in
-            
+
         }
     }
-    
-    
+
     func setAvailableData() {
         guard let url = self.urlInfo else {
             return
@@ -52,6 +49,6 @@ class MainPageVM : ObservableObject {
         self.yandexSQI = (url.phishInfo.yandexSQI ?? -1).description
         self.creationDate = (url.phishInfo.creationDate ?? Date(timeIntervalSince1970: 0)).formatted()
         self.OPRRank = (url.phishInfo.OPRRank ?? -1).description
-        
+
     }
 }

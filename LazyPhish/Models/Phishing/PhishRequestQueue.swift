@@ -7,8 +7,8 @@
 
 import Foundation
 
-class PhishRequestQueue : PhishRequest {
-    var oprCache: [String:OPRInfo] = [:]
+class PhishRequestQueue: PhishRequest {
+    var oprCache: [String: OPRInfo] = [:]
     var phishInfo: [PhishInfo] = []
     
     var phishURLS: [URL] {
@@ -36,7 +36,6 @@ class PhishRequestQueue : PhishRequest {
     override func getOPR(_ url: URL) async throws -> OPRInfo {
         return try await self.getOPR(url, ignoreCache: false)
     }
-    
     
     override func getOPR(urls url: [URL]) async throws -> [OPRInfo] {
         return try await self.getOPR(urls: url, ignoreCache: false)
@@ -113,7 +112,7 @@ class PhishRequestQueue : PhishRequest {
     }
     
     func cacheOPR(urls url: [URL]) async throws {
-        let _ = try await getOPRCached(urls: url)
+        _ = try await getOPRCached(urls: url)
     }
     
     func getOPRCached(urls requested: [URL]) async throws -> [OPRInfo] {
@@ -132,10 +131,8 @@ class PhishRequestQueue : PhishRequest {
             return cache
         }
         let resultwurl = try await getOPRURL(urls: send)
-        for i in resultwurl {
-            if oprCache[i.key] == nil {
-                oprCache[i.key] = i.value
-            }
+        for i in resultwurl where oprCache[i.key] == nil {
+            oprCache[i.key] = i.value
         }
         for item in resultwurl {
             cache.append(item.value)
@@ -144,9 +141,9 @@ class PhishRequestQueue : PhishRequest {
         
     }
     
-    func getOPRURL(urls url: [URL]) async throws -> [String:OPRInfo] {
+    func getOPRURL(urls url: [URL]) async throws -> [String: OPRInfo] {
         let response = try await super.getOPR(urls: url)
-                
+        
         var result: [String: OPRInfo] = [:]
         
         for item in response {
@@ -154,9 +151,9 @@ class PhishRequestQueue : PhishRequest {
         }
         
         print(result.count)
-//        for (n,item) in url.enumerated() {
-//            dict[item] = res[n]
-//        }
+        //        for (n,item) in url.enumerated() {
+        //            dict[item] = res[n]
+        //        }
         
         return result
     }
