@@ -24,7 +24,9 @@ struct MultiRequestView: View {
                     }
                     TableColumn("yandexSQI") { type in
                         VStack {
-                            Text(type.phishInfo.yandexSQI?.formatted() ?? (type.phishInfo.remote.yandexSQI.error?.localizedDescription ?? "Ureachable"))
+                            Text(type.phishInfo.yandexSQI?.formatted() ??
+                                 (type.phishInfo.remote.yandexSQI.error?.localizedDescription ??
+                                  "Ureachable"))
                             if let img = type.phishInfo.remote.yandexSQI.error {
                                 switch img {
                                 case .yandexSQIVisionNotRecognized(let image):
@@ -36,10 +38,14 @@ struct MultiRequestView: View {
                         }
                     }
                     TableColumn("OPR Rank") { type in
-                        Text(type.phishInfo.OPR?.rank?.description ?? (type.phishInfo.remote.OPR.error?.localizedDescription ?? "Ureachable"))
+                        Text(type.phishInfo.OPR?.rank?.description ??
+                             (type.phishInfo.remote.OPR.error?.localizedDescription ??
+                              "Ureachable"))
                     }
                     TableColumn("Creation Date") { type in
-                        Text(type.phishInfo.creationDate?.formatted() ?? (type.phishInfo.remote.whois.error?.localizedDescription ?? "Ureachable"))
+                        Text(type.phishInfo.creationDate?.formatted() ??
+                             (type.phishInfo.remote.whois.error?.localizedDescription ??
+                              "Ureachable"))
                     }
                 } rows: {
                     ForEach(vm.tableContent) { data in

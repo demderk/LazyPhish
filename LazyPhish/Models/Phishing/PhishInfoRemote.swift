@@ -9,7 +9,7 @@ import Foundation
 import SwiftWhois
 
 struct PhishInfoRemote {
-    var whois: MetricStatus<WhoisData?> = .planned
+    var whois: MetricStatus<WhoisData> = .planned
     var yandexSQI: MetricStatus<Int> = .planned
     var OPR: MetricStatus<OPRInfo> = .planned
 
@@ -25,7 +25,7 @@ struct PhishInfoRemote {
         self.OPR = remote.OPR
     }
 
-    mutating func append(remote: PhishInfoRemote) throws {
+    mutating func append(remote: PhishInfoRemote) {
         if case .planned = whois {
             self.whois = remote.whois
         }

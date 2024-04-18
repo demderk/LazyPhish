@@ -11,6 +11,7 @@ disabled_rules:
   - trailing_whitespace
   - todo
   - force_try
+  - force_cast
 
 # # For release 
 # disabled_rules:

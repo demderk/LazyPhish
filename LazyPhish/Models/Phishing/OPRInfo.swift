@@ -7,7 +7,19 @@
 
 import Foundation
 
-struct OPRInfo: Codable {
+protocol OPRFailable : Decodable {
+    var statusCode: Int { get set }
+    var error: String { get set}
+    var domain: String { get set }
+}
+
+struct FailedOPRInfo: OPRFailable {
+    var statusCode: Int
+    var error: String
+    var domain: String
+}
+
+struct OPRInfo: OPRFailable {
     var statusCode: Int
     var error: String
     var pageRankInteger: Int
@@ -16,8 +28,8 @@ struct OPRInfo: Codable {
     var domain: String
 }
 
-struct OPRResponse: Codable {
+struct OPRResponse: Decodable {
     var statusCode: Int
-    var response: [OPRInfo]
+    @ThrowingOPRInfoList var response: [OPRFailable]
     var lastUpdated: String
 }
