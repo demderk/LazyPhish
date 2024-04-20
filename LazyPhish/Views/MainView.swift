@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MainView: View {
     @StateObject var vm = MainViewVM()
-//    var viewHost: [MainPageSelected: some View] = [:]
     
     var body: some View {
         NavigationSplitView(sidebar: {
@@ -24,4 +23,5 @@ struct MainView: View {
 
 #Preview {
     MainView()
+        .frame(minWidth: 1000, minHeight: 600)
 }

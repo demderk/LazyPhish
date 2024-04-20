@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import SwiftUI
 
 class SingleRequestViewModel: ObservableObject {
-    
+    @Published var searchText: String = ""
 }
 
