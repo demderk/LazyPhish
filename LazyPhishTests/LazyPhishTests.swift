@@ -11,42 +11,25 @@ import Foundation
 
 final class LazyPhishTests: XCTestCase {
 
-    func testIPModeIPv4() throws {
-        let urli = PhishRequest(URL(string: "http://127.0.0.1")!)
-                
-        XCTAssertEqual(urli.phishInfo.isIP, true)
-    }
-    
-    func testIPModeIPv4Extra() throws {
-        let urli = PhishRequest(URL(string: "http://127.0.0.1/31/fasf/tt.php")!)
-        XCTAssertEqual(urli.phishInfo.isIP, true)
-    }
-    
-    func testIPModeIPv4HEX() throws {
-        let urli = PhishRequest(URL(string: "http://0xc0a80001")!)
-                
-        XCTAssertEqual(urli.phishInfo.isIP, true)
-    }
-    
-    func testIPModeIPv4HEXExtra() throws {
-        let urli = PhishRequest(URL(string: "http://0xc0a80001/31/fasf/tt.php")!)
-        XCTAssertEqual(urli.phishInfo.isIP, true)
-    }
-    
-//    func testPrint() async throws {
-//        let x = PhishRequestQuerry([URL(string: "google.com")!,
-//                                    URL(string: "vk.com")!,
-//                                    URL(string: "name.com")!,
-//                                    URL(string: "youtube.com")!])
-//        
-//        Task {
-//            let t = await x.refreshRemoteData(x.infos)
-//            switch t {
-//            case .success(let success):
-//                print(success)
-//            case .failure(let failure):
-//                return
-//            }
-//        }
+//    func testIPModeIPv4() throws {
+//        let urli = PhishRequest(URL(string: "http://127.0.0.1")!)
+//                
+//        XCTAssertEqual(urli.phishInfo.isIP, true)
+//    }
+//    
+//    func testIPModeIPv4Extra() throws {
+//        let urli = PhishRequest(URL(string: "http://127.0.0.1/31/fasf/tt.php")!)
+//        XCTAssertEqual(urli.phishInfo.isIP, true)
+//    }
+//    
+//    func testIPModeIPv4HEX() throws {
+//        let urli = PhishRequest(URL(string: "http://0xc0a80001")!)
+//                
+//        XCTAssertEqual(urli.phishInfo.isIP, true)
+//    }
+//    
+//    func testIPModeIPv4HEXExtra() throws {
+//        let urli = PhishRequest(URL(string: "http://0xc0a80001/31/fasf/tt.php")!)
+//        XCTAssertEqual(urli.phishInfo.isIP, true)
 //    }
 }

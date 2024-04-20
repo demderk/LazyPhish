@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol OPRFailable : Decodable {
+protocol OPRFailable: Decodable {
     var statusCode: Int { get set }
     var error: String { get set}
     var domain: String { get set }

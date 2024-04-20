@@ -18,41 +18,24 @@ class PhishRequestQueue: PhishRequest {
         phishInfo.append(contentsOf: try urls.map({ try PhishInfo(url: $0) }))
     }
     
-    override init() {
-        
-    }
-    
     convenience init(_ urlStrings: String...) throws {
         try self.init(urlStrings)
     }
     
-    // PhishRequestQuerry caches OPR by default
-//    override func getOPR(_ url: URL) async throws -> OPRInfo {
-//        return try await self.getOPR(url, ignoreCache: false)
-//    }
-//    
-//    override func getOPR(urls url: [URL]) async throws -> [OPRInfo] {
-//        return try await self.getOPR(urls: url, ignoreCache: false)
-//    }
-    
-    // TODO: refreshRemoteData Closure on Error
+    override init() {
+        
+    }
     
     public func refreshRemoteData(onTaskComplete: ((PhishInfo) -> Void)?) {
         Task {
             _ = await refreshRemoteData(phishInfo, requestCompleted: onTaskComplete)
         }
     }
-        
-    override func refreshRemoteData(
-        _ base: StrictRemote,
-        collectMetrics: Set<PhishRequestMetric>)
-    async -> PhishInfo {
-        return await super.refreshRemoteData(base, collectMetrics: collectMetrics)
-    }
     
     func refreshRemoteData(
         _ base: [StrictRemote],
-        requestCompleted: ((PhishInfo) -> Void)? = nil
+        requestCompleted: ((PhishInfo) -> Void)? = nil,
+        onQueue: DispatchQueue = DispatchQueue.main
     ) async -> [PhishInfo] {
         var remote = base
         remote = await processOPR(remoteObjects: remote)
@@ -69,7 +52,7 @@ class PhishRequestQueue: PhishRequest {
             for await response in taskGroup {
                 // Получение whois нужно запускать обязательно последовательно, иначе оно падает.
                 let result = await self.refreshRemoteData(response, collectMetrics: [.whois])
-                DispatchQueue.main.async {
+                onQueue.async {
                     requestCompleted?(result)
                 }
                 responses.append(result)

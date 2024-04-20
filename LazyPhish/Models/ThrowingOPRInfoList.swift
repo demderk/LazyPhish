@@ -1,10 +1,6 @@
 @propertyWrapper
 struct ThrowingOPRInfoList {
     var wrappedValue: [OPRFailable]
-        
-    init(wrappedValue: [OPRFailable]) {
-        self.wrappedValue = wrappedValue
-    }
 }
 
 extension ThrowingOPRInfoList: Decodable {

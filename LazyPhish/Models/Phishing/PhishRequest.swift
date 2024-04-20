@@ -40,8 +40,8 @@ class PhishRequest {
     
     public func refreshRemoteData(
         _ base: StrictRemote,
-        collectMetrics: Set<PhishRequestMetric>)
-    async -> PhishInfo {
+        collectMetrics: Set<PhishRequestMetric>
+    ) async -> PhishInfo {
         let remote = await withTaskGroup(
             of: StrictRemote.self,
             returning: StrictRemote.self) { taskGroup in
@@ -191,7 +191,10 @@ class PhishRequest {
         }
         let splitedRemote = remoteObjects.chunked(into: 100)
         
-        let finalRemote = await withTaskGroup(of: [StrictRemote].self, returning: [StrictRemote].self) { requestPool in
+        let finalRemote = await withTaskGroup(
+            of: [StrictRemote].self,
+            returning: [StrictRemote].self
+        ) { requestPool in
             for item in splitedRemote {
                 // TODO: Weak Self?
                 requestPool.addTask { [self] in 
@@ -246,14 +249,17 @@ class PhishRequest {
             let response = success.response
             
             for item in response {
-                guard var found = remoteObjects.first(where: { $0.host == item.domain || $0.host == "www.\(item.domain)" }) else {
+                guard var found = remoteObjects.first(
+                    where: { $0.host == item.domain || $0.host == "www.\(item.domain)" }
+                ) else {
                     fatalError(item.domain)
                 }
                 if let successResult = item as? OPRInfo {
                     found.remote.OPR = .success(value: successResult)
                     result.append(found)
                 } else {
-                    found.remote.OPR = .failed(error: .OPRRemoteError(response: "[\(item.statusCode)] \(item.error)"))
+                    found.remote.OPR = .failed(
+                        error: .OPRRemoteError(response: "[\(item.statusCode)] \(item.error)"))
                     result.append(found)
                 }
             }
