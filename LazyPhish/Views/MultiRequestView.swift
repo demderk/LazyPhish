@@ -12,7 +12,7 @@ struct MultiRequestView: View {
 
     var body: some View {
         VStack {
-            HStack {
+            HSplitView {
                 TextEditor(text: $vm.requestText)
                     .font(.body)
                 Table(of: PhishTableEntry.self) {
@@ -56,7 +56,7 @@ struct MultiRequestView: View {
             Button("Send") {
                 vm.sendRequestQuerry()
             }
-        }
+        }.navigationTitle("Request Querry")
     }
 }
 

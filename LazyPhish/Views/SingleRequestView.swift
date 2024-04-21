@@ -9,8 +9,8 @@ import SwiftUI
 
 struct SingleRequestView: View {
     @ObservedObject var vm = SingleRequestViewModel()
-    
     @FocusState var isEditing: Bool
+    @EnvironmentObject var globalVM: GlobalVM
     
     var body: some View {
         VStack {
@@ -43,7 +43,9 @@ struct SingleRequestView: View {
                         }
                     Spacer()
                         .frame(maxWidth: 0)
-                    Button(action: {}, label: {
+                    Button(action: {
+                        
+                    }, label: {
                         Image(systemName: "arrow.forward")
                             .font(.system(size: 17))
                             .fontWeight(.bold)
@@ -63,7 +65,9 @@ struct SingleRequestView: View {
                         .padding([.bottom], 8)
                         .padding([.leading], 8)
                     HStack {
-                        Button(action: {}, label: {
+                        Button(action: {
+                            globalVM.navigation.append(MainSelectedPage.multi)
+                        }, label: {
                             VStack {
                                 Image(systemName: "tablecells")
                                     .font(.system(size: 32))
@@ -102,7 +106,6 @@ struct SingleRequestView: View {
                         }).buttonStyle(.plain)
                             .padding([.horizontal], 16)
                         
-
                         Spacer()
                     }.padding([.horizontal], 16)
                 }
@@ -110,7 +113,7 @@ struct SingleRequestView: View {
                 .padding([.horizontal], 256)
                 .padding([.vertical], 32)
             Spacer()
-        }
+        }.navigationTitle("Home")
     }
 }
 

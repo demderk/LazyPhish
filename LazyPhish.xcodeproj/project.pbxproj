@@ -38,6 +38,7 @@
 		30B1C5DB2BD1231400D275D4 /* MainViewVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B1C5DA2BD1231400D275D4 /* MainViewVM.swift */; };
 		30B9B9A42B9A0ABF0063ADB3 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 30B9B9A32B9A0ABF0063ADB3 /* SwiftSoup */; };
 		30B9B9A72B9A13410063ADB3 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 30B9B9A62B9A13410063ADB3 /* Alamofire */; };
+		30CE1AAB2BD58A8B001B022F /* GlobalVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CE1AAA2BD58A8B001B022F /* GlobalVM.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		30B1C5D62BD122AE00D275D4 /* SingleRequestVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleRequestVM.swift; sourceTree = "<group>"; };
 		30B1C5D82BD122F300D275D4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		30B1C5DA2BD1231400D275D4 /* MainViewVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewVM.swift; sourceTree = "<group>"; };
+		30CE1AAA2BD58A8B001B022F /* GlobalVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +218,7 @@
 				30B1C5D62BD122AE00D275D4 /* SingleRequestVM.swift */,
 				3003966D2BA7494E001B6C2C /* MultiRequestVM.swift */,
 				30B1C5DA2BD1231400D275D4 /* MainViewVM.swift */,
+				30CE1AAA2BD58A8B001B022F /* GlobalVM.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -373,6 +376,7 @@
 				30B1C5D72BD122AE00D275D4 /* SingleRequestVM.swift in Sources */,
 				30B1C5D92BD122F300D275D4 /* MainView.swift in Sources */,
 				30B1C5DB2BD1231400D275D4 /* MainViewVM.swift in Sources */,
+				30CE1AAB2BD58A8B001B022F /* GlobalVM.swift in Sources */,
 				300396702BA74B3D001B6C2C /* PhishTableEntry.swift in Sources */,
 				300396722BA74FEE001B6C2C /* PhishRequestSingle.swift in Sources */,
 				300367772B95CC1F00D3C84C /* LazyPhishApp.swift in Sources */,
