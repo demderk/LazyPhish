@@ -11,7 +11,7 @@ class MainViewVM: ObservableObject {
     @Published var selectedPage: MainSelectedPage = .single
     init() { }
     
-    private var pageHolder = MainViewPageHolder()
+    var pageHolder = MainViewPageHolder()
     
     @ViewBuilder func getPage() -> some View {
         pageHolder.getView(selected: selectedPage)

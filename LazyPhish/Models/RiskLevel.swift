@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum RiskLevel {
+enum RiskLevel: Comparable {
     case common
     case suspicious
     case danger

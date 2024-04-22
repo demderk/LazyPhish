@@ -59,4 +59,11 @@ struct PhishInfo: StrictRemote {
         self.url = try PhishInfoFormatter.validURL(url.absoluteString)
         self.remote = remote
     }
+    
+    func getMLEntry() -> MLEntry? {
+        if remote.completed {
+            return MLEntry(self)
+        }
+        return nil
+    }
 }

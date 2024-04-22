@@ -13,15 +13,15 @@ struct MainView: View {
     
     var body: some View {
         NavigationStack(path: $globalVM.navigation) {
-            SingleRequestView()
+            vm.pageHolder.single
                 .environmentObject(globalVM)
                 .navigationDestination(for: MainSelectedPage.self) { page in
                     switch page {
                     case .multi:
-                        MultiRequestView()
+                        vm.pageHolder.multi
                             .environmentObject(globalVM)
                     case .single:
-                        SingleRequestView()
+                        vm.pageHolder.single
                             .environmentObject(globalVM)
                     }
                 }

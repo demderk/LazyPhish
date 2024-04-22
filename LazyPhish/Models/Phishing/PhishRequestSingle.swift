@@ -9,7 +9,7 @@ import Foundation
 
 class PhishRequestSingle: PhishRequest {
     private(set) var phishInfo: PhishInfo
-
+    
     init(_ url: String) throws {
         phishInfo = try PhishInfo(url)
     }

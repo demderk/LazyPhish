@@ -39,6 +39,8 @@
 		30B9B9A42B9A0ABF0063ADB3 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 30B9B9A32B9A0ABF0063ADB3 /* SwiftSoup */; };
 		30B9B9A72B9A13410063ADB3 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 30B9B9A62B9A13410063ADB3 /* Alamofire */; };
 		30CE1AAB2BD58A8B001B022F /* GlobalVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CE1AAA2BD58A8B001B022F /* GlobalVM.swift */; };
+		30CE1AB02BD66CD9001B022F /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 30CE1AAF2BD66CD9001B022F /* WrappingHStack */; };
+		30CE1AB22BD6700C001B022F /* ResultTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CE1AB12BD6700C001B022F /* ResultTag.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +84,7 @@
 		30B1C5D82BD122F300D275D4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		30B1C5DA2BD1231400D275D4 /* MainViewVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewVM.swift; sourceTree = "<group>"; };
 		30CE1AAA2BD58A8B001B022F /* GlobalVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalVM.swift; sourceTree = "<group>"; };
+		30CE1AB12BD6700C001B022F /* ResultTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTag.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +96,7 @@
 				3037D15F2B9CA1B00012104E /* AlamofireImage in Frameworks */,
 				300367992B97418600D3C84C /* SwiftWhois in Frameworks */,
 				30B9B9A42B9A0ABF0063ADB3 /* SwiftSoup in Frameworks */,
+				30CE1AB02BD66CD9001B022F /* WrappingHStack in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,6 +199,7 @@
 			children = (
 				30137C432BD4108C00905B15 /* MainViewPageHolder.swift */,
 				30137C452BD410B500905B15 /* MainSelectedPage.swift */,
+				30CE1AB12BD6700C001B022F /* ResultTag.swift */,
 			);
 			path = Frontend;
 			sourceTree = "<group>";
@@ -245,6 +250,7 @@
 				30B9B9A32B9A0ABF0063ADB3 /* SwiftSoup */,
 				30B9B9A62B9A13410063ADB3 /* Alamofire */,
 				3037D15E2B9CA1B00012104E /* AlamofireImage */,
+				30CE1AAF2BD66CD9001B022F /* WrappingHStack */,
 			);
 			productName = LazyPhish;
 			productReference = 300367732B95CC1F00D3C84C /* LazyPhish.app */;
@@ -304,6 +310,7 @@
 				30B9B9A22B9A0ABF0063ADB3 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				30B9B9A52B9A101D0063ADB3 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				3037D15D2B9CA1B00012104E /* XCRemoteSwiftPackageReference "AlamofireImage" */,
+				30CE1AAE2BD66C72001B022F /* XCRemoteSwiftPackageReference "WrappingHStack" */,
 			);
 			productRefGroup = 300367742B95CC1F00D3C84C /* Products */;
 			projectDirPath = "";
@@ -374,6 +381,7 @@
 				30B1C5D52BD122A000D275D4 /* SingleRequestView.swift in Sources */,
 				3037D15A2B9B6C530012104E /* RequestError.swift in Sources */,
 				30B1C5D72BD122AE00D275D4 /* SingleRequestVM.swift in Sources */,
+				30CE1AB22BD6700C001B022F /* ResultTag.swift in Sources */,
 				30B1C5D92BD122F300D275D4 /* MainView.swift in Sources */,
 				30B1C5DB2BD1231400D275D4 /* MainViewVM.swift in Sources */,
 				30CE1AAB2BD58A8B001B022F /* GlobalVM.swift in Sources */,
@@ -689,6 +697,14 @@
 				minimumVersion = 5.9.0;
 			};
 		};
+		30CE1AAE2BD66C72001B022F /* XCRemoteSwiftPackageReference "WrappingHStack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dkk/WrappingHStack";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.11;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -716,6 +732,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 30B9B9A52B9A101D0063ADB3 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		30CE1AAF2BD66CD9001B022F /* WrappingHStack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 30CE1AAE2BD66C72001B022F /* XCRemoteSwiftPackageReference "WrappingHStack" */;
+			productName = WrappingHStack;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

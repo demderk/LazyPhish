@@ -9,6 +9,7 @@ import Foundation
 import AppKit
 
 enum RequestError: Error {
+    case requestIsEmpty
     case dateFormatError
     case ipCheckRegexError
     case yandexSQICroppingError
@@ -69,6 +70,8 @@ enum RequestError: Error {
             "Whois unknown error. Underlying: \(underlyingError)."
         case .OPRRemoteError(response: let response):
             "OPR Provider throws an error. \(response)"
+        case .requestIsEmpty:
+            "Request is empty"
         }
     }
 }
