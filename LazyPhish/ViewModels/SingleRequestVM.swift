@@ -14,19 +14,24 @@ class SingleRequestViewModel: ObservableObject {
     @Published var lastRequest: PhishInfo?
     @Published var tagList: [MetricData] = []
     
+    private var requestIsPending: Bool = false
     private var phishRequest: PhishRequestSingle?
     
     func makeRequest() {
-        if !request.isEmpty {
+        if !request.isEmpty && !requestIsPending{
             do {
-                phishRequest = try PhishRequestSingle(request)
+                requestIsPending = true
+                phishRequest = try PhishRequestSingle(request, preActions: [.makeHttp])
                 phishRequest?.refreshRemoteData { data in
                     withAnimation {
                         self.lastRequest = data
                         self.tagList = Array(data.getMetricSet()!.values.sorted(by: { $0.risk > $1.risk }))
+                        self.requestIsPending = false
                     }
                 }
             } catch {
+                // TODO: Show error on page
+                print(error.localizedDescription)
                 errorText = error.localizedDescription
             }
         }

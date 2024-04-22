@@ -14,6 +14,10 @@ class PhishRequestQueue: PhishRequest {
         phishInfo.append(contentsOf: try urlStrings.map({ try PhishInfo($0) }))
     }
     
+    init(_ urlStrings: [String], preActions: Set<FormatPreaction> ) throws {
+        phishInfo.append(contentsOf: try urlStrings.map({ try PhishInfo($0, preActions: preActions) }))
+    }
+    
     init(urls: [URL]) throws {
         phishInfo.append(contentsOf: try urls.map({ try PhishInfo(url: $0) }))
     }

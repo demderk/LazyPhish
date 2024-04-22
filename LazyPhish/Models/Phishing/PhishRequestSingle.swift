@@ -14,6 +14,10 @@ class PhishRequestSingle: PhishRequest {
         phishInfo = try PhishInfo(url)
     }
     
+    init(_ url: String, preActions: Set<FormatPreaction>) throws {
+        phishInfo = try PhishInfo(url, preActions: preActions)
+    }
+    
     func refreshRemoteData(
         onTaskComplete: ((PhishInfo) -> Void)?,
         onQueue: DispatchQueue = DispatchQueue.main

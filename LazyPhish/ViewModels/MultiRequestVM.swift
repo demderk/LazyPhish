@@ -19,7 +19,7 @@ class MultiRequestVM: ObservableObject {
             .compactMap({ $0.isEmpty ? nil : $0 })
         tableContent.removeAll()
         var id = 0
-        engine = try! PhishRequestQueue(urls)
+        engine = try! PhishRequestQueue(urls, preActions: [.makeHttp])
         engine.refreshRemoteData { [self] data in
             tableContent.append(PhishTableEntry(id: id, phishInfo: data))
             id += 1

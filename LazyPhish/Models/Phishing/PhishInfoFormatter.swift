@@ -7,6 +7,20 @@
 
 import Foundation
 
+enum FormatPreaction {
+    case makeHttps
+    case makeHttp
+    
+    func execute(_ input: String) -> String {
+        switch self {
+        case .makeHttps:
+            return PhishInfoFormatter.makeHttps(url: input)
+        case .makeHttp:
+            return PhishInfoFormatter.makeHttp(url: input)
+        }
+    }
+}
+
 final class PhishInfoFormatter {
     static let URLIPv4Regex: String =
     #"(\d{1,3}\W{0,}[.]\W{0,}\d{1,3}\W{0,}[.]\W{0,}\d{1,3}\W{0,}[.]\W{0,}\d{1,3})"#
@@ -54,6 +68,23 @@ final class PhishInfoFormatter {
         return url
     }
     
+    static func validURL(_ urlString: String, preActions: Set<FormatPreaction>) throws -> URL {
+        var input = urlString
+        for action in preActions {
+            input = action.execute(input)
+        }
+        guard input.contains("http://") || input.contains("https://") else {
+            throw RequestError.urlNotAWebRequest(url: input)
+        }
+        guard let url = URL(string: input) else {
+            throw RequestError.urlHostIsInvalid(url: input)
+        }
+        guard url.host() != nil else {
+            throw RequestError.urlHostIsBroken(url: input)
+        }
+        return url
+    }
+    
     static func getDate(_ whoisDate: String) throws -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
@@ -66,5 +97,19 @@ final class PhishInfoFormatter {
             throw RequestError.dateFormatError
         }
         return result
+    }
+    
+    static func makeHttps(url: String) -> String {
+        if url.contains("http://") || url.contains("https://") {
+            return url
+        }
+        return "https://\(url)"
+    }
+    
+    static func makeHttp(url: String) -> String {
+        if url.contains("http://") || url.contains("https://") {
+            return url
+        }
+        return "http://\(url)"
     }
 }

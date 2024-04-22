@@ -43,6 +43,9 @@ struct SingleRequestView: View {
                             .onTapGesture {
                                 isEditing = true
                             }
+                            .onSubmit {
+                                vm.makeRequest()
+                            }
                         Spacer()
                             .frame(maxWidth: 0)
                         Button(action: {
@@ -58,7 +61,7 @@ struct SingleRequestView: View {
                     .background(Color(nsColor: NSColor.controlBackgroundColor))
                     .clipShape(RoundedRectangle(cornerSize: CGSize(width: 16, height: 16)))
                     if let haveResult = vm.lastRequest {
-                        VStack() {
+                        VStack {
                             HStack {
                                 Text("Request Result")
                                     .font(.title)

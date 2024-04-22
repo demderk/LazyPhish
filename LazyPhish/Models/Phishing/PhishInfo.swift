@@ -46,6 +46,10 @@ struct PhishInfo: StrictRemote {
         url = try PhishInfoFormatter.validURL(urlString)
     }
 
+    init(_ urlString: String, preActions: Set<FormatPreaction>) throws {
+        url = try PhishInfoFormatter.validURL(urlString, preActions: preActions)
+    }
+
     init(url: URL) throws {
         self.url = try PhishInfoFormatter.validURL(url.absoluteString)
     }
