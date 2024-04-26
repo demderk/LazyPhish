@@ -29,6 +29,7 @@ enum RequestError: Error {
     case urlHostIsBroken(url: String)
     case whoisIsNil
     case whoisUnknownError(underlyingError: Error)
+    case nothingToExport
     
     var localizedDescription: String {
         switch self {
@@ -72,6 +73,8 @@ enum RequestError: Error {
             "OPR Provider throws an error. \(response)"
         case .requestIsEmpty:
             "Request is empty"
+        case .nothingToExport:
+            "x"
         }
     }
 }

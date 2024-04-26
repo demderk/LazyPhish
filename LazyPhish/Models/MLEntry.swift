@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MLEntry {
+struct MLEntry: Codable {
     
     var isIP: RiskLevel
     var haveWhois: RiskLevel
@@ -55,5 +55,19 @@ struct MLEntry {
         default:
             fatalError("x")
         }
+    }
+}
+
+extension MLEntry {
+    static func getHeaders() -> [String] {
+        ["isIP",
+         "haveWhois",
+         "creationDate",
+         "urlLength",
+         "yandexSQI",
+         "OPR",
+         "prefixCount",
+         "subDomainCount",
+        ]
     }
 }

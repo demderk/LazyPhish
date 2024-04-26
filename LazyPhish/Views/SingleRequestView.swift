@@ -79,26 +79,14 @@ struct SingleRequestView: View {
                                             .fontWeight(.bold)
                                         
                                         WrappingHStack(vm.tagList, id: \.self) { tag in
-                                            
-                                            var color: Color
-                                            
-                                            switch tag.risk {
-                                            case .common:
-                                                color = Color.green.opacity(0.35)
-                                            case .suspicious:
-                                                color = Color.yellow.opacity(0.40)
-                                            case .danger:
-                                                color = Color.red.opacity(0.45)
-                                            }
-                                            
-                                            return Text(tag.value)
+                                            Text(tag.value)
                                                 .font(.body)
                                                 .fontWeight(.semibold)
                                                 .lineLimit(1)
                                                 .fixedSize(horizontal: true, vertical: false)
                                                 .padding([.horizontal], 8)
                                                 .padding([.vertical], 4)
-                                                .background(color)
+                                                .background(tag.risk.getColor())
                                                 .clipShape(RoundedRectangle(cornerSize: CGSize(width: 16, height: 16)))
                                                 .padding([.vertical],8)
                                         }.frame(minWidth: 512)

@@ -73,6 +73,9 @@ final class PhishInfoFormatter {
         for action in preActions {
             input = action.execute(input)
         }
+        guard !input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            throw RequestError.requestIsEmpty
+        }
         guard input.contains("http://") || input.contains("https://") else {
             throw RequestError.urlNotAWebRequest(url: input)
         }
@@ -100,6 +103,9 @@ final class PhishInfoFormatter {
     }
     
     static func makeHttps(url: String) -> String {
+        guard !url.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return url
+        }
         if url.contains("http://") || url.contains("https://") {
             return url
         }
@@ -107,6 +113,9 @@ final class PhishInfoFormatter {
     }
     
     static func makeHttp(url: String) -> String {
+        guard !url.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return url
+        }
         if url.contains("http://") || url.contains("https://") {
             return url
         }

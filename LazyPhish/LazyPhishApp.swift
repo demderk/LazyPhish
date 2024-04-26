@@ -18,7 +18,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 @main
 struct LazyPhishApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-
+    
+    
     var body: some Scene {
         WindowGroup {
             MainView()

@@ -8,7 +8,7 @@
 import Foundation
 
 class PhishRequestQueue: PhishRequest {
-    var phishInfo: [PhishInfo] = []
+    private(set) var phishInfo: [PhishInfo] = []
     
     init(_ urlStrings: [String] ) throws {
         phishInfo.append(contentsOf: try urlStrings.map({ try PhishInfo($0) }))
@@ -30,13 +30,24 @@ class PhishRequestQueue: PhishRequest {
         
     }
     
-    public func refreshRemoteData(onTaskComplete: ((PhishInfo) -> Void)?) {
+    public func phishInfo(_ urlStrings: [String]) throws {
+        phishInfo.append(contentsOf: try urlStrings.map({ try PhishInfo($0) }))
+    }
+    
+    public func refreshRemoteData(
+        onRequestComplete: ((PhishInfo) -> Void)?,
+        onTaskComplete: @escaping (([PhishInfo]) -> Void),
+        onQueue: DispatchQueue = DispatchQueue.main
+    ) {
         Task {
-            _ = await refreshRemoteData(phishInfo, requestCompleted: onTaskComplete)
+            phishInfo = await refreshRemoteData(phishInfo, requestCompleted: onRequestComplete)
+            onQueue.async {
+                onTaskComplete(self.phishInfo)
+            }
         }
     }
     
-    func refreshRemoteData(
+    private func refreshRemoteData(
         _ base: [StrictRemote],
         requestCompleted: ((PhishInfo) -> Void)? = nil,
         onQueue: DispatchQueue = DispatchQueue.main

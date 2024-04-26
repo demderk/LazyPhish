@@ -90,3 +90,5 @@ fastlane/test_output
 iOSInjectionProject/
 
 LazyPhish/Authority.plist
+
+.DS_Store
