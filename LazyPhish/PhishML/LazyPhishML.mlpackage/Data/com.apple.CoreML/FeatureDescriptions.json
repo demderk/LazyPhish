@@ -1,0 +1,39 @@
+{
+  "Outputs" : {
+    "IsPhishing" : {
+      "MLFeatureShortDescription" : ""
+    },
+    "IsPhishingProbability" : {
+      "MLFeatureShortDescription" : ""
+    }
+  },
+  "Inputs" : {
+    "isIP" : {
+      "MLFeatureShortDescription" : ""
+    },
+    "prefixCount" : {
+      "MLFeatureShortDescription" : ""
+    },
+    "subDomainCount" : {
+      "MLFeatureShortDescription" : ""
+    },
+    "creationDate" : {
+      "MLFeatureShortDescription" : ""
+    },
+    "urlLength" : {
+      "MLFeatureShortDescription" : ""
+    },
+    "OPR" : {
+      "MLFeatureShortDescription" : ""
+    },
+    "yandexSQI" : {
+      "MLFeatureShortDescription" : ""
+    },
+    "haveWhois" : {
+      "MLFeatureShortDescription" : ""
+    }
+  },
+  "TrainingInputs" : {
+
+  }
+}

@@ -18,12 +18,19 @@ class PhishRequestSingle: PhishRequest {
         phishInfo = try PhishInfo(url, preActions: preActions)
     }
     
+    func processRequest() async -> PhishInfo {
+        let result = await super.refreshRemoteData(phishInfo)
+        phishInfo = result
+        return result
+    }
+    
     func refreshRemoteData(
         onTaskComplete: ((PhishInfo) -> Void)?,
         onQueue: DispatchQueue = DispatchQueue.main
     ) {
         Task {
             let result = await super.refreshRemoteData(phishInfo)
+            phishInfo = result
             onQueue.async {
                 if let onTaskComplete {
                     onTaskComplete(result)

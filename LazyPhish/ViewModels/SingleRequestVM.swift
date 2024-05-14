@@ -28,6 +28,8 @@ class SingleRequestViewModel: ObservableObject {
                         self.tagList = Array(data.getMetricSet()!.values.sorted(by: { $0.risk > $1.risk }))
                         self.requestIsPending = false
                     }
+                    let ML = PhishML()
+                    print(ML.predictPhishing(input: (self.phishRequest?.phishInfo.getMLEntry())!))
                 }
             } catch {
                 // TODO: Show error on page
@@ -35,6 +37,6 @@ class SingleRequestViewModel: ObservableObject {
                 errorText = error.localizedDescription
             }
         }
-        objectWillChange.send()
+//        objectWillChange.send()
     }
 }

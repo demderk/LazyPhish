@@ -107,9 +107,6 @@ struct MultiRequestView: View {
                         Button("Export ML Data") {
                             vm.exportCSV()
                         }
-//                        Button("Export Querry Data") {
-//                            
-//                        }
                     } label: {
                         Image(systemName: "square.and.arrow.up")
                             .padding(.horizontal, 8)

@@ -13,18 +13,30 @@ struct MainView: View {
     
     var body: some View {
         NavigationStack(path: $globalVM.navigation) {
-            vm.pageHolder.single
-                .environmentObject(globalVM)
-                .navigationDestination(for: MainSelectedPage.self) { page in
-                    switch page {
-                    case .multi:
-                        vm.pageHolder.multi
-                            .environmentObject(globalVM)
-                    case .single:
-                        vm.pageHolder.single
-                            .environmentObject(globalVM)
-                    }
-                }
+                vm.pageHolder.single
+                    .environmentObject(globalVM)
+                    .navigationDestination(for: MainSelectedPage.self) { page in
+                        switch page {
+                        case .multi:
+                            vm.pageHolder.multi
+                                .environmentObject(globalVM)
+                        case .single:
+                            vm.pageHolder.single
+                                .environmentObject(globalVM)
+                        case .server:
+                            vm.pageHolder.server
+                                .environmentObject(globalVM)
+                        }
+                        
+                        //                        Spacer()
+                        
+                    }.frame(
+                        minWidth: 0,
+                        maxWidth: .infinity,
+                        minHeight: 0,
+                        maxHeight: .infinity,
+                        alignment: .center
+                      )
         }.toolbar {
             Text("")
         }

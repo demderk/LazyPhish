@@ -23,7 +23,7 @@ struct LazyPhishApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
-                .frame(minWidth: 1000, minHeight: 600)
+                .frame(minWidth: 1100, minHeight: 600)
         }
     }
 }

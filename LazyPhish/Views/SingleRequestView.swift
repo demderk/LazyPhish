@@ -15,6 +15,9 @@ struct SingleRequestView: View {
     
     var body: some View {
         ScrollView {
+            HStack {
+                Spacer()
+            }
             VStack {
                 Spacer()
                     .frame(height: 112)
@@ -31,6 +34,7 @@ struct SingleRequestView: View {
                             .focused($isEditing)
                             .textFieldStyle(.plain)
                             .font(.title3)
+                            .lineLimit(1)
                             .padding([.leading], 24)
                             .padding([.vertical], 21)
                             .onHover(perform: { hovering in
@@ -44,6 +48,7 @@ struct SingleRequestView: View {
                                 isEditing = true
                             }
                             .onSubmit {
+                                isEditing = false
                                 vm.makeRequest()
                             }
                         Spacer()
@@ -129,7 +134,9 @@ struct SingleRequestView: View {
                                 }
                             }).buttonStyle(.plain)
                                 .padding([.horizontal], 16)
-                            Button(action: {}, label: {
+                            Button(action: {
+                                globalVM.navigation.append(MainSelectedPage.server)
+                            }, label: {
                                 VStack {
                                     Image(systemName: "rectangle.and.text.magnifyingglass")
                                         .font(.system(size: 32))

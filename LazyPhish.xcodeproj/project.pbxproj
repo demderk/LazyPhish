@@ -30,6 +30,12 @@
 		307A27032BA5BA7F00B9D14A /* PhishInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307A27022BA5BA7F00B9D14A /* PhishInfo.swift */; };
 		307A27052BA5BABC00B9D14A /* PhishInfoRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307A27042BA5BABC00B9D14A /* PhishInfoRemote.swift */; };
 		307CBC482BCC57D3004B68A8 /* PhishInfoFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307CBC472BCC57D3004B68A8 /* PhishInfoFormatter.swift */; };
+		30815DF42BF374B300A7DBAC /* Vapor in Frameworks */ = {isa = PBXBuildFile; productRef = 30815DF32BF374B300A7DBAC /* Vapor */; };
+		30815DF62BF3753D00A7DBAC /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30815DF52BF3753D00A7DBAC /* ServerView.swift */; };
+		30815DF82BF3756500A7DBAC /* ServerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30815DF72BF3756500A7DBAC /* ServerVM.swift */; };
+		30815DFB2BF37A1A00A7DBAC /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30815DFA2BF37A1A00A7DBAC /* Server.swift */; };
+		30815E002BF3B55200A7DBAC /* PhishML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30815DFF2BF3B55200A7DBAC /* PhishML.swift */; };
+		30815E022BF3B66C00A7DBAC /* LazyPhishML.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 30815E012BF3B66C00A7DBAC /* LazyPhishML.mlpackage */; };
 		30AF623C2BDABFA80004E8BF /* Authority.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30AF623B2BDABFA80004E8BF /* Authority.plist */; };
 		30AF623E2BDAC6310004E8BF /* PhishFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AF623D2BDAC6310004E8BF /* PhishFile.swift */; };
 		30AF62412BDAC9420004E8BF /* CodableCSV in Frameworks */ = {isa = PBXBuildFile; productRef = 30AF62402BDAC9420004E8BF /* CodableCSV */; };
@@ -38,7 +44,6 @@
 		30B1C5D72BD122AE00D275D4 /* SingleRequestVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B1C5D62BD122AE00D275D4 /* SingleRequestVM.swift */; };
 		30B1C5D92BD122F300D275D4 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B1C5D82BD122F300D275D4 /* MainView.swift */; };
 		30B1C5DB2BD1231400D275D4 /* MainViewVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B1C5DA2BD1231400D275D4 /* MainViewVM.swift */; };
-		30B9B9A42B9A0ABF0063ADB3 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 30B9B9A32B9A0ABF0063ADB3 /* SwiftSoup */; };
 		30B9B9A72B9A13410063ADB3 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 30B9B9A62B9A13410063ADB3 /* Alamofire */; };
 		30CE1AAB2BD58A8B001B022F /* GlobalVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CE1AAA2BD58A8B001B022F /* GlobalVM.swift */; };
 		30CE1AB02BD66CD9001B022F /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 30CE1AAF2BD66CD9001B022F /* WrappingHStack */; };
@@ -79,6 +84,11 @@
 		307A27022BA5BA7F00B9D14A /* PhishInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishInfo.swift; sourceTree = "<group>"; };
 		307A27042BA5BABC00B9D14A /* PhishInfoRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishInfoRemote.swift; sourceTree = "<group>"; };
 		307CBC472BCC57D3004B68A8 /* PhishInfoFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishInfoFormatter.swift; sourceTree = "<group>"; };
+		30815DF52BF3753D00A7DBAC /* ServerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerView.swift; sourceTree = "<group>"; };
+		30815DF72BF3756500A7DBAC /* ServerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerVM.swift; sourceTree = "<group>"; };
+		30815DFA2BF37A1A00A7DBAC /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
+		30815DFF2BF3B55200A7DBAC /* PhishML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishML.swift; sourceTree = "<group>"; };
+		30815E012BF3B66C00A7DBAC /* LazyPhishML.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = LazyPhishML.mlpackage; sourceTree = "<group>"; };
 		30AF623B2BDABFA80004E8BF /* Authority.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Authority.plist; sourceTree = "<group>"; };
 		30AF623D2BDAC6310004E8BF /* PhishFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishFile.swift; sourceTree = "<group>"; };
 		30B1C5CE2BD020E000D275D4 /* ThrowingOPRInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrowingOPRInfoList.swift; sourceTree = "<group>"; };
@@ -98,8 +108,8 @@
 				30B9B9A72B9A13410063ADB3 /* Alamofire in Frameworks */,
 				3037D15F2B9CA1B00012104E /* AlamofireImage in Frameworks */,
 				300367992B97418600D3C84C /* SwiftWhois in Frameworks */,
-				30B9B9A42B9A0ABF0063ADB3 /* SwiftSoup in Frameworks */,
 				30AF62412BDAC9420004E8BF /* CodableCSV in Frameworks */,
+				30815DF42BF374B300A7DBAC /* Vapor in Frameworks */,
 				30CE1AB02BD66CD9001B022F /* WrappingHStack in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,6 +147,7 @@
 		300367752B95CC1F00D3C84C /* LazyPhish */ = {
 			isa = PBXGroup;
 			children = (
+				30815DFC2BF3B4F100A7DBAC /* PhishML */,
 				3003966A2BA6020C001B6C2C /* Views */,
 				30B9B99F2B997F350063ADB3 /* ViewModels */,
 				3037D1552B9B6C050012104E /* Models */,
@@ -191,6 +202,7 @@
 		3003966A2BA6020C001B6C2C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				30815DF52BF3753D00A7DBAC /* ServerView.swift */,
 				30B1C5D42BD122A000D275D4 /* SingleRequestView.swift */,
 				3003966B2BA7489F001B6C2C /* MultiRequestView.swift */,
 				30B1C5D82BD122F300D275D4 /* MainView.swift */,
@@ -211,6 +223,7 @@
 		3037D1552B9B6C050012104E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				30815DF92BF37A0700A7DBAC /* Server */,
 				30137C422BD4106300905B15 /* Frontend */,
 				3003965F2BA5BC1F001B6C2C /* Phishing */,
 				3037D1562B9B6C280012104E /* MLEntry.swift */,
@@ -222,6 +235,23 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		30815DF92BF37A0700A7DBAC /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				30815DFA2BF37A1A00A7DBAC /* Server.swift */,
+			);
+			path = Server;
+			sourceTree = "<group>";
+		};
+		30815DFC2BF3B4F100A7DBAC /* PhishML */ = {
+			isa = PBXGroup;
+			children = (
+				30815E012BF3B66C00A7DBAC /* LazyPhishML.mlpackage */,
+				30815DFF2BF3B55200A7DBAC /* PhishML.swift */,
+			);
+			path = PhishML;
+			sourceTree = "<group>";
+		};
 		30B9B99F2B997F350063ADB3 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +259,7 @@
 				3003966D2BA7494E001B6C2C /* MultiRequestVM.swift */,
 				30B1C5DA2BD1231400D275D4 /* MainViewVM.swift */,
 				30CE1AAA2BD58A8B001B022F /* GlobalVM.swift */,
+				30815DF72BF3756500A7DBAC /* ServerVM.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -252,11 +283,11 @@
 			name = LazyPhish;
 			packageProductDependencies = (
 				300367982B97418600D3C84C /* SwiftWhois */,
-				30B9B9A32B9A0ABF0063ADB3 /* SwiftSoup */,
 				30B9B9A62B9A13410063ADB3 /* Alamofire */,
 				3037D15E2B9CA1B00012104E /* AlamofireImage */,
 				30CE1AAF2BD66CD9001B022F /* WrappingHStack */,
 				30AF62402BDAC9420004E8BF /* CodableCSV */,
+				30815DF32BF374B300A7DBAC /* Vapor */,
 			);
 			productName = LazyPhish;
 			productReference = 300367732B95CC1F00D3C84C /* LazyPhish.app */;
@@ -318,6 +349,7 @@
 				3037D15D2B9CA1B00012104E /* XCRemoteSwiftPackageReference "AlamofireImage" */,
 				30CE1AAE2BD66C72001B022F /* XCRemoteSwiftPackageReference "WrappingHStack" */,
 				30AF623F2BDAC9420004E8BF /* XCRemoteSwiftPackageReference "CodableCSV" */,
+				30815DF22BF374B300A7DBAC /* XCRemoteSwiftPackageReference "vapor" */,
 			);
 			productRefGroup = 300367742B95CC1F00D3C84C /* Products */;
 			projectDirPath = "";
@@ -375,6 +407,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30815DF62BF3753D00A7DBAC /* ServerView.swift in Sources */,
 				30AF623E2BDAC6310004E8BF /* PhishFile.swift in Sources */,
 				3003966C2BA7489F001B6C2C /* MultiRequestView.swift in Sources */,
 				30137C442BD4108C00905B15 /* MainViewPageHolder.swift in Sources */,
@@ -383,11 +416,13 @@
 				307CBC482BCC57D3004B68A8 /* PhishInfoFormatter.swift in Sources */,
 				307A27052BA5BABC00B9D14A /* PhishInfoRemote.swift in Sources */,
 				30B1C5CF2BD020E000D275D4 /* ThrowingOPRInfoList.swift in Sources */,
+				30815E022BF3B66C00A7DBAC /* LazyPhishML.mlpackage in Sources */,
 				307A27032BA5BA7F00B9D14A /* PhishInfo.swift in Sources */,
 				30137C462BD410B500905B15 /* MainSelectedPage.swift in Sources */,
 				3003966E2BA7494E001B6C2C /* MultiRequestVM.swift in Sources */,
 				30B1C5D52BD122A000D275D4 /* SingleRequestView.swift in Sources */,
 				3037D15A2B9B6C530012104E /* RequestError.swift in Sources */,
+				30815DFB2BF37A1A00A7DBAC /* Server.swift in Sources */,
 				30B1C5D72BD122AE00D275D4 /* SingleRequestVM.swift in Sources */,
 				30CE1AB22BD6700C001B022F /* ResultTag.swift in Sources */,
 				30B1C5D92BD122F300D275D4 /* MainView.swift in Sources */,
@@ -400,6 +435,8 @@
 				3037D1572B9B6C280012104E /* MLEntry.swift in Sources */,
 				300367882B95CE5B00D3C84C /* PhishRequest.swift in Sources */,
 				300396612BA5BCD0001B6C2C /* MetricStatus.swift in Sources */,
+				30815DF82BF3756500A7DBAC /* ServerVM.swift in Sources */,
+				30815E002BF3B55200A7DBAC /* PhishML.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,7 +513,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -534,7 +571,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -691,6 +728,14 @@
 				minimumVersion = 4.3.0;
 			};
 		};
+		30815DF22BF374B300A7DBAC /* XCRemoteSwiftPackageReference "vapor" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vapor/vapor";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.99.3;
+			};
+		};
 		30AF623F2BDAC9420004E8BF /* XCRemoteSwiftPackageReference "CodableCSV" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dehesa/CodableCSV";
@@ -741,15 +786,15 @@
 			package = 3037D15D2B9CA1B00012104E /* XCRemoteSwiftPackageReference "AlamofireImage" */;
 			productName = AlamofireImage;
 		};
+		30815DF32BF374B300A7DBAC /* Vapor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 30815DF22BF374B300A7DBAC /* XCRemoteSwiftPackageReference "vapor" */;
+			productName = Vapor;
+		};
 		30AF62402BDAC9420004E8BF /* CodableCSV */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 30AF623F2BDAC9420004E8BF /* XCRemoteSwiftPackageReference "CodableCSV" */;
 			productName = CodableCSV;
-		};
-		30B9B9A32B9A0ABF0063ADB3 /* SwiftSoup */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 30B9B9A22B9A0ABF0063ADB3 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
-			productName = SwiftSoup;
 		};
 		30B9B9A62B9A13410063ADB3 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;

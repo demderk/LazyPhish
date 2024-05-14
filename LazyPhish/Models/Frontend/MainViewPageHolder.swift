@@ -11,6 +11,7 @@ import SwiftUI
 class MainViewPageHolder: ObservableObject {
     var multi: some View = MultiRequestView()
     var single: some View = SingleRequestView()
+    var server: some View = ServerView()
     
     @ViewBuilder func getView(selected: MainSelectedPage) -> some View {
         switch selected {
@@ -18,6 +19,8 @@ class MainViewPageHolder: ObservableObject {
             single
         case .multi:
             multi
+        case .server:
+            server
         }
     }
 }
