@@ -27,7 +27,7 @@ struct WhoisInfo {
     public var registrant: String?
     
     /// The creation date
-    public var creationDate: String?
+    public var creationDate: Date?
     
     /// The expiration date
     public var expirationDate: String?
@@ -43,20 +43,6 @@ struct WhoisInfo {
     
     /// The raw Whois data
     public var rawData: String?
-}
-
-extension Logger {
-    public static var subsystem = Bundle.main.bundleIdentifier!
-    
-    public static var whoisLogger = Logger(
-        subsystem: subsystem,
-        category: "whoisRequest")
-}
-
-enum WhoisConnectionError: Error {
-    case responseIsNil
-    case badResponse
-    case timeout
 }
 
 class WhoisConnection {
@@ -87,11 +73,11 @@ class WhoisConnection {
                     return
                 }
                 guard let recievedData = content else {
-                    continuation.resume(throwing: WhoisConnectionError.responseIsNil)
+                    continuation.resume(throwing: WhoisError.responseIsNil)
                     return
                 }
                 guard let stringResponse = String(data: recievedData, encoding: .utf8) else {
-                    continuation.resume(throwing: WhoisConnectionError.badResponse)
+                    continuation.resume(throwing: WhoisError.badResponse)
                     return
                 }
                 continuation.resume(returning: stringResponse)
@@ -120,7 +106,6 @@ class WhoisConnection {
     }
     
     func makeRecursiveRequest(host: String) async throws -> String {
-        //        try await Task.sleep(for: .seconds(0.4))
         let response = try await makeRequest(host: host)
         let responseArray = buildResponseArray(responseText: response)
         if let refer = responseArray.first(where: { $0.key == "refer" }) {
@@ -162,7 +147,7 @@ class WhoisConnection {
                 "registration time", 
                 "登録年月日",
                 "domain record activated":
-                if whoisData.creationDate == nil { whoisData.creationDate = value }
+                if whoisData.creationDate == nil { whoisData.creationDate = try? getDate(value) }
             case "expiration date",
                 "expires on",
                 "registry expiry date",
@@ -203,14 +188,27 @@ class WhoisConnection {
                 recursiveTask.cancel()
             }
         }
-        let response = try await recursiveTask.value
         switch await recursiveTask.result {
-        case .success(let string):
+        case .success(let response):
             return parseWhoisResponse(response)
         case .failure(let x):
             throw x
         }
         
+    }
+    
+    private func getDate(_ whoisDate: String) throws -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "dd-MMM-yyyy"
+        var res = dateFormatter.date(from: whoisDate)
+        if res == nil {
+            res = try? Date(whoisDate, strategy: .iso8601)
+        }
+        guard let result = res else {
+            throw WhoisError.dateFormatError
+        }
+        return result
     }
     
     deinit {

@@ -70,16 +70,20 @@ class PhishRequest {
             let whois = try await connection.lookup(host: remoteObject.host)
             result.remote.whois = .success(value: whois)
             return result
-        } catch {
-            result.remote.whois = .failed(error: .whoisUnknownError(underlyingError: error))
+        } catch let error as WhoisError {
+            result.remote.whois = .failed(error: error)
             return result
         }
-//        let whoisConnection = WhoisConnection()
-//        let x = try? await whoisConnection.lookup(host: "google.com")
-//        print(x?.creationDate)
-////        print(recieved ?? "nil")
-//        result.remote.whois = .failed(error: .whoisIsNil)
-//        return result
+        catch {
+            if let nserr = POSIXErrorCode(rawValue: Int32((error as NSError).code)) {
+                if case .ECANCELED = nserr {
+                    result.remote.whois = .failed(error: WhoisError.timeout)
+                    return result
+                }
+            }
+            result.remote.whois = .failed(error: WhoisError.unknown(error))
+            return result
+        }
     }
         
     internal func processYandexSQI(
@@ -98,7 +102,7 @@ class PhishRequest {
                 guard let image = input.cropping(to: CGRect(x: 30, y: 0, width: 58, height: 31))?
                     .increaseContrast()
                 else {
-                    remote.remote.yandexSQI = .failed(error: RequestError.yandexSQICroppingError)
+                    remote.remote.yandexSQI = .failed(error: YandexSQIError.yandexSQICroppingError)
                     return remote
                 }
                 let vision = VNImageRequestHandler(cgImage: image)
@@ -119,7 +123,7 @@ class PhishRequest {
                         }
                     }
                 } catch {
-                    remote.remote.yandexSQI = .failed(error: .yandexSQIVisionPerformError(error))
+                    remote.remote.yandexSQI = .failed(error: YandexSQIError.yandexSQIVisionPerformError(error))
                     return remote
                 }
                 
@@ -139,13 +143,14 @@ class PhishRequest {
                         }
                     }
                 } catch {
-                    remote.remote.yandexSQI = .failed(error: .yandexSQIVisionPerformError(error))
+                    remote.remote.yandexSQI = .failed(error: YandexSQIError.yandexSQIVisionPerformError(error))
                     return remote
                 }
                 
                 guard let output = recognized else {
-                    remote.remote.yandexSQI = .failed(error: RequestError.yandexSQIVisionNotRecognized(
-                        image: NSImage(cgImage: image, size: .zero)))
+                    remote.remote.yandexSQI = .failed(
+                        error: YandexSQIError.yandexSQIVisionNotRecognized(
+                            image: NSImage(cgImage: image, size: .zero)))
                     return remote
                 }
                 
@@ -154,15 +159,15 @@ class PhishRequest {
                     result.remote.yandexSQI = .success(value: sqi)
                     return result
                 } else {
-                    remote.remote.yandexSQI = .failed(error: RequestError.yandexSQIVisionNotRecognized(
+                    remote.remote.yandexSQI = .failed(error: YandexSQIError.yandexSQIVisionNotRecognized(
                         image: NSImage(cgImage: image, size: .zero)))
                     return remote
                 }
             }
-            remote.remote.yandexSQI = .failed(error: RequestError.yandexSQIVisionNotRecognizedUnknown)
+            remote.remote.yandexSQI = .failed(error: YandexSQIError.yandexSQIVisionNotRecognizedUnknown)
             return remote
         case .failure(let failure):
-            remote.remote.yandexSQI = .failed(error: RequestError.yandexSQIRequestError(parent: failure))
+            remote.remote.yandexSQI = .failed(error: YandexSQIError.yandexSQIRequestError(parent: failure))
             return remote
         }
     }
@@ -178,7 +183,7 @@ class PhishRequest {
                 }
             }
         }
-        throw RequestError.authorityAccessError
+        throw RequestCriticalError.authorityAccessError
     }
     
     internal func processOPR(_ remoteObject: StrictRemote) async -> StrictRemote {
@@ -217,7 +222,7 @@ class PhishRequest {
         guard remoteObjects.count <= 100 else {
             for item in remoteObjects {
                 var temp = item
-                temp.remote.OPR = .failed(error: .OPRSingleRequestCountExceeded)
+                temp.remote.OPR = .failed(error: OPRError.singleRequestCountExceeded)
                 result.append(temp)
             }
             return result
@@ -225,7 +230,7 @@ class PhishRequest {
         guard let apiKey = try? getOPRKey() else {
             for item in remoteObjects {
                 var temp = item
-                temp.remote.OPR = .failed(error: .OPRApiKeyUnreachable)
+                temp.remote.OPR = .failed(error: OPRError.apiKeyUnreachable)
                 result.append(temp)
             }
             return result
@@ -261,7 +266,7 @@ class PhishRequest {
                     result.append(found)
                 } else {
                     found.remote.OPR = .failed(
-                        error: .OPRRemoteError(response: "[\(item.statusCode)] \(item.error)"))
+                        error: OPRError.remoteError(response: "[\(item.statusCode)] \(item.error)"))
                     result.append(found)
                 }
             }
@@ -269,11 +274,9 @@ class PhishRequest {
         case .failure(let error):
             for item in remoteObjects {
                 var temp = item
-                print("---")
-                temp.remote.OPR = .failed(error: .OPRRequestError(underlyingError: error))
+                temp.remote.OPR = .failed(error: OPRError.requestError(underlyingError: error))
                 result.append(temp)
             }
-            print(error)
             return result
         }
     }

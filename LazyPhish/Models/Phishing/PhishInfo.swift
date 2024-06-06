@@ -28,9 +28,7 @@ struct PhishInfo: StrictRemote {
     var OPR: OPRInfo? { remote.OPR.value }
 
     var isIP: Bool { PhishInfoFormatter.getURLIPMode(url) }
-    var creationDate: Date? { whois?.creationDate != nil
-        ? try? PhishInfoFormatter.getDate(whois!.creationDate!)
-        : nil }
+    var creationDate: Date? { whois?.creationDate }
     var OPRRank: Int? { OPR?.rank != nil ? Int((OPR?.rank)!) : nil }
     var OPRGrade: Decimal? { OPR?.pageRankDecimal }
     var host: String { url.host()! } // 100% non-nil value is excepted

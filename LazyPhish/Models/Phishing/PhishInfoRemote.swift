@@ -9,23 +9,47 @@ import Foundation
 import SwiftWhois
 import os
 
-extension Logger {
-    static let requestErrors = Logger(
-        subsystem: Bundle.main.bundleIdentifier!,
-        category: String(describing: "Request Error")
-    )
+enum RemoteStatus {
+    case planned
+    case completedWithErrors
+    case completed
+    case failed
 }
 
 struct PhishInfoRemote {
     var whois: MetricStatus<WhoisInfo> = .planned { 
         didSet {
             if case .failed(let error) = whois {
-                Logger.requestErrors.error("PhishRemoteError: \(error.localizedDescription)")
+                if error.isCritical {
+                    Logger.whoisRequestLogger.warning("[WHOIS] [WARNING] \(error.localizedDescription)")
+                } else {
+                    Logger.whoisRequestLogger.info("[WHOIS] [INFO] \(error.localizedDescription)")
+                }
             }
         }
     }
-    var yandexSQI: MetricStatus<Int> = .planned
-    var OPR: MetricStatus<OPRInfo> = .planned
+    var yandexSQI: MetricStatus<Int> = .planned {
+        didSet {
+            if case .failed(let error) = yandexSQI {
+                if error.isCritical {
+                    Logger.yandexSQIRequestLogger.warning("[YandexSQI] [WARNING] \(error.localizedDescription)")
+                } else {
+                    Logger.yandexSQIRequestLogger.trace("[YandexSQI] [INFO] \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    var OPR: MetricStatus<OPRInfo> = .planned {
+        didSet {
+            if case .failed(let error) = OPR {
+                if error.isCritical {
+                    Logger.OPRRequestLogger.warning("[OPR] [WARNING] \(error.localizedDescription)")
+                } else {
+                    Logger.OPRRequestLogger.info("[OPR] [INFO] \(error.localizedDescription)")
+                }
+            }
+        }
+    }
     
     var hasErrors: Bool {
         self.whois.error != nil ||
@@ -44,6 +68,23 @@ struct PhishInfoRemote {
             return false
         }
         return true
+    }
+    
+    var status: RemoteStatus {
+        var current: RemoteStatus = .planned
+        if completed {
+            current = .completed
+            if let critical = whois.error {
+                current = critical.isCritical ? .failed : .completedWithErrors
+            }
+            if let critical = yandexSQI.error {
+                current = critical.isCritical ? .failed : .completedWithErrors
+            }
+            if let critical = OPR.error {
+                current = critical.isCritical ? .failed : .completedWithErrors
+            }
+        }
+        return current
     }
     
     mutating func forceAppend(remote: PhishInfoRemote) {

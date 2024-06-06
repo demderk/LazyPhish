@@ -65,7 +65,7 @@ extension PhishInfo {
                 metrics[i] = MetricData(risk: risk, value: text)
             case .creationDate:
                 let risk = mlModel.getRisk(entry: i)
-                let text = self.whois?.creationDate ?? "Creation data unavailable"
+                let text = self.whois?.creationDate?.description ?? "Creation data unavailable"
                 metrics[i] = MetricData(risk: risk, value: text)
             case .urlLength:
                 let risk = mlModel.getRisk(entry: i)

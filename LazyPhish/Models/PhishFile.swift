@@ -25,7 +25,7 @@ struct PhishFile: FileDocument {
     
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         guard !entries.isEmpty else {
-            throw RequestError.nothingToExport
+            throw FileError.nothingToExport
         }
         let encoder = CSVEncoder { $0.headers = MLEntry.getHeaders() }
         let encodedData = try encoder.encode(entries)

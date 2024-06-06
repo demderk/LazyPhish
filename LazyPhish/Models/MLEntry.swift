@@ -22,7 +22,19 @@ struct MLEntry: Codable {
         isIP = phishInfo.isIP ? .danger : .common
         haveWhois = phishInfo.whois == nil ? .danger : .common
         // FIXME: Creation date
-        creationDate = .common
+
+        creationDate = .danger
+        
+        if let date = phishInfo.creationDate {
+            if date.distance(to: .now) <= 60*60*24*180 {
+                creationDate = .danger
+            } else if date.distance(to: .now) <= 60*60*24*365 {
+                creationDate = .suspicious
+            } else {
+                creationDate = .common
+            }
+        }
+        
         switch phishInfo {
         case let phish where phish.urlLength < 54:
             urlLength = .common
