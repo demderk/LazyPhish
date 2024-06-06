@@ -48,6 +48,7 @@
 		30CE1AAB2BD58A8B001B022F /* GlobalVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CE1AAA2BD58A8B001B022F /* GlobalVM.swift */; };
 		30CE1AB02BD66CD9001B022F /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 30CE1AAF2BD66CD9001B022F /* WrappingHStack */; };
 		30CE1AB22BD6700C001B022F /* ResultTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CE1AB12BD6700C001B022F /* ResultTag.swift */; };
+		30E724A82C0F7FD20082ED54 /* WhoisConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E724A72C0F7FD20082ED54 /* WhoisConnection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,7 @@
 		30B1C5DA2BD1231400D275D4 /* MainViewVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewVM.swift; sourceTree = "<group>"; };
 		30CE1AAA2BD58A8B001B022F /* GlobalVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalVM.swift; sourceTree = "<group>"; };
 		30CE1AB12BD6700C001B022F /* ResultTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTag.swift; sourceTree = "<group>"; };
+		30E724A72C0F7FD20082ED54 /* WhoisConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoisConnection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,6 +233,7 @@
 				30B1C5CE2BD020E000D275D4 /* ThrowingOPRInfoList.swift */,
 				3003966F2BA74B3D001B6C2C /* PhishTableEntry.swift */,
 				30AF623D2BDAC6310004E8BF /* PhishFile.swift */,
+				30E724A72C0F7FD20082ED54 /* WhoisConnection.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -413,6 +416,7 @@
 				30137C442BD4108C00905B15 /* MainViewPageHolder.swift in Sources */,
 				300396632BA5BD00001B6C2C /* RiskLevel.swift in Sources */,
 				3037D15C2B9B6CA00012104E /* OPRInfo.swift in Sources */,
+				30E724A82C0F7FD20082ED54 /* WhoisConnection.swift in Sources */,
 				307CBC482BCC57D3004B68A8 /* PhishInfoFormatter.swift in Sources */,
 				307A27052BA5BABC00B9D14A /* PhishInfoRemote.swift in Sources */,
 				30B1C5CF2BD020E000D275D4 /* ThrowingOPRInfoList.swift in Sources */,

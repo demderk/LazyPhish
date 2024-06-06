@@ -26,7 +26,6 @@ struct PhishingInfo: Content {
     var host: String
 }
 
-
 class Server {
     private var app: Application?
     
@@ -51,7 +50,7 @@ class Server {
         }
         
         server.get("phishing") { req async throws in
-//            Server.log.trace("Incoming connection on Hello")
+            //            Server.log.trace("Incoming connection on Hello")
             if let body = try? req.content.decode(PhishingInfo.self),
                let request = try? PhishRequestSingle(body.host),
                let mlEntry = await request.processRequest().getMLEntry() 

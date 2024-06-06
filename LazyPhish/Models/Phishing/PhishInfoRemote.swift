@@ -7,9 +7,23 @@
 
 import Foundation
 import SwiftWhois
+import os
+
+extension Logger {
+    static let requestErrors = Logger(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: "Request Error")
+    )
+}
 
 struct PhishInfoRemote {
-    var whois: MetricStatus<WhoisData> = .planned
+    var whois: MetricStatus<WhoisInfo> = .planned { 
+        didSet {
+            if case .failed(let error) = whois {
+                Logger.requestErrors.error("PhishRemoteError: \(error.localizedDescription)")
+            }
+        }
+    }
     var yandexSQI: MetricStatus<Int> = .planned
     var OPR: MetricStatus<OPRInfo> = .planned
     

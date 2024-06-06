@@ -67,7 +67,6 @@ extension MLEntry {
          "yandexSQI",
          "OPR",
          "prefixCount",
-         "subDomainCount",
-        ]
+         "subDomainCount"]
     }
 }

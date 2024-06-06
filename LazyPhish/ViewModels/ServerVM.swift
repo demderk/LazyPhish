@@ -8,7 +8,7 @@
 import Foundation
 import Vapor
 
-class ServerVM : ObservableObject {
+class ServerVM: ObservableObject {
     let server = Server()
     
     func createServer() {

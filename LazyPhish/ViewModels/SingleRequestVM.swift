@@ -18,7 +18,7 @@ class SingleRequestViewModel: ObservableObject {
     private var phishRequest: PhishRequestSingle?
     
     func makeRequest() {
-        if !request.isEmpty && !requestIsPending{
+        if !request.isEmpty && !requestIsPending {
             do {
                 requestIsPending = true
                 phishRequest = try PhishRequestSingle(request, preActions: [.makeHttp])
@@ -28,8 +28,8 @@ class SingleRequestViewModel: ObservableObject {
                         self.tagList = Array(data.getMetricSet()!.values.sorted(by: { $0.risk > $1.risk }))
                         self.requestIsPending = false
                     }
-                    let ML = PhishML()
-                    print(ML.predictPhishing(input: (self.phishRequest?.phishInfo.getMLEntry())!))
+                    let predictML = PhishML()
+                    print(predictML.predictPhishing(input: (self.phishRequest?.phishInfo.getMLEntry())!))
                 }
             } catch {
                 // TODO: Show error on page

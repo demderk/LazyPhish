@@ -17,4 +17,3 @@ class MainViewVM: ObservableObject {
         pageHolder.getView(selected: selectedPage)
     }
 }
-

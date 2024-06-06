@@ -31,9 +31,7 @@ extension Array {
 }
 
 class PhishRequest {
-    
-    private let whoisMutex: NSLock = NSLock()
-    
+        
     public func refreshRemoteData(_ base: StrictRemote) async -> PhishInfo {
         await refreshRemoteData(base, collectMetrics: [.yandexSQI, .OPR, .whois])
     }
@@ -68,16 +66,20 @@ class PhishRequest {
     internal func processWhois(_ remoteObject: StrictRemote) async -> StrictRemote {
         var result = remoteObject
         do {
-            if let whois = try await SwiftWhois.lookup(domain: remoteObject.host, server: "whois.iana.org") {
-                result.remote.whois = .success(value: whois)
-                return result
-            }
-            result.remote.whois = .failed(error: .whoisIsNil)
+            let connection = WhoisConnection()
+            let whois = try await connection.lookup(host: remoteObject.host)
+            result.remote.whois = .success(value: whois)
             return result
         } catch {
             result.remote.whois = .failed(error: .whoisUnknownError(underlyingError: error))
             return result
         }
+//        let whoisConnection = WhoisConnection()
+//        let x = try? await whoisConnection.lookup(host: "google.com")
+//        print(x?.creationDate)
+////        print(recieved ?? "nil")
+//        result.remote.whois = .failed(error: .whoisIsNil)
+//        return result
     }
         
     internal func processYandexSQI(

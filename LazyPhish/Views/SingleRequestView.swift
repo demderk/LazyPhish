@@ -92,8 +92,13 @@ struct SingleRequestView: View {
                                                 .padding([.horizontal], 8)
                                                 .padding([.vertical], 4)
                                                 .background(tag.risk.getColor())
-                                                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 16, height: 16)))
-                                                .padding([.vertical],8)
+                                                .clipShape(
+                                                    RoundedRectangle(
+                                                        cornerSize:
+                                                            CGSize(
+                                                                width: 16,
+                                                                height: 16)))
+                                                .padding([.vertical], 8)
                                         }.frame(minWidth: 512)
                                     }.padding(16)
                                     //                                Spacer()
@@ -103,7 +108,7 @@ struct SingleRequestView: View {
                             .clipShape(RoundedRectangle(cornerSize: CGSize(width: 16, height: 16)))
                         }
                     }
-                    VStack() {
+                    VStack {
                         HStack {
                             Text("Instruments")
                                 .font(.title)
@@ -126,8 +131,16 @@ struct SingleRequestView: View {
                                         .padding([.leading], 9)
                                         .padding([.trailing], 8)
                                         .frame(width: 64, height: 68)
-                                        .background(Color(nsColor: NSColor.systemBlue.withAlphaComponent(0.08)))
-                                        .clipShape(RoundedRectangle(cornerSize: CGSize(width: 16, height: 16)))
+                                        .background(
+                                            Color(
+                                                nsColor:
+                                                    NSColor.systemBlue.withAlphaComponent(0.08)))
+                                        .clipShape(
+                                            RoundedRectangle(
+                                                cornerSize:
+                                                    CGSize(
+                                                        width: 16,
+                                                        height: 16)))
                                     Text("Make Querry")
                                         .padding([.top], 1)
                                         .offset(CGSize(width: 2, height: 0))
@@ -147,8 +160,14 @@ struct SingleRequestView: View {
                                         .padding([.leading], 9)
                                         .padding([.trailing], 8)
                                         .frame(width: 64, height: 72)
-                                        .background(Color(nsColor: NSColor.systemBlue.withAlphaComponent(0.08)))
-                                        .clipShape(RoundedRectangle(cornerSize: CGSize(width: 16, height: 16)))
+                                        .background(
+                                            Color(
+                                                nsColor: NSColor.systemBlue.withAlphaComponent(0.08)))
+                                        .clipShape(
+                                            RoundedRectangle(
+                                                cornerSize:
+                                                    CGSize(width: 16,
+                                                           height: 16)))
                                     Text("Onlooker")
                                         .padding([.top], 1)
                                         .offset(CGSize(width: 2, height: 0))

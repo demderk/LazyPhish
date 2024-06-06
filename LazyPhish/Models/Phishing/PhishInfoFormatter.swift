@@ -91,7 +91,7 @@ final class PhishInfoFormatter {
     static func getDate(_ whoisDate: String) throws -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.dateFormat = "dd-MMM-yyyy"
         var res = dateFormatter.date(from: whoisDate)
         if res == nil {
             res = try? Date(whoisDate, strategy: .iso8601)

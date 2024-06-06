@@ -23,7 +23,7 @@ struct PhishInfo: StrictRemote {
 
     var remote = PhishInfoRemote()
 
-    var whois: WhoisData? { remote.whois.value ?? nil }
+    var whois: WhoisInfo? { remote.whois.value ?? nil }
     var yandexSQI: Int? { remote.yandexSQI.value }
     var OPR: OPRInfo? { remote.OPR.value }
 

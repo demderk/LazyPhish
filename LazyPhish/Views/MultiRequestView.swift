@@ -88,9 +88,11 @@ struct MultiRequestView: View {
                 }
             }
         }.navigationTitle("Request Querry")
-            .fileExporter(isPresented: $vm.CSVExportIsPresented, document: vm.resultingDocument, contentType: .commaSeparatedText, defaultFilename: "PhishList") { r in
-                print(r)
-            }
+            .fileExporter(
+                isPresented: $vm.CSVExportIsPresented,
+                document: vm.resultingDocument,
+                contentType: .commaSeparatedText,
+                defaultFilename: "PhishList") {_ in}
             .toolbar {
                 ToolbarItem(placement: .navigation) {
                         Button {
@@ -101,6 +103,7 @@ struct MultiRequestView: View {
                         }.padding(.trailing, 8)
                         .disabled(vm.bussy)
                         .help("Execute Querry")
+                        .keyboardShortcut(.return)
                 }
                 ToolbarItem(placement: .primaryAction) {
                     Menu {
@@ -113,8 +116,6 @@ struct MultiRequestView: View {
                     }
                     .disabled(!vm.readyForExport)
                     .help("Export as CSV")
-                        
-                    
                 }
             }
     }

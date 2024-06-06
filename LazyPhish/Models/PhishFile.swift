@@ -20,9 +20,7 @@ struct PhishFile: FileDocument {
     }
     
     init(configuration: ReadConfiguration) throws {
-        if let data = configuration.file.regularFileContents {
-//            text = String(decoding: data, as: UTF8.self)
-        }
+
     }
     
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
@@ -34,6 +32,4 @@ struct PhishFile: FileDocument {
         print(String(decoding: encodedData, as: UTF8.self))
         return FileWrapper(regularFileWithContents: encodedData)
     }
-    
-    
 }
