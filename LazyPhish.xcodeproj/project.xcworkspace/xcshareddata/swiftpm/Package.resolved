@@ -1,5 +1,5 @@
 {
-  "originHash" : "5bec7bc79f33a3d1c7fd0e417654c99808051a3648993378356714dff1632f9d",
+  "originHash" : "c735686e436e9c07342f81e607344d997c6129c074d5a1dc64e6f77f2edfaf70",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -206,15 +206,6 @@
       "state" : {
         "revision" : "1d39e56d364cba79ce43b341f9661b534cccb18d",
         "version" : "2.7.1"
-      }
-    },
-    {
-      "identity" : "swiftwhois",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/isaced/SwiftWhois.git",
-      "state" : {
-        "revision" : "3d1a55a20fcd39d98773520e4a72dd202f062eea",
-        "version" : "0.0.2"
       }
     },
     {

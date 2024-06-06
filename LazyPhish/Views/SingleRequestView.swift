@@ -7,6 +7,7 @@
 
 import SwiftUI
 import WrappingHStack
+import AppKit
 
 struct SingleRequestView: View {
     @ObservedObject var vm = SingleRequestViewModel()
@@ -22,11 +23,19 @@ struct SingleRequestView: View {
                 Spacer()
                     .frame(height: 112)
                 VStack {
-                    Text("LazyPhish")
-                        .font(.system(size: 48, weight: .heavy, design: .default))
-                        .padding([.bottom], 2)
-                    Text("Phishing Security. Evolved.")
-                        .font(.title2)
+//                    Image("logo")
+//                        .resizable()
+//                        .frame(
+//                            width: 80,
+//                            height: 80)
+//                    Spacer().frame(width: 16)
+                    VStack {
+                        Text("LazyPhish")
+                            .font(.system(size: 48, weight: .heavy, design: .default))
+                            .padding([.bottom], 2)
+                        Text("Phishing Security. Evolved.")
+                            .font(.title2)
+                    }
                 }
                 VStack {
                     HStack {
@@ -151,7 +160,7 @@ struct SingleRequestView: View {
                                 globalVM.navigation.append(MainSelectedPage.server)
                             }, label: {
                                 VStack {
-                                    Image(systemName: "rectangle.and.text.magnifyingglass")
+                                    Image(systemName: "antenna.radiowaves.left.and.right")
                                         .font(.system(size: 32))
                                         .fontWeight(.semibold)
                                         .foregroundStyle(.blue)
@@ -168,7 +177,7 @@ struct SingleRequestView: View {
                                                 cornerSize:
                                                     CGSize(width: 16,
                                                            height: 16)))
-                                    Text("Onlooker")
+                                    Text("Reflector")
                                         .padding([.top], 1)
                                         .offset(CGSize(width: 2, height: 0))
                                 }
@@ -179,7 +188,7 @@ struct SingleRequestView: View {
                         }.padding([.horizontal], 16)
                     }
                 }.frame(maxWidth: 640)
-                    .padding([.horizontal], 256)
+                    .padding([.horizontal], 64)
                     .padding([.vertical], 32)
                 Spacer()
             }.navigationTitle("Home")
