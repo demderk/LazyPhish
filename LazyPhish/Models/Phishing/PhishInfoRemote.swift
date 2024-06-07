@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftWhois
 import os
 
 enum RemoteStatus {

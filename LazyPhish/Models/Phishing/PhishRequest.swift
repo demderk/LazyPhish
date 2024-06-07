@@ -5,7 +5,6 @@
 //  Created by Roman Zheglov on 04.03.2024.
 //
 import Foundation
-import SwiftWhois
 import Alamofire
 import RegexBuilder
 import Vision

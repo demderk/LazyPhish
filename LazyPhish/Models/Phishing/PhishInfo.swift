@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftWhois
 
 // guarantees of a mandatory host
 protocol StrictURL {
