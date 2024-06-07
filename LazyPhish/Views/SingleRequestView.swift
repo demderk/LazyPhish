@@ -150,7 +150,7 @@ struct SingleRequestView: View {
                                                     CGSize(
                                                         width: 16,
                                                         height: 16)))
-                                    Text("Make Querry")
+                                    Text("Queue Processor")
                                         .padding([.top], 1)
                                         .offset(CGSize(width: 2, height: 0))
                                 }

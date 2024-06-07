@@ -13,6 +13,7 @@ enum RemoteStatus {
     case completedWithErrors
     case completed
     case failed
+    case canceled
 }
 
 struct PhishInfoRemote {

@@ -77,13 +77,13 @@ final class PhishInfoFormatter {
             throw ParserError.requestIsEmpty
         }
         guard input.contains("http://") || input.contains("https://") else {
-            throw ParserError.urlNotAWebRequest(url: input)
+            throw ParserError.urlNotAWebRequest(url: urlString)
         }
         guard let url = URL(string: input) else {
-            throw ParserError.urlHostIsInvalid(url: input)
+            throw ParserError.urlHostIsInvalid(url: urlString)
         }
         guard url.host() != nil else {
-            throw ParserError.urlHostIsBroken(url: input)
+            throw ParserError.urlHostIsBroken(url: urlString)
         }
         
         return url

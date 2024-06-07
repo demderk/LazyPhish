@@ -14,6 +14,14 @@ class PhishRequestQueue: PhishRequest {
         phishInfo.append(contentsOf: try urlStrings.map({ try PhishInfo($0) }))
     }
     
+    init(_ urlStrings: [Int: String], preActions: Set<FormatPreaction> ) throws {
+        phishInfo.append(contentsOf: try urlStrings.map({ key, value in
+            var item = try PhishInfo(value, preActions: preActions)
+            item.requestID = key
+            return item
+        }))
+    }
+    
     init(_ urlStrings: [String], preActions: Set<FormatPreaction> ) throws {
         phishInfo.append(contentsOf: try urlStrings.map({ try PhishInfo($0, preActions: preActions) }))
     }
@@ -51,7 +59,8 @@ class PhishRequestQueue: PhishRequest {
         _ base: [StrictRemote],
         requestCompleted: ((PhishInfo) -> Void)? = nil,
         onQueue: DispatchQueue = DispatchQueue.main
-    ) async -> [PhishInfo] {
+    ) async -> [PhishInfo] 
+    {
         var remote = base
         remote = await processOPR(remoteObjects: remote)
         

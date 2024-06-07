@@ -10,84 +10,103 @@ import SwiftUI
 struct MultiRequestView: View {
     @ObservedObject var vm = MultiRequestVM()
     @State var showExport = false
-        
+    @State var sortingTable = [KeyPathComparator(\PhishInfo.requestID, order: .forward)]
+    
+    @ViewBuilder
     var body: some View {
-        VStack {
-            HSplitView {
+        HSplitView {
+            VStack {
+                HStack {
+                    Spacer()
+                    Text("Request Body")
+                        .font(.callout)
+                        .padding(6)
+                        .lineLimit(1)
+                    Spacer()
+                }.background(.background)
+                Spacer().frame(height: 0)
+                Divider()
+                Spacer().frame(height: 0)
                 TextEditor(text: $vm.requestText)
                     .font(.body)
-                Table(of: PhishTableEntry.self) {
-                    TableColumn("ID") { type in
-                        Text(type.id.formatted())
-                    }
-                    TableColumn("Url") { type in
-                        Text(type.phishInfo.url.formatted())
-                    }
-                    TableColumn("yandexSQI") { type in
+                    .lineSpacing(5)
+                    .padding(.top,8)
+                    .padding(.horizontal,4)
+                    .background(.background)
+            }.frame(minWidth: 64)
+            HStack {
+                Table(of: PhishInfo.self, sortOrder: $sortingTable) {
+                    TableColumn("ID", value: \.requestID!) { type in
+                        Text(type.requestID?.description ?? "Error")
+                    }.width(min: 32, ideal: 32)
+                    TableColumn("Url", value: \.host) { type in
+                        Text(type.url.formatted())
+                    }.width(min: 144, ideal: 192)
+                    TableColumn("yandexSQI", value: \.sortSqiInt) { type in
                         VStack {
-                            Text(type.phishInfo.yandexSQI?.formatted() ??
-                                 (type.phishInfo.remote.yandexSQI.error?.localizedDescription ??
+                            Text(type.yandexSQI?.formatted() ??
+                                 (type.remote.yandexSQI.error?.localizedDescription ??
                                   "Ureachable"))
                             .padding(.horizontal, 4)
-                            .background(type.phishInfo.getMLEntry()?.yandexSQI.getColor() ?? .blue)
+                            .background(type.getMLEntry()?.yandexSQI.getColor() ?? .blue)
                             .clipShape(Capsule())
                             
                         }
-                    }
-                    TableColumn("OPR Rank") { type in
-                        Text(type.phishInfo.OPR?.rank?.description ??
-                             (type.phishInfo.remote.OPR.error?.localizedDescription ??
+                    }.width(min: 64, ideal: 64)
+                    TableColumn("OPR Rank", value: \.sortOprInt) { type in
+                        Text(type.OPR?.rank?.description ??
+                             (type.remote.OPR.error?.localizedDescription ??
                               "Ureachable"))
                         .padding(.horizontal, 4)
-                        .background(type.phishInfo.getMLEntry()?.OPR.getColor() ?? .blue)
+                        .background(type.getMLEntry()?.OPR.getColor() ?? .blue)
                         .clipShape(Capsule())
-                    }
-                    TableColumn("Creation Date") { type in
-                        Text(type.phishInfo.creationDate?.formatted() ??
-                             (type.phishInfo.remote.whois.error?.localizedDescription ??
+                    }.width(min: 64, ideal: 64)
+                    TableColumn("Creation Date", value: \.sortDate) { type in
+                        Text(type.creationDate?.formatted() ??
+                             (type.remote.whois.error?.localizedDescription ??
                               "Ureachable"))
                         .padding(.horizontal, 4)
-                        .background(type.phishInfo.getMLEntry()?.creationDate.getColor() ?? .blue)
+                        .background(type.getMLEntry()?.creationDate.getColor() ?? .blue)
                         .clipShape(Capsule())
-                    }
-                    TableColumn("Have Whois") { type in
-                        Text(type.phishInfo.whois != nil ? "Yes" : "No")
+                    }.width(min: 120, ideal: 120)
+                    TableColumn("Have Whois", value: \.sortHaveWhois) { type in
+                        Text(type.whois != nil ? "Yes" : "No")
                             .padding(.horizontal, 4)
-                            .background(type.phishInfo.getMLEntry()?.haveWhois.getColor() ?? .blue)
+                            .background(type.getMLEntry()?.haveWhois.getColor() ?? .blue)
                             .clipShape(Capsule())
-                    }
-                    TableColumn("Is IP") { type in
-                        Text(type.phishInfo.isIP ? "Yes" : "No")
+                    }.width(min: 72, ideal: 72)
+                    TableColumn("Is IP", value: \.sortIsIP) { type in
+                        Text(type.isIP ? "Yes" : "No")
                             .padding(.horizontal, 4)
-                            .background(type.phishInfo.getMLEntry()?.isIP.getColor() ?? .blue)
+                            .background(type.getMLEntry()?.isIP.getColor() ?? .blue)
                             .clipShape(Capsule())
-
-                    }
-                    TableColumn("Prefixes") { type in
-                        Text(type.phishInfo.prefixCount.description)
+                        
+                    }.width(min: 40, ideal: 40)
+                    TableColumn("Prefixes", value: \.prefixCount) { type in
+                        Text(type.prefixCount.description)
                             .padding(.horizontal, 4)
-                            .background(type.phishInfo.getMLEntry()?.prefixCount.getColor() ?? .blue)
+                            .background(type.getMLEntry()?.prefixCount.getColor() ?? .blue)
                             .clipShape(Capsule())
-                    }
-                    TableColumn("Subdomains") { type in
-                        Text(type.phishInfo.subDomainCount.description)
+                    }.width(min: 48, ideal: 48)
+                    TableColumn("Subdomains", value: \.subDomainCount) { type in
+                        Text(type.subDomainCount.description)
                             .padding(.horizontal, 4)
-                            .background(type.phishInfo.getMLEntry()?.subDomainCount.getColor() ?? .blue)
+                            .background(type.getMLEntry()?.subDomainCount.getColor() ?? .blue)
                             .clipShape(Capsule())
-                    }
-                    TableColumn("URL Length") { type in
-                        Text(type.phishInfo.urlLength.description)
+                    }.width(min: 72, ideal: 72)
+                    TableColumn("URL Length", value: \.urlLength) { type in
+                        Text(type.urlLength.description)
                             .padding(.horizontal, 4)
-                            .background(type.phishInfo.getMLEntry()?.urlLength.getColor() ?? .blue)
+                            .background(type.getMLEntry()?.urlLength.getColor() ?? .blue)
                             .clipShape(Capsule())
-                    }
+                    }.width(min: 72, ideal: 72)
                 } rows: {
                     ForEach(vm.tableContent) { data in
                         TableRow(data)
                     }
                 }
-            }
-        }.navigationTitle("Request Querry")
+            }.frame(minWidth: 64)
+        }.navigationTitle("Queue Processor")
             .fileExporter(
                 isPresented: $vm.CSVExportIsPresented,
                 document: vm.resultingDocument,
@@ -95,15 +114,67 @@ struct MultiRequestView: View {
                 defaultFilename: "PhishList") {_ in}
             .toolbar {
                 ToolbarItem(placement: .navigation) {
+                    HStack {
+                        if vm.bussy {
+                            Button {
+                                //                            vm.sendRequestQuerry()
+                            } label: {
+                                Image(systemName: "stop.fill")
+                                    .padding(.horizontal, 8)
+                            }
+                            .help("Stop Execution")
+                            .keyboardShortcut(".")
+                        }
                         Button {
-                            vm.sendRequestQuerry()
+                            withAnimation {
+                                vm.sendRequestQuerry()
+                            }
                         } label: {
                             Image(systemName: "play.fill")
-                                .padding(.horizontal, 16)
-                        }.padding(.trailing, 8)
+                                .padding(.horizontal, 8)
+                        }
                         .disabled(vm.bussy)
                         .help("Execute Querry")
                         .keyboardShortcut(.return)
+                        HStack {
+                            if vm.bussy {
+                                ProgressView()
+                                    .progressViewStyle(.circular)
+                                    .scaleEffect(
+                                        CGSize(width: 0.5, height: 0.5))
+                                    .frame(width: 17, height: 17)
+                            } else {
+                                Image(systemName: vm.statusIconName)
+                            }
+                            Text(vm.statusText)
+                        }
+                        .padding(4)
+                        .padding(.trailing, 4)
+                        .padding(.horizontal, 8)
+                        .background(Color(
+                            nsColor: NSColor.lightGray.withAlphaComponent(0.1)))
+                        .clipShape(Capsule())
+                    }.padding(.trailing, 8)
+                }
+                if vm.linesWithErrors > 0 || vm.linesWithWarnings > 0 {
+                    ToolbarItem(placement: .primaryAction) {
+                        HStack {
+                            if vm.linesWithErrors > 0 {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(.red)
+                                Text(vm.linesWithErrors.description).offset(CGSize(width: -4, height: 0))
+                            }
+                            if vm.linesWithWarnings > 0 {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                    .foregroundColor(.yellow)
+                                Text(vm.linesWithWarnings.description).offset(CGSize(width: -4, height: 0))
+                            }
+                        }.padding(4)
+                            .padding(.horizontal, 8)
+                            .background(Color(
+                                nsColor: NSColor.lightGray.withAlphaComponent(0.1)))
+                            .clipShape(Capsule())
+                    }
                 }
                 ToolbarItem(placement: .primaryAction) {
                     Menu {
@@ -117,6 +188,8 @@ struct MultiRequestView: View {
                     .disabled(!vm.readyForExport)
                     .help("Export as CSV")
                 }
+            }.onChange(of: sortingTable) { sort in
+                vm.tableContent.sort(using: sort)
             }
     }
 }
@@ -124,5 +197,5 @@ struct MultiRequestView: View {
 #Preview {
     MultiRequestView()
         .frame(minWidth: 1000, minHeight: 600)
-
+    
 }

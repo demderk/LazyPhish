@@ -34,7 +34,7 @@ class PhishRequest {
     public func refreshRemoteData(_ base: StrictRemote) async -> PhishInfo {
         await refreshRemoteData(base, collectMetrics: [.yandexSQI, .OPR, .whois])
     }
-    
+        
     public func refreshRemoteData(
         _ base: StrictRemote,
         collectMetrics: Set<PhishRequestMetric>

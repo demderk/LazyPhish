@@ -17,11 +17,15 @@ protocol StrictRemote: StrictURL {
     var remote: PhishInfoRemote { get set }
 }
 
+
 struct PhishInfo: StrictRemote {
+    
     let url: URL
 
     var remote = PhishInfoRemote()
-
+    
+    var requestID: Int?
+    
     var whois: WhoisInfo? { remote.whois.value ?? nil }
     var yandexSQI: Int? { remote.yandexSQI.value }
     var OPR: OPRInfo? { remote.OPR.value }
@@ -35,6 +39,7 @@ struct PhishInfo: StrictRemote {
     var prefixCount: Int { url.formatted().components(separatedBy: ["-"]).count - 1 }
     var subDomainCount: Int { url.formatted().components(separatedBy: ["."]).count - 2 }
     var hasErrors: Bool { remote.hasErrors }
+    var remoteStatus: RemoteStatus { remote.status }
     
     // Вроде как, нужно избегать конструкторов, которые могут вернуть ошибку... Так?
     // Инкапсулировал код формата PhishInfo, так как свифт не умеет вызывать
