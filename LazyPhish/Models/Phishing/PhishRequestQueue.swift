@@ -7,8 +7,35 @@
 
 import Foundation
 
+actor Semaphore {
+    private var count: Int
+    private var waiters: [CheckedContinuation<Void, Never>] = []
+
+    init(count: Int = 0) {
+        self.count = count
+    }
+
+    func wait() async {
+        count -= 1
+        if count >= 0 { return }
+        await withCheckedContinuation {
+            waiters.append($0)
+        }
+    }
+
+    func signal(count: Int = 1) {
+        assert(count >= 1)
+        self.count += count
+        for _ in 0..<count {
+            if waiters.isEmpty { return }
+            waiters.removeFirst().resume()
+        }
+    }
+}
+
 class PhishRequestQueue: PhishRequest {
     private(set) var phishInfo: [PhishInfo] = []
+    private var whoisSemaphore = Semaphore(count: 1)
     
     init(_ urlStrings: [String] ) throws {
         phishInfo.append(contentsOf: try urlStrings.map({ try PhishInfo($0) }))
@@ -55,6 +82,20 @@ class PhishRequestQueue: PhishRequest {
         }
     }
     
+    var sCount: UInt64 = 1
+    
+    public override func processWhois(_ remoteObject: any StrictRemote) async -> any StrictRemote {
+        await whoisSemaphore.wait()
+        let x = await super.processWhois(remoteObject)
+        if sCount < 50 {
+            await whoisSemaphore.signal(count: 10)
+            sCount += 10
+        } else {
+            await whoisSemaphore.signal(count: 1)
+        }
+        return x
+    }
+    
     private func refreshRemoteData(
         _ base: [StrictRemote],
         requestCompleted: ((PhishInfo) -> Void)? = nil,
@@ -67,7 +108,7 @@ class PhishRequestQueue: PhishRequest {
         return await withTaskGroup(of: PhishInfo.self) { taskGroup in
             for item in remote {
                 taskGroup.addTask {
-                    let response = await self.refreshRemoteData(item, collectMetrics: [.yandexSQI])
+                    let response = await self.refreshRemoteData(item, collectMetrics: [.yandexSQI, .whois])
                     return response
                 }
             }
@@ -75,7 +116,8 @@ class PhishRequestQueue: PhishRequest {
             var responses: [PhishInfo] = []
             for await response in taskGroup {
                 // Получение whois нужно запускать обязательно последовательно, иначе оно падает.
-                let result = await self.refreshRemoteData(response, collectMetrics: [.whois])
+//                let result = await self.refreshRemoteData(response, collectMetrics: [.whois])
+                let result = response
                 onQueue.async {
                     requestCompleted?(result)
                 }

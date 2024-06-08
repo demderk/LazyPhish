@@ -56,7 +56,6 @@ class MultiRequestVM: ObservableObject {
         guard !urls.isEmpty else {
             return
         }
-        // FIXME: Ну уже пора лол
         do {
             engine = try PhishRequestQueue(urlsUUIDS, preActions: [.makeHttp])
         } catch let error as ParserError {
@@ -101,10 +100,10 @@ class MultiRequestVM: ObservableObject {
                 break
             }
         } onTaskComplete: { [self] arr in
-            withAnimation {
                 self.bussy = false
                 self.readyForExport = true
                 self.tableContent.sort(by: { $0.id < $1.id })
+            withAnimation {
                 if arr.contains(where: {$0.remoteStatus == .completedWithErrors}) {
                     completeWithErrorsUI()
                 }

@@ -49,6 +49,66 @@ class WhoisConnection {
     private var server: String = "whois.iana.org"
     private var connection: NWConnection?
     
+    private let cacheTldWhoisServer: [String: String] = [
+        "com": "whois.verisign-grs.com",
+        "net": "whois.verisign-grs.com",
+        "org": "whois.publicinterestregistry.org",
+        "cn": "whois.cnnic.cn",
+        "ai": "whois.nic.ai",
+        "au": "whois.auda.org.au",
+        "co": "whois.nic.co",
+        "ca": "whois.cira.ca",
+        "do": "whois.nic.do",
+        "gl": "whois.nic.gl",
+        "in": "whois.registry.in",
+        "io": "whois.nic.io",
+        "it": "whois.nic.it",
+        "me": "whois.nic.me",
+        "ro": "whois.rotld.ro",
+        "rs": "whois.rnids.rs",
+        "so": "whois.nic.so",
+        "us": "whois.nic.us",
+        "ws": "whois.website.ws",
+        "agency": "whois.nic.agency",
+        "app": "whois.nic.google",
+        "biz": "whois.nic.biz",
+        "dev": "whois.nic.google",
+        "house": "whois.nic.house",
+        "info": "whois.nic.info",
+        "link": "whois.uniregistry.net",
+        "live": "whois.nic.live",
+        "nyc": "whois.nic.nyc",
+        "one": "whois.nic.one",
+        "online": "whois.nic.online",
+        "shop": "whois.nic.shop",
+        "site": "whois.nic.site",
+        "xyz": "whois.nic.xyz",
+        "ru": "whois.tcinet.ru",
+        "jp": "whois.jprs.jp",
+        "fm": "whois.nic.fm",
+        "gov": "whois.dotgov.gov",
+        "uk": "whois.nic.uk",
+        "cz": "whois.nic.cz",
+        "edu": "whois.educause.edu",
+        "de": "whois.denic.de",
+        "fr": "whois.nic.fr",
+        "nl": "whois.domain-registry.nl",
+        "tv": "whois.nic.tv",
+        "cc": "ccwhois.verisign-grs.com",
+        "eu": "whois.eu",
+        "br": "whois.registro.br",
+        "la": "whois.nic.la",
+        "ly": "whois.nic.ly",
+        "be": "whois.dns.be",
+        // FAILING
+        "es": "whois.nic.es"
+    ]
+
+    private func getCachedWhoisServer(for domain: String) -> String? {
+        let tld = domain.components(separatedBy: ".").last ?? ""
+        return cacheTldWhoisServer[tld]
+    }
+    
     @discardableResult
     func establishConnection() -> NWConnection {
         let newConnection = NWConnection.init(
@@ -106,11 +166,16 @@ class WhoisConnection {
     }
     
     func makeRecursiveRequest(host: String) async throws -> String {
+        if let cached = getCachedWhoisServer(for: host) {
+            server = cached
+        } else {
+            print("not found for: \(host)")
+        }
         let response = try await makeRequest(host: host)
         let responseArray = buildResponseArray(responseText: response)
         if let refer = responseArray.first(where: { $0.key == "refer" }) {
             server = refer.value
-            try await Task.sleep(for: .seconds(0.4))
+            try await Task.sleep(for: .seconds(0.1))
             return try await makeRecursiveRequest(host: host)
         }
         else {
@@ -177,7 +242,7 @@ class WhoisConnection {
         return whoisData
     }
     
-    func lookup(host: String, timeout: Int = 2000) async throws -> WhoisInfo {
+    func lookup(host: String, timeout: Int = 3000) async throws -> WhoisInfo {
         let recursiveTask = Task {
             return try await makeRecursiveRequest(host: host)
         }
