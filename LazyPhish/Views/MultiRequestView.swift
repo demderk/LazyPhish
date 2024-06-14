@@ -30,8 +30,8 @@ struct MultiRequestView: View {
                 TextEditor(text: $vm.requestText)
                     .font(.body)
                     .lineSpacing(5)
-                    .padding(.top,8)
-                    .padding(.horizontal,4)
+                    .padding(.top, 8)
+                    .padding(.horizontal, 4)
                     .background(.background)
             }.frame(minWidth: 64)
             HStack {
@@ -112,6 +112,11 @@ struct MultiRequestView: View {
                 document: vm.resultingDocument,
                 contentType: .commaSeparatedText,
                 defaultFilename: "PhishList") {_ in}
+            .fileExporter(
+                isPresented: $vm.RAWExportIsPresented,
+                document: vm.RAWResultingDocument,
+                contentType: .commaSeparatedText,
+                defaultFilename: "PhishList") {_ in}
             .toolbar {
                 ToolbarItem(placement: .navigation) {
                     HStack {
@@ -180,6 +185,9 @@ struct MultiRequestView: View {
                     Menu {
                         Button("Export ML Data") {
                             vm.exportCSV()
+                        }
+                        Button("Export RAW ML Data") {
+                            vm.exportCSVRAW()
                         }
                     } label: {
                         Image(systemName: "square.and.arrow.up")

@@ -1,0 +1,950 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		30AC8A842C174EBA00110167 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AC8A832C174EBA00110167 /* AppDelegate.swift */; };
+		30AC8A862C174EBA00110167 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AC8A852C174EBA00110167 /* SceneDelegate.swift */; };
+		30AC8A892C174EBA00110167 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 30AC8A882C174EBA00110167 /* Base */; };
+		30AC8A8C2C174EBA00110167 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 30AC8A8B2C174EBA00110167 /* Base */; };
+		30AC8A952C174EBA00110167 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AC8A942C174EBA00110167 /* AppDelegate.swift */; };
+		30AC8A982C174EBA00110167 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 30AC8A972C174EBA00110167 /* Base */; };
+		30AC8AA02C174EBA00110167 /* Access Control Extension Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 30AC8A9F2C174EBA00110167 /* Access Control Extension Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		30AC8AAA2C174EBA00110167 /* Access Control Extension Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 30AC8AA92C174EBA00110167 /* Access Control Extension Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		30AC8AB02C174EBA00110167 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 30AC8A742C174EB700110167 /* Base */; };
+		30AC8AB12C174EBA00110167 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 30AC8A742C174EB700110167 /* Base */; };
+		30AC8AB22C174EBA00110167 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 30AC8A752C174EB700110167 /* Icon.png */; };
+		30AC8AB32C174EBA00110167 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 30AC8A752C174EB700110167 /* Icon.png */; };
+		30AC8AB42C174EBA00110167 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 30AC8A762C174EB700110167 /* Style.css */; };
+		30AC8AB52C174EBA00110167 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 30AC8A762C174EB700110167 /* Style.css */; };
+		30AC8AB62C174EBA00110167 /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 30AC8A772C174EB700110167 /* Script.js */; };
+		30AC8AB72C174EBA00110167 /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 30AC8A772C174EB700110167 /* Script.js */; };
+		30AC8AB82C174EBA00110167 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AC8A782C174EB700110167 /* ViewController.swift */; };
+		30AC8AB92C174EBA00110167 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AC8A782C174EB700110167 /* ViewController.swift */; };
+		30AC8ABA2C174EBA00110167 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30AC8A792C174EBA00110167 /* Assets.xcassets */; };
+		30AC8ABB2C174EBA00110167 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30AC8A792C174EBA00110167 /* Assets.xcassets */; };
+		30AC8ABC2C174EBA00110167 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AC8A7B2C174EBA00110167 /* SafariWebExtensionHandler.swift */; };
+		30AC8ABD2C174EBA00110167 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AC8A7B2C174EBA00110167 /* SafariWebExtensionHandler.swift */; };
+		30C882AD2C1CA90D00C2441D /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 30C882A82C1CA90D00C2441D /* manifest.json */; };
+		30C882AE2C1CA90D00C2441D /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 30C882A82C1CA90D00C2441D /* manifest.json */; };
+		30C882AF2C1CA90D00C2441D /* Untitled-7.json in Resources */ = {isa = PBXBuildFile; fileRef = 30C882A92C1CA90D00C2441D /* Untitled-7.json */; };
+		30C882B02C1CA90D00C2441D /* Untitled-7.json in Resources */ = {isa = PBXBuildFile; fileRef = 30C882A92C1CA90D00C2441D /* Untitled-7.json */; };
+		30C882B12C1CA90D00C2441D /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 30C882AA2C1CA90D00C2441D /* background.js */; };
+		30C882B22C1CA90D00C2441D /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 30C882AA2C1CA90D00C2441D /* background.js */; };
+		30C882B32C1CA90D00C2441D /* error.html in Resources */ = {isa = PBXBuildFile; fileRef = 30C882AB2C1CA90D00C2441D /* error.html */; };
+		30C882B42C1CA90D00C2441D /* error.html in Resources */ = {isa = PBXBuildFile; fileRef = 30C882AB2C1CA90D00C2441D /* error.html */; };
+		30C882B52C1CA90D00C2441D /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = 30C882AC2C1CA90D00C2441D /* content.js */; };
+		30C882B62C1CA90D00C2441D /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = 30C882AC2C1CA90D00C2441D /* content.js */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		30AC8AA12C174EBA00110167 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 30AC8A6D2C174EB600110167 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 30AC8A9E2C174EBA00110167;
+			remoteInfo = "Access Control Extension Extension (iOS)";
+		};
+		30AC8AAB2C174EBA00110167 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 30AC8A6D2C174EB600110167 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 30AC8AA82C174EBA00110167;
+			remoteInfo = "Access Control Extension Extension (macOS)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		30AC8AC32C174EBA00110167 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				30AC8AA02C174EBA00110167 /* Access Control Extension Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30AC8ACA2C174EBA00110167 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				30AC8AAA2C174EBA00110167 /* Access Control Extension Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		30AC8A742C174EB700110167 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = ../Base.lproj/Main.html; sourceTree = "<group>"; };
+		30AC8A752C174EB700110167 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		30AC8A762C174EB700110167 /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
+		30AC8A772C174EB700110167 /* Script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Script.js; sourceTree = "<group>"; };
+		30AC8A782C174EB700110167 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		30AC8A792C174EBA00110167 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		30AC8A7B2C174EBA00110167 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		30AC8A802C174EBA00110167 /* Access Control Extension.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Access Control Extension.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		30AC8A832C174EBA00110167 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		30AC8A852C174EBA00110167 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		30AC8A882C174EBA00110167 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		30AC8A8B2C174EBA00110167 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		30AC8A8D2C174EBA00110167 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		30AC8A922C174EBA00110167 /* Access Control Extension.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Access Control Extension.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		30AC8A942C174EBA00110167 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		30AC8A972C174EBA00110167 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		30AC8A992C174EBA00110167 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		30AC8A9A2C174EBA00110167 /* Access Control Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Access Control Extension.entitlements"; sourceTree = "<group>"; };
+		30AC8A9F2C174EBA00110167 /* Access Control Extension Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Access Control Extension Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		30AC8AA42C174EBA00110167 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		30AC8AA92C174EBA00110167 /* Access Control Extension Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Access Control Extension Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		30AC8AAE2C174EBA00110167 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		30AC8AAF2C174EBA00110167 /* Access Control Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Access Control Extension.entitlements"; sourceTree = "<group>"; };
+		30C882A82C1CA90D00C2441D /* manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = manifest.json; path = ../../LazyPhishEndpoint/manifest.json; sourceTree = "<group>"; };
+		30C882A92C1CA90D00C2441D /* Untitled-7.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "Untitled-7.json"; path = "../../LazyPhishEndpoint/Untitled-7.json"; sourceTree = "<group>"; };
+		30C882AA2C1CA90D00C2441D /* background.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = background.js; path = ../../LazyPhishEndpoint/background.js; sourceTree = "<group>"; };
+		30C882AB2C1CA90D00C2441D /* error.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = error.html; path = ../../LazyPhishEndpoint/error.html; sourceTree = "<group>"; };
+		30C882AC2C1CA90D00C2441D /* content.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = content.js; path = ../../LazyPhishEndpoint/content.js; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		30AC8A7D2C174EBA00110167 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30AC8A8F2C174EBA00110167 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30AC8A9C2C174EBA00110167 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30AC8AA62C174EBA00110167 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		30AC8A6C2C174EB600110167 = {
+			isa = PBXGroup;
+			children = (
+				30AC8A712C174EB700110167 /* Shared (App) */,
+				30AC8A7A2C174EBA00110167 /* Shared (Extension) */,
+				30AC8A822C174EBA00110167 /* iOS (App) */,
+				30AC8A932C174EBA00110167 /* macOS (App) */,
+				30AC8AA32C174EBA00110167 /* iOS (Extension) */,
+				30AC8AAD2C174EBA00110167 /* macOS (Extension) */,
+				30AC8A812C174EBA00110167 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		30AC8A712C174EB700110167 /* Shared (App) */ = {
+			isa = PBXGroup;
+			children = (
+				30AC8A782C174EB700110167 /* ViewController.swift */,
+				30AC8A792C174EBA00110167 /* Assets.xcassets */,
+				30AC8A722C174EB700110167 /* Resources */,
+			);
+			path = "Shared (App)";
+			sourceTree = "<group>";
+		};
+		30AC8A722C174EB700110167 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				30AC8A732C174EB700110167 /* Main.html */,
+				30AC8A752C174EB700110167 /* Icon.png */,
+				30AC8A762C174EB700110167 /* Style.css */,
+				30AC8A772C174EB700110167 /* Script.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		30AC8A7A2C174EBA00110167 /* Shared (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				30AC8ACE2C174EBB00110167 /* Resources */,
+				30AC8A7B2C174EBA00110167 /* SafariWebExtensionHandler.swift */,
+			);
+			path = "Shared (Extension)";
+			sourceTree = "<group>";
+		};
+		30AC8A812C174EBA00110167 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				30AC8A802C174EBA00110167 /* Access Control Extension.app */,
+				30AC8A922C174EBA00110167 /* Access Control Extension.app */,
+				30AC8A9F2C174EBA00110167 /* Access Control Extension Extension.appex */,
+				30AC8AA92C174EBA00110167 /* Access Control Extension Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		30AC8A822C174EBA00110167 /* iOS (App) */ = {
+			isa = PBXGroup;
+			children = (
+				30AC8A832C174EBA00110167 /* AppDelegate.swift */,
+				30AC8A852C174EBA00110167 /* SceneDelegate.swift */,
+				30AC8A872C174EBA00110167 /* LaunchScreen.storyboard */,
+				30AC8A8A2C174EBA00110167 /* Main.storyboard */,
+				30AC8A8D2C174EBA00110167 /* Info.plist */,
+			);
+			path = "iOS (App)";
+			sourceTree = "<group>";
+		};
+		30AC8A932C174EBA00110167 /* macOS (App) */ = {
+			isa = PBXGroup;
+			children = (
+				30AC8A942C174EBA00110167 /* AppDelegate.swift */,
+				30AC8A962C174EBA00110167 /* Main.storyboard */,
+				30AC8A992C174EBA00110167 /* Info.plist */,
+				30AC8A9A2C174EBA00110167 /* Access Control Extension.entitlements */,
+			);
+			path = "macOS (App)";
+			sourceTree = "<group>";
+		};
+		30AC8AA32C174EBA00110167 /* iOS (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				30AC8AA42C174EBA00110167 /* Info.plist */,
+			);
+			path = "iOS (Extension)";
+			sourceTree = "<group>";
+		};
+		30AC8AAD2C174EBA00110167 /* macOS (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				30AC8AAE2C174EBA00110167 /* Info.plist */,
+				30AC8AAF2C174EBA00110167 /* Access Control Extension.entitlements */,
+			);
+			path = "macOS (Extension)";
+			sourceTree = "<group>";
+		};
+		30AC8ACE2C174EBB00110167 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				30C882AA2C1CA90D00C2441D /* background.js */,
+				30C882AC2C1CA90D00C2441D /* content.js */,
+				30C882AB2C1CA90D00C2441D /* error.html */,
+				30C882A82C1CA90D00C2441D /* manifest.json */,
+				30C882A92C1CA90D00C2441D /* Untitled-7.json */,
+			);
+			name = Resources;
+			path = "Shared (Extension)";
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		30AC8A7F2C174EBA00110167 /* Access Control Extension (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 30AC8AC42C174EBA00110167 /* Build configuration list for PBXNativeTarget "Access Control Extension (iOS)" */;
+			buildPhases = (
+				30AC8A7C2C174EBA00110167 /* Sources */,
+				30AC8A7D2C174EBA00110167 /* Frameworks */,
+				30AC8A7E2C174EBA00110167 /* Resources */,
+				30AC8AC32C174EBA00110167 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				30AC8AA22C174EBA00110167 /* PBXTargetDependency */,
+			);
+			name = "Access Control Extension (iOS)";
+			productName = "Access Control Extension (iOS)";
+			productReference = 30AC8A802C174EBA00110167 /* Access Control Extension.app */;
+			productType = "com.apple.product-type.application";
+		};
+		30AC8A912C174EBA00110167 /* Access Control Extension (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 30AC8ACB2C174EBA00110167 /* Build configuration list for PBXNativeTarget "Access Control Extension (macOS)" */;
+			buildPhases = (
+				30AC8A8E2C174EBA00110167 /* Sources */,
+				30AC8A8F2C174EBA00110167 /* Frameworks */,
+				30AC8A902C174EBA00110167 /* Resources */,
+				30AC8ACA2C174EBA00110167 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				30AC8AAC2C174EBA00110167 /* PBXTargetDependency */,
+			);
+			name = "Access Control Extension (macOS)";
+			productName = "Access Control Extension (macOS)";
+			productReference = 30AC8A922C174EBA00110167 /* Access Control Extension.app */;
+			productType = "com.apple.product-type.application";
+		};
+		30AC8A9E2C174EBA00110167 /* Access Control Extension Extension (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 30AC8AC02C174EBA00110167 /* Build configuration list for PBXNativeTarget "Access Control Extension Extension (iOS)" */;
+			buildPhases = (
+				30AC8A9B2C174EBA00110167 /* Sources */,
+				30AC8A9C2C174EBA00110167 /* Frameworks */,
+				30AC8A9D2C174EBA00110167 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Access Control Extension Extension (iOS)";
+			productName = "Access Control Extension Extension (iOS)";
+			productReference = 30AC8A9F2C174EBA00110167 /* Access Control Extension Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		30AC8AA82C174EBA00110167 /* Access Control Extension Extension (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 30AC8AC72C174EBA00110167 /* Build configuration list for PBXNativeTarget "Access Control Extension Extension (macOS)" */;
+			buildPhases = (
+				30AC8AA52C174EBA00110167 /* Sources */,
+				30AC8AA62C174EBA00110167 /* Frameworks */,
+				30AC8AA72C174EBA00110167 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Access Control Extension Extension (macOS)";
+			productName = "Access Control Extension Extension (macOS)";
+			productReference = 30AC8AA92C174EBA00110167 /* Access Control Extension Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		30AC8A6D2C174EB600110167 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					30AC8A7F2C174EBA00110167 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					30AC8A912C174EBA00110167 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					30AC8A9E2C174EBA00110167 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					30AC8AA82C174EBA00110167 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+				};
+			};
+			buildConfigurationList = 30AC8A702C174EB600110167 /* Build configuration list for PBXProject "Access Control Extension" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 30AC8A6C2C174EB600110167;
+			productRefGroup = 30AC8A812C174EBA00110167 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				30AC8A7F2C174EBA00110167 /* Access Control Extension (iOS) */,
+				30AC8A912C174EBA00110167 /* Access Control Extension (macOS) */,
+				30AC8A9E2C174EBA00110167 /* Access Control Extension Extension (iOS) */,
+				30AC8AA82C174EBA00110167 /* Access Control Extension Extension (macOS) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		30AC8A7E2C174EBA00110167 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30AC8AB22C174EBA00110167 /* Icon.png in Resources */,
+				30AC8A892C174EBA00110167 /* Base in Resources */,
+				30AC8AB02C174EBA00110167 /* Base in Resources */,
+				30AC8AB62C174EBA00110167 /* Script.js in Resources */,
+				30AC8ABA2C174EBA00110167 /* Assets.xcassets in Resources */,
+				30AC8A8C2C174EBA00110167 /* Base in Resources */,
+				30AC8AB42C174EBA00110167 /* Style.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30AC8A902C174EBA00110167 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30AC8AB32C174EBA00110167 /* Icon.png in Resources */,
+				30AC8AB52C174EBA00110167 /* Style.css in Resources */,
+				30AC8A982C174EBA00110167 /* Base in Resources */,
+				30AC8AB72C174EBA00110167 /* Script.js in Resources */,
+				30AC8ABB2C174EBA00110167 /* Assets.xcassets in Resources */,
+				30AC8AB12C174EBA00110167 /* Base in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30AC8A9D2C174EBA00110167 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30C882B12C1CA90D00C2441D /* background.js in Resources */,
+				30C882AF2C1CA90D00C2441D /* Untitled-7.json in Resources */,
+				30C882B32C1CA90D00C2441D /* error.html in Resources */,
+				30C882B52C1CA90D00C2441D /* content.js in Resources */,
+				30C882AD2C1CA90D00C2441D /* manifest.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30AC8AA72C174EBA00110167 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30C882B22C1CA90D00C2441D /* background.js in Resources */,
+				30C882B02C1CA90D00C2441D /* Untitled-7.json in Resources */,
+				30C882B42C1CA90D00C2441D /* error.html in Resources */,
+				30C882B62C1CA90D00C2441D /* content.js in Resources */,
+				30C882AE2C1CA90D00C2441D /* manifest.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		30AC8A7C2C174EBA00110167 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30AC8AB82C174EBA00110167 /* ViewController.swift in Sources */,
+				30AC8A842C174EBA00110167 /* AppDelegate.swift in Sources */,
+				30AC8A862C174EBA00110167 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30AC8A8E2C174EBA00110167 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30AC8AB92C174EBA00110167 /* ViewController.swift in Sources */,
+				30AC8A952C174EBA00110167 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30AC8A9B2C174EBA00110167 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30AC8ABC2C174EBA00110167 /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30AC8AA52C174EBA00110167 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30AC8ABD2C174EBA00110167 /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		30AC8AA22C174EBA00110167 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 30AC8A9E2C174EBA00110167 /* Access Control Extension Extension (iOS) */;
+			targetProxy = 30AC8AA12C174EBA00110167 /* PBXContainerItemProxy */;
+		};
+		30AC8AAC2C174EBA00110167 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 30AC8AA82C174EBA00110167 /* Access Control Extension Extension (macOS) */;
+			targetProxy = 30AC8AAB2C174EBA00110167 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		30AC8A732C174EB700110167 /* Main.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				30AC8A742C174EB700110167 /* Base */,
+			);
+			name = Main.html;
+			sourceTree = "<group>";
+		};
+		30AC8A872C174EBA00110167 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				30AC8A882C174EBA00110167 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		30AC8A8A2C174EBA00110167 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				30AC8A8B2C174EBA00110167 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		30AC8A962C174EBA00110167 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				30AC8A972C174EBA00110167 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		30AC8ABE2C174EBA00110167 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		30AC8ABF2C174EBA00110167 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		30AC8AC12C174EBA00110167 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Access Control Extension Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Access-Control-Extension.Extension";
+				PRODUCT_NAME = "Access Control Extension Extension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		30AC8AC22C174EBA00110167 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Access Control Extension Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Access-Control-Extension.Extension";
+				PRODUCT_NAME = "Access Control Extension Extension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		30AC8AC52C174EBA00110167 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Access Control Extension";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Access-Control-Extension";
+				PRODUCT_NAME = "Access Control Extension";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		30AC8AC62C174EBA00110167 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Access Control Extension";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Access-Control-Extension";
+				PRODUCT_NAME = "Access Control Extension";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		30AC8AC82C174EBA00110167 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "macOS (Extension)/Access Control Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Access Control Extension Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Access-Control-Extension.Extension";
+				PRODUCT_NAME = "Access Control Extension Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		30AC8AC92C174EBA00110167 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "macOS (Extension)/Access Control Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Access Control Extension Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Access-Control-Extension.Extension";
+				PRODUCT_NAME = "Access Control Extension Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		30AC8ACC2C174EBA00110167 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "macOS (App)/Access Control Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Access Control Extension";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Access-Control-Extension";
+				PRODUCT_NAME = "Access Control Extension";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		30AC8ACD2C174EBA00110167 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "macOS (App)/Access Control Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Access Control Extension";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Access-Control-Extension";
+				PRODUCT_NAME = "Access Control Extension";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		30AC8A702C174EB600110167 /* Build configuration list for PBXProject "Access Control Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30AC8ABE2C174EBA00110167 /* Debug */,
+				30AC8ABF2C174EBA00110167 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		30AC8AC02C174EBA00110167 /* Build configuration list for PBXNativeTarget "Access Control Extension Extension (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30AC8AC12C174EBA00110167 /* Debug */,
+				30AC8AC22C174EBA00110167 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		30AC8AC42C174EBA00110167 /* Build configuration list for PBXNativeTarget "Access Control Extension (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30AC8AC52C174EBA00110167 /* Debug */,
+				30AC8AC62C174EBA00110167 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		30AC8AC72C174EBA00110167 /* Build configuration list for PBXNativeTarget "Access Control Extension Extension (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30AC8AC82C174EBA00110167 /* Debug */,
+				30AC8AC92C174EBA00110167 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		30AC8ACB2C174EBA00110167 /* Build configuration list for PBXNativeTarget "Access Control Extension (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30AC8ACC2C174EBA00110167 /* Debug */,
+				30AC8ACD2C174EBA00110167 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 30AC8A6D2C174EB600110167 /* Project object */;
+}

@@ -8,7 +8,7 @@
 import Foundation
 import AppKit
 
-protocol RequestError : Error {
+protocol RequestError: Error {
     var isCritical: Bool {get}
     var localizedDescription: String { get }
 }
@@ -19,6 +19,7 @@ extension RequestError {
 
 enum WhoisError: RequestError {
     case responseIsNil
+    case badRequest(description: String)
     case badResponse
     case timeout
     case dateFormatError
@@ -45,6 +46,8 @@ enum WhoisError: RequestError {
             "WHOIS date formatted incorectly."
         case .unknown(let underlying):
             "WHOIS Unknown Error. Underlying Error: \(underlying)"
+        case .badRequest(description: let description):
+            "Bad WHOIS Request. \(description)"
         }
     }
 }
@@ -89,7 +92,7 @@ enum OPRError: RequestError {
             "OPR Provider throws an error. \(response)"
         case .apiKeyUnreachable:
             "OPR auth key is inaccessible."
-        case .requestError(underlyingError: let underlyingError):
+        case .requestError:
             "OPR HTTPS Request error."
         }
     }

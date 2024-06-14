@@ -122,7 +122,8 @@ class PhishRequest {
                         }
                     }
                 } catch {
-                    remote.remote.yandexSQI = .failed(error: YandexSQIError.yandexSQIVisionPerformError(error))
+                    remote.remote.yandexSQI = .failed(
+                        error: YandexSQIError.yandexSQIVisionPerformError(error))
                     return remote
                 }
                 
@@ -142,7 +143,8 @@ class PhishRequest {
                         }
                     }
                 } catch {
-                    remote.remote.yandexSQI = .failed(error: YandexSQIError.yandexSQIVisionPerformError(error))
+                    remote.remote.yandexSQI = .failed(
+                        error: YandexSQIError.yandexSQIVisionPerformError(error))
                     return remote
                 }
                 
@@ -256,7 +258,9 @@ class PhishRequest {
             
             for item in response {
                 guard var found = remoteObjects.first(
-                    where: { $0.host == item.domain || $0.host == "www.\(item.domain)" }
+                    where: {
+                        $0.host.lowercased() == item.domain.lowercased() ||
+                        $0.host.lowercased() == "www.\(item.domain.lowercased())" }
                 ) else {
                     fatalError(item.domain)
                 }

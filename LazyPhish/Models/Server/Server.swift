@@ -49,8 +49,7 @@ class Server {
             return
         }
         
-        server.get("phishing") { req async throws in
-            //            Server.log.trace("Incoming connection on Hello")
+        server.post("phishing") { req async throws in
             if let body = try? req.content.decode(PhishingInfo.self),
                let request = try? PhishRequestSingle(body.host),
                let mlEntry = await request.processRequest().getMLEntry() 

@@ -32,9 +32,11 @@ struct PhishInfoRemote {
         didSet {
             if case .failed(let error) = yandexSQI {
                 if error.isCritical {
-                    Logger.yandexSQIRequestLogger.warning("[YandexSQI] [WARNING] \(error.localizedDescription)")
+                    Logger.yandexSQIRequestLogger.warning(
+                        "[YandexSQI] [WARNING] \(error.localizedDescription)")
                 } else {
-                    Logger.yandexSQIRequestLogger.trace("[YandexSQI] [INFO] \(error.localizedDescription)")
+                    Logger.yandexSQIRequestLogger.trace(
+                        "[YandexSQI] [INFO] \(error.localizedDescription)")
                 }
             }
         }

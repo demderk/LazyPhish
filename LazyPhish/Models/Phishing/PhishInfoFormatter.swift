@@ -76,7 +76,7 @@ final class PhishInfoFormatter {
         guard !input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             throw ParserError.requestIsEmpty
         }
-        guard input.contains("http://") || input.contains("https://") else {
+        guard input.prefix(4) == "http" else {
             throw ParserError.urlNotAWebRequest(url: urlString)
         }
         guard let url = URL(string: input) else {
@@ -93,7 +93,7 @@ final class PhishInfoFormatter {
         guard !url.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return url
         }
-        if url.contains("http://") || url.contains("https://") {
+        guard url.prefix(8) == "https://" else {
             return url
         }
         return "https://\(url)"
@@ -103,7 +103,7 @@ final class PhishInfoFormatter {
         guard !url.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return url
         }
-        if url.contains("http://") || url.contains("https://") {
+        if url.prefix(7) == "http://" || url.prefix(8) == "https://" {
             return url
         }
         return "http://\(url)"

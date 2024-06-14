@@ -17,7 +17,6 @@ protocol StrictRemote: StrictURL {
     var remote: PhishInfoRemote { get set }
 }
 
-
 struct PhishInfo: StrictRemote {
     
     let url: URL

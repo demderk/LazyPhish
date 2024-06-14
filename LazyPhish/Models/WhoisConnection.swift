@@ -168,15 +168,19 @@ class WhoisConnection {
     func makeRecursiveRequest(host: String) async throws -> String {
         if let cached = getCachedWhoisServer(for: host) {
             server = cached
-        } else {
-            print("not found for: \(host)")
+        } 
+        let hostComponents = Array(host.components(separatedBy: ".").reversed())
+        guard hostComponents.count > 1 else {
+            throw WhoisError.badRequest(description: "Host is incorrect. Hostname: \(host)")
         }
-        let response = try await makeRequest(host: host)
+           
+        var master = "\(hostComponents[1]).\(hostComponents[0])"
+        let response = try await makeRequest(host: master)
         let responseArray = buildResponseArray(responseText: response)
         if let refer = responseArray.first(where: { $0.key == "refer" }) {
             server = refer.value
             try await Task.sleep(for: .seconds(0.1))
-            return try await makeRecursiveRequest(host: host)
+            return try await makeRecursiveRequest(host: master)
         }
         else {
             return response

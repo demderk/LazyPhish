@@ -36,6 +36,7 @@ actor Semaphore {
 class PhishRequestQueue: PhishRequest {
     private(set) var phishInfo: [PhishInfo] = []
     private var whoisSemaphore = Semaphore(count: 1)
+    private var mainSemaphore = Semaphore(count: 100)
     
     init(_ urlStrings: [String] ) throws {
         phishInfo.append(contentsOf: try urlStrings.map({ try PhishInfo($0) }))
@@ -96,12 +97,18 @@ class PhishRequestQueue: PhishRequest {
         return x
     }
     
+    override func refreshRemoteData(_ base: any StrictRemote, collectMetrics: Set<PhishRequestMetric>) async -> PhishInfo {
+        await mainSemaphore.wait()
+        let x = await super.refreshRemoteData(base, collectMetrics: collectMetrics)
+        await mainSemaphore.signal()
+        return x
+    }
+    
     private func refreshRemoteData(
         _ base: [StrictRemote],
         requestCompleted: ((PhishInfo) -> Void)? = nil,
         onQueue: DispatchQueue = DispatchQueue.main
-    ) async -> [PhishInfo] 
-    {
+    ) async -> [PhishInfo] {
         var remote = base
         remote = await processOPR(remoteObjects: remote)
         
@@ -116,7 +123,7 @@ class PhishRequestQueue: PhishRequest {
             var responses: [PhishInfo] = []
             for await response in taskGroup {
                 // Получение whois нужно запускать обязательно последовательно, иначе оно падает.
-//                let result = await self.refreshRemoteData(response, collectMetrics: [.whois])
+                // let result = await self.refreshRemoteData(response, collectMetrics: [.whois])
                 let result = response
                 onQueue.async {
                     requestCompleted?(result)

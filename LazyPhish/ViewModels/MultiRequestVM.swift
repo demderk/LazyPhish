@@ -8,11 +8,6 @@
 import Foundation
 import SwiftUI
 
-//enum RequestState {
-//    case ready
-//    case
-//}
-
 extension PhishInfo: Identifiable {
     // Я в этом сооооооооовсем не уверен
     var id: Int { self.requestID ?? Int.random(in: 0...Int.max) }
@@ -30,6 +25,7 @@ class MultiRequestVM: ObservableObject {
     @Published var requestText = ""
     @Published var tableContent: [PhishInfo] = []
     @Published var CSVExportIsPresented = false
+    @Published var RAWExportIsPresented = false
     @Published var readyForExport = false
     @Published var bussy = false
     @Published var status: RemoteStatus = .planned
@@ -42,6 +38,8 @@ class MultiRequestVM: ObservableObject {
     private var engine = PhishRequestQueue()
     
     var resultingDocument: PhishFile = PhishFile([])
+    var RAWResultingDocument: RawPhishFile = RawPhishFile([])
+    var ignoreWrongLines: Bool = true
     
     @MainActor
     func sendRequestQuerry() {
@@ -59,17 +57,20 @@ class MultiRequestVM: ObservableObject {
         do {
             engine = try PhishRequestQueue(urlsUUIDS, preActions: [.makeHttp])
         } catch let error as ParserError {
-            var errorMessage = error.localizedDescription
+            var errorMessage = "Parser error"
             switch error {
             case .urlHostIsInvalid(let url):
                 if let num = urls.firstIndex(of: url) {
+                    errorMessage = "Swift host parse error."
                     errorMessage += "  Line \(num+1)."
                 }
             case .urlNotAWebRequest(let url):
+                errorMessage = "Not a web request."
                 if let num = urls.firstIndex(of: url) {
                     errorMessage += "  Line \(num+1)."
                 }
             case .urlHostIsBroken(let url):
+                errorMessage = "Host is invalid."
                 if let num = urls.firstIndex(of: url) {
                     errorMessage += " Line \(num+1)."
                 }
@@ -151,6 +152,11 @@ class MultiRequestVM: ObservableObject {
     func exportCSV() {
         resultingDocument = PhishFile(engine.phishInfo.map({ $0.getMLEntry()! }))
         CSVExportIsPresented = true
+    }
+    
+    func exportCSVRAW() {
+        RAWResultingDocument = RawPhishFile(engine.phishInfo)
+        RAWExportIsPresented = true
     }
     
 }
