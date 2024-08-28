@@ -174,15 +174,21 @@ class PhishRequest {
     }
     
     internal func getOPRKey() throws -> String {
-        if let path = Bundle.main.path(forResource: "Authority", ofType: "plist") {
-            if let data = try? Data(contentsOf: URL(filePath: path)) {
-                if let plist = try? PropertyListSerialization.propertyList(from: data, format: nil)
-                    as? [String: String] {
-                    if let result = plist["OPRKey"] {
-                        return result
-                    }
-                }
-            }
+//        if let path = Bundle.main.path(forResource: "Authority", ofType: "plist") {
+//            if let data = try? Data(contentsOf: URL(filePath: path)) {
+//                if let plist = try? PropertyListSerialization.propertyList(from: data, format: nil)
+//                    as? [String: String] {
+//                    if let result = plist["OPRKey"] {
+//                        return result
+//                    }
+//                }
+//            }
+//        }
+        if !KeyService.inited {
+            KeyService.refreshAllKeys()
+        }
+        if let opr = KeyService.OPRKey {
+            return opr
         }
         throw RequestCriticalError.authorityAccessError
     }

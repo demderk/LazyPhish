@@ -23,6 +23,12 @@ struct LazyPhishApp: App {
         WindowGroup {
             MainView()
                 .frame(minWidth: 1100, minHeight: 600)
+                .onAppear {
+                    KeyService.refreshAllKeys()
+                }
+        }
+        Settings {
+            SettingsView()
         }
     }
 }

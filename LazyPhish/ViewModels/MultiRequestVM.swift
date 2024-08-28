@@ -27,7 +27,7 @@ class MultiRequestVM: ObservableObject {
     @Published var CSVExportIsPresented = false
     @Published var RAWExportIsPresented = false
     @Published var readyForExport = false
-    @Published var bussy = false
+    @Published var busy = false
     @Published var status: RemoteStatus = .planned
     @Published var statusIconName = "checkmark.circle.fill"
     @Published var statusText = "Ready"
@@ -101,7 +101,7 @@ class MultiRequestVM: ObservableObject {
                 break
             }
         } onTaskComplete: { [self] arr in
-                self.bussy = false
+                self.busy = false
                 self.readyForExport = true
                 self.tableContent.sort(by: { $0.id < $1.id })
             withAnimation {
@@ -123,20 +123,20 @@ class MultiRequestVM: ObservableObject {
         linesWithWarnings = 0
         linesWithErrors = 0
         totalParsed = 0
-        self.bussy = true
+        self.busy = true
         self.statusText = "Processing..."
         self.statusIconName = "timer"
     }
     
     func completeUI() {
-        self.bussy = false
+        self.busy = false
         self.status = .completed
         self.statusText = "Completed Successfully"
         self.statusIconName = "checkmark.circle.fill"
     }
     
     func completeWithErrorsUI() {
-        self.bussy = false
+        self.busy = false
         self.status = .completedWithErrors
         self.statusText = "Completed With Warnings"
         self.statusIconName = "checkmark.circle.fill"

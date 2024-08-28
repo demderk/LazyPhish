@@ -14,6 +14,7 @@ enum MainSelectedPage: CaseIterable, Identifiable {
     case single
     case multi
     case server
+    case analysis
     
     var title: String {
         switch self {
@@ -23,6 +24,9 @@ enum MainSelectedPage: CaseIterable, Identifiable {
             "Multi Request"
         case .server:
             "Reflector Server"
+        case .analysis:
+            "PhishAnalytics"
         }
+        
     }
 }

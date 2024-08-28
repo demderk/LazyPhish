@@ -23,9 +23,11 @@ struct MainView: View {
                         case .single:
                             vm.pageHolder.single
                                 .environmentObject(globalVM)
-                        case .server:
-                            vm.pageHolder.server
+                        case .analysis:
+                            vm.pageHolder.analysis
                                 .environmentObject(globalVM)
+                        case .server:
+                            Text("Whoops... This functionality is disabled")
                         }
                         
                         //                        Spacer()

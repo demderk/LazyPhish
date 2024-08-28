@@ -120,7 +120,7 @@ struct MultiRequestView: View {
             .toolbar {
                 ToolbarItem(placement: .navigation) {
                     HStack {
-                        if vm.bussy {
+                        if vm.busy {
                             Button {
                                 //                            vm.sendRequestQuerry()
                             } label: {
@@ -138,27 +138,12 @@ struct MultiRequestView: View {
                             Image(systemName: "play.fill")
                                 .padding(.horizontal, 8)
                         }
-                        .disabled(vm.bussy)
+                        .disabled(vm.busy)
                         .help("Execute Querry")
                         .keyboardShortcut(.return)
-                        HStack {
-                            if vm.bussy {
-                                ProgressView()
-                                    .progressViewStyle(.circular)
-                                    .scaleEffect(
-                                        CGSize(width: 0.5, height: 0.5))
-                                    .frame(width: 17, height: 17)
-                            } else {
-                                Image(systemName: vm.statusIconName)
-                            }
-                            Text(vm.statusText)
-                        }
-                        .padding(4)
-                        .padding(.trailing, 4)
-                        .padding(.horizontal, 8)
-                        .background(Color(
-                            nsColor: NSColor.lightGray.withAlphaComponent(0.1)))
-                        .clipShape(Capsule())
+                        StatusView(busy: $vm.busy,
+                                   iconName: $vm.statusIconName,
+                                   status: $vm.statusText)
                     }.padding(.trailing, 8)
                 }
                 if vm.linesWithErrors > 0 || vm.linesWithWarnings > 0 {

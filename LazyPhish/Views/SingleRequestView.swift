@@ -14,8 +14,13 @@ struct SingleRequestView: View {
     @FocusState var isEditing: Bool
     @EnvironmentObject var globalVM: GlobalVM
     
+    @State var deepMode: Bool = false
+    @State var deepMode2: Bool = false
+    @State var deepMode3: Bool = false
+    
     var body: some View {
         ScrollView {
+            // 100% horizontal space for scroll
             HStack {
                 Spacer()
             }
@@ -74,6 +79,17 @@ struct SingleRequestView: View {
                     }
                     .background(Color(nsColor: NSColor.controlBackgroundColor))
                     .clipShape(RoundedRectangle(cornerSize: CGSize(width: 16, height: 16)))
+                    HStack {
+//                        Spacer()
+                        Toggle("Deep Mode", isOn: $deepMode)
+                            .toggleStyle(BigToggleImageButton(image: Image(systemName: "sparkle.magnifyingglass")))
+                        Toggle("LazyPhish AI", isOn: $deepMode2)
+                            .toggleStyle(BigToggleImageButton(image: Image(systemName: "sparkle")))
+                        Toggle("Lookyloo", isOn: $deepMode3)
+                            .toggleStyle(BigToggleImageButton(image: Image(systemName: "eyes")))
+                        Spacer()
+                    }.padding(.top, 4)
+                     .padding(.horizontal, 24)
                     if let haveResult = vm.lastRequest {
                         VStack {
                             HStack {
@@ -127,61 +143,13 @@ struct SingleRequestView: View {
                             .padding([.bottom], 8)
                             .padding([.leading], 8)
                         HStack {
-                            Button(action: {
+                            PageButton(action: {
                                 globalVM.navigation.append(MainSelectedPage.multi)
-                            }, label: {
-                                VStack {
-                                    Image(systemName: "tablecells")
-                                        .font(.system(size: 32))
-                                        .fontWeight(.semibold)
-                                        .foregroundStyle(.blue)
-                                        .aspectRatio(contentMode: .fit)
-                                        .padding([.vertical], 16)
-                                        .padding([.leading], 9)
-                                        .padding([.trailing], 8)
-                                        .frame(width: 64, height: 68)
-                                        .background(
-                                            Color(
-                                                nsColor:
-                                                    NSColor.systemBlue.withAlphaComponent(0.08)))
-                                        .clipShape(
-                                            RoundedRectangle(
-                                                cornerSize:
-                                                    CGSize(
-                                                        width: 16,
-                                                        height: 16)))
-                                    Text("Queue Processor")
-                                        .padding([.top], 1)
-                                        .offset(CGSize(width: 2, height: 0))
-                                }
-                            }).buttonStyle(.plain)
+                            }, title: "Reflector", imageSystemName: "tablecells")
                                 .padding([.horizontal], 16)
-                            Button(action: {
+                            PageButton(action: {
                                 globalVM.navigation.append(MainSelectedPage.server)
-                            }, label: {
-                                VStack {
-                                    Image(systemName: "antenna.radiowaves.left.and.right")
-                                        .font(.system(size: 32))
-                                        .fontWeight(.semibold)
-                                        .foregroundStyle(.blue)
-                                        .aspectRatio(contentMode: .fit)
-                                        .padding([.vertical], 16)
-                                        .padding([.leading], 9)
-                                        .padding([.trailing], 8)
-                                        .frame(width: 64, height: 72)
-                                        .background(
-                                            Color(
-                                                nsColor: NSColor.systemBlue.withAlphaComponent(0.08)))
-                                        .clipShape(
-                                            RoundedRectangle(
-                                                cornerSize:
-                                                    CGSize(width: 16,
-                                                           height: 16)))
-                                    Text("Reflector")
-                                        .padding([.top], 1)
-                                        .offset(CGSize(width: 2, height: 0))
-                                }
-                            }).buttonStyle(.plain)
+                            }, title: "Reflector", imageSystemName: "antenna.radiowaves.left.and.right")
                                 .padding([.horizontal], 16)
                             
                             Spacer()
