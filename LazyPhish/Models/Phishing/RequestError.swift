@@ -81,6 +81,7 @@ enum OPRError: RequestError {
     case remoteError(response: String)
     case singleRequestCountExceeded
     case apiKeyUnreachable
+    case pipelineFirstIsNull
         
     var localizedDescription: String {
         switch self {
@@ -94,6 +95,8 @@ enum OPRError: RequestError {
             "OPR auth key is inaccessible."
         case .requestError:
             "OPR HTTPS Request error."
+        case .pipelineFirstIsNull:
+            "Pipeline execute method failed"
         }
     }
 }

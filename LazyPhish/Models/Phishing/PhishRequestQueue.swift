@@ -35,7 +35,6 @@ actor Semaphore {
 
 class PhishRequestQueue: PhishRequest {
     private(set) var phishInfo: [PhishInfo] = []
-    private var whoisSemaphore = Semaphore(count: 1)
     private var mainSemaphore = Semaphore(count: 100)
     
     init(_ urlStrings: [String] ) throws {
@@ -76,28 +75,14 @@ class PhishRequestQueue: PhishRequest {
         onQueue: DispatchQueue = DispatchQueue.main
     ) {
         Task {
-            phishInfo = await refreshRemoteData(phishInfo, requestCompleted: onRequestComplete)
+            phishInfo = await refreshRemoteData(phishInfo, collectMetrics: [YandexSQIPipeline(), OPRPipeline(), WhoisPipeline()], requestCompleted: onRequestComplete)
             onQueue.async {
                 onTaskComplete(self.phishInfo)
             }
         }
     }
-    
-    var sCount: UInt64 = 1
-    
-    public override func processWhois(_ remoteObject: any StrictRemote) async -> any StrictRemote {
-        await whoisSemaphore.wait()
-        let x = await super.processWhois(remoteObject)
-        if sCount < 50 {
-            await whoisSemaphore.signal(count: 10)
-            sCount += 10
-        } else {
-            await whoisSemaphore.signal(count: 1)
-        }
-        return x
-    }
-    
-    override func refreshRemoteData(_ base: any StrictRemote, collectMetrics: Set<PhishRequestMetric>) async -> PhishInfo {
+    //    
+    override func refreshRemoteData(_ base: any StrictRemote, collectMetrics: [PhishingPipelineObject]) async -> PhishInfo {
         await mainSemaphore.wait()
         let x = await super.refreshRemoteData(base, collectMetrics: collectMetrics)
         await mainSemaphore.signal()
@@ -106,16 +91,29 @@ class PhishRequestQueue: PhishRequest {
     
     private func refreshRemoteData(
         _ base: [StrictRemote],
+        collectMetrics: [PhishingPipelineObject],
         requestCompleted: ((PhishInfo) -> Void)? = nil,
         onQueue: DispatchQueue = DispatchQueue.main
     ) async -> [PhishInfo] {
         var remote = base
-        remote = await processOPR(remoteObjects: remote)
+//        remote = await processOPR(remoteObjects: remote)
+        
+        var metrics = collectMetrics
+        
+        for metric in collectMetrics {
+            if let pipe = metric as? PhishingArrayPipelineObject {
+                remote = await pipe.executeAll(data: base)
+            } else {
+                metrics.append(metric)
+            }
+        }
+        
+        let finalMetrics = metrics
         
         return await withTaskGroup(of: PhishInfo.self) { taskGroup in
             for item in remote {
                 taskGroup.addTask {
-                    let response = await self.refreshRemoteData(item, collectMetrics: [.yandexSQI, .whois])
+                    let response = await self.refreshRemoteData(item, collectMetrics: finalMetrics)
                     return response
                 }
             }
