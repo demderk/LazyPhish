@@ -68,7 +68,6 @@ class KeyService {
             if force {
                 SecItemDelete(query as CFDictionary) // Удаление существующего элемента (если есть)
                 let status = SecItemAdd(query as CFDictionary, nil)
-                print(status)
             } else {
                 var found = false
                 switch keyChain {
@@ -80,7 +79,6 @@ class KeyService {
                 if !found {
                     SecItemDelete(query as CFDictionary) // Удаление существующего элемента (если есть)
                     let status = SecItemAdd(query as CFDictionary, nil)
-                    print("same \(status)")
                     switch keyChain {
                     case .virusTotal:
                         lastSucceedVTKey = data
@@ -99,9 +97,8 @@ class KeyService {
         DispatchQueue.global().async {
             
             let query = buildReadQuery(path: keyChain)
-            
             var item: AnyObject?
-            let status = SecItemCopyMatching(query as CFDictionary, &item)
+            SecItemCopyMatching(query as CFDictionary, &item)
             
             if let success = item as? Data {
                 let str = String(decoding: success, as: UTF8.self)

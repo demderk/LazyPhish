@@ -40,7 +40,12 @@ struct PhishInfo: StrictRemote {
     var host: String { url.host()! } // 100% non-nil value is excepted
     var urlLength: Int { url.formatted().count }
     var prefixCount: Int { url.formatted().components(separatedBy: ["-"]).count - 1 }
-    var subDomainCount: Int { url.host()!.components(separatedBy: ["."]).count - 2 }
+    var subDomainCount: Int {
+        url.host()!
+            .replacing("www.", with: "")
+            .components(separatedBy: ["."])
+            .count - 2
+    }
     var hasErrors: Bool { remote.hasErrors }
     var remoteStatus: RemoteStatus { remote.status }
     

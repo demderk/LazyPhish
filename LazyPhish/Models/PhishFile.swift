@@ -29,7 +29,6 @@ struct PhishFile: FileDocument {
         }
         let encoder = CSVEncoder { $0.headers = MLEntry.getHeaders() }
         let encodedData = try encoder.encode(entries)
-        print(String(decoding: encodedData, as: UTF8.self))
         return FileWrapper(regularFileWithContents: encodedData)
     }
 }
@@ -88,7 +87,6 @@ struct RawPhishFile: FileDocument {
         let converted = entries.map({ RawPhishInfo($0) })
         let encodedData = try encoder.encode(converted)
         
-        print(String(decoding: encodedData, as: UTF8.self))
         return FileWrapper(regularFileWithContents: encodedData)
     }
 }

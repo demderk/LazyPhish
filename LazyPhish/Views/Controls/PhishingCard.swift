@@ -14,7 +14,7 @@ struct PhishingCard: View {
     @State var tagList: [MetricData] = []
     
     var legitPercent: (percent: Int, risk: RiskLevel) {
-        let predictML = PhishML()
+        let predictML = try! PhishML()
         let mlResult = predictML.predictPhishing(input: request.getMLEntry()!)
         if let prob = mlResult.IsPhishingProbability.first(where: { $0.key == 0 })?.value {
             let percent = Int(prob * 100)

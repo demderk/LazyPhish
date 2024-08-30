@@ -119,9 +119,8 @@ struct KeysSettingsView: View {
             } else {
                 securedBody
             }
-        }.onChange(of: state) { newValue in
+        }.onChange(of: state) { _ in
             if saveMode {
-                print("State changed: \(newValue)")
                 KeyService.saveAllKeys(virusTotal: VTKey, opr: OPRKey)
             }
         }

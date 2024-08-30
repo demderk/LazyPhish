@@ -100,7 +100,6 @@ struct SingleRequestView: View {
                                     .font(.title3)
                                     .fontWeight(.bold)
                                     .fontDesign(.default)
-
                                 Spacer().frame(width: 8)
                                 Text(request.host)
                                     .font(.title)
@@ -127,10 +126,6 @@ struct SingleRequestView: View {
                             PageButton(action: {
                                 globalVM.navigation.append(MainSelectedPage.multi)
                             }, title: "Request Queue", imageSystemName: "tablecells")
-                            .padding([.horizontal], 16)
-                            PageButton(action: {
-                                globalVM.navigation.append(MainSelectedPage.server)
-                            }, title: "Reflector", imageSystemName: "antenna.radiowaves.left.and.right")
                             .padding([.horizontal], 16)
                             
                             Spacer()

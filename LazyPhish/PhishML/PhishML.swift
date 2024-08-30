@@ -32,13 +32,14 @@ extension MLEntry {
 }
 
 class PhishML {
-    private var model = LazyPhishML()
+    private var model: LazyPhishML
     
-    init() {
+    init() throws {
         do {
             try self.model = LazyPhishML(configuration: MLModelConfiguration())
         } catch {
             Logger.MLModelLogger.error("PhishML | LazyPhishML | Initialization error")
+            throw error
         }
     }
     

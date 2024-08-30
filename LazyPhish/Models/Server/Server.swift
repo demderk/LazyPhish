@@ -34,18 +34,16 @@ class Server {
         category: "Reflection Server"
     )
     
-    private static let phishML = PhishML()
+    private static let phishML = try! PhishML()
     
     func startServer() {
         guard app == nil else {
-            print("Server already created")
             return
         }
         
         app = try! Application(.detect())
         
         guard let server = app else {
-            print("error")
             return
         }
         
@@ -63,7 +61,6 @@ class Server {
                 )
                 return response
             } else {
-                print("not")
             }
             return PhishingSite(host: "-1", trustIndex: -1, isPhishing: false, action: .accept)
         }
@@ -75,7 +72,6 @@ class Server {
     
     func stopServer() {
         guard let server = app else {
-            print("Already started")
             return
         }
         server.shutdown()

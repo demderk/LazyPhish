@@ -34,7 +34,6 @@ final class PhishInfoFormatter {
 \W{0,}0[xX][0-9a-fA-F]{2}
 """#
     
-    
     static func getURLIPMode(_ url: URL) -> Bool {
         guard let ipv4Regex = try? Regex(URLIPv4Regex),
               let ipv4RegexBin = try? Regex(URLIPv4RegexBinary),

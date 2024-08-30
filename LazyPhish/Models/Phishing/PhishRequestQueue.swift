@@ -61,10 +61,6 @@ class PhishRequestQueue: PhishRequest {
         try self.init(urlStrings)
     }
     
-    override init() {
-        
-    }
-    
     public func phishInfo(_ urlStrings: [String]) throws {
         phishInfo.append(contentsOf: try urlStrings.map({ try PhishInfo($0) }))
     }
@@ -104,8 +100,6 @@ class PhishRequestQueue: PhishRequest {
         onQueue: DispatchQueue = DispatchQueue.main
     ) async -> [PhishInfo] {
         var remote = base
-//        remote = await processOPR(remoteObjects: remote)
-        
         var metrics: [PhishingPipelineObject] = []
         
         for metric in collectMetrics {
@@ -115,7 +109,6 @@ class PhishRequestQueue: PhishRequest {
                 metrics.append(metric)
             }
         }
-        
         let finalMetrics = metrics
         
         return await withTaskGroup(of: PhishInfo.self) { taskGroup in
@@ -128,8 +121,7 @@ class PhishRequestQueue: PhishRequest {
             
             var responses: [PhishInfo] = []
             for await response in taskGroup {
-                // Получение whois нужно запускать обязательно последовательно, иначе оно падает.
-                // let result = await self.refreshRemoteData(response, collectMetrics: [.whois])
+                
                 let result = response
                 onQueue.async {
                     requestCompleted?(result)
