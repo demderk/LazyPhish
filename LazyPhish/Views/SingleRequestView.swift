@@ -25,13 +25,14 @@ struct SingleRequestView: View {
             VStack {
                 Spacer()
                     .frame(height: 112)
-                VStack {                    VStack {
-                    Text("LazyPhish")
-                        .font(.system(size: 48, weight: .heavy, design: .default))
-                        .padding([.bottom], 2)
-                    Text("Phishing Security. Evolved.")
-                        .font(.title2)
-                }
+                VStack {
+                    VStack {
+                        Text("LazyPhish")
+                            .font(.system(size: 48, weight: .heavy, design: .default))
+                            .padding([.bottom], 2)
+                        Text("Phishing Security. Evolved.")
+                            .font(.title2)
+                    }
                 }
                 VStack {
                     HStack {
@@ -82,13 +83,13 @@ struct SingleRequestView: View {
                     }
                     .background(Color(nsColor: NSColor.controlBackgroundColor))
                     .clipShape(RoundedRectangle(cornerSize: CGSize(width: 16, height: 16)))
-                    HStack {
-                        Toggle("Deep Mode", isOn: $deepMode)
-                            .toggleStyle(BigToggleImageButton(
-                                image: Image(systemName: "sparkle.magnifyingglass")))
-                        Spacer()
-                    }.padding(.top, 4)
-                        .padding(.horizontal, 24)
+//                    HStack {
+//                        Toggle("Deep Mode", isOn: $deepMode)
+//                            .toggleStyle(BigToggleImageButton(
+//                                image: Image(systemName: "sparkle.magnifyingglass")))
+//                        Spacer()
+//                    }.padding(.top, 4)
+//                        .padding(.horizontal, 24)
                     if let request = vm.lastRequest {
                         VStack {
                             HStack(alignment: .center) {

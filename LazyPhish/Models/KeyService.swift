@@ -67,7 +67,7 @@ class KeyService {
             
             if force {
                 SecItemDelete(query as CFDictionary) // Удаление существующего элемента (если есть)
-                let status = SecItemAdd(query as CFDictionary, nil)
+                SecItemAdd(query as CFDictionary, nil)
             } else {
                 var found = false
                 switch keyChain {
@@ -78,7 +78,7 @@ class KeyService {
                 }
                 if !found {
                     SecItemDelete(query as CFDictionary) // Удаление существующего элемента (если есть)
-                    let status = SecItemAdd(query as CFDictionary, nil)
+                    SecItemAdd(query as CFDictionary, nil)
                     switch keyChain {
                     case .virusTotal:
                         lastSucceedVTKey = data

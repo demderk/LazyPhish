@@ -22,22 +22,22 @@ struct KeysSettingsView: View {
     
     var securedBody: some View {
         VStack(alignment: .trailing) {
-            VStack {
-                HStack {
-                    Spacer()
-                    Text("VirusTotal API Key:")
-                    TextField("VirusTotal", text: $VTKey)
-                        .textFieldStyle(.squareBorder)
-                        .frame(width: 512)
-                        .focused($vtFieldFocus)
-                        .onChange(of: vtFieldFocus) { _ in
-                            if !saveMode {
-                                saveMode = !saveMode
-                            }
-                        }
-                }
-            }.padding(.horizontal, 32)
-            Spacer().frame(height: 8)
+//            VStack {
+//                HStack {
+//                    Spacer()
+//                    Text("VirusTotal API Key:")
+//                    TextField("VirusTotal", text: $VTKey)
+//                        .textFieldStyle(.squareBorder)
+//                        .frame(width: 512)
+//                        .focused($vtFieldFocus)
+//                        .onChange(of: vtFieldFocus) { _ in
+//                            if !saveMode {
+//                                saveMode = !saveMode
+//                            }
+//                        }
+//                }
+//            }.padding(.horizontal, 32)
+//            Spacer().frame(height: 8)
             VStack {
                 VStack {
                     HStack {
@@ -74,9 +74,6 @@ struct KeysSettingsView: View {
                         .clipShape(RoundedRectangle(cornerSize: CGSize(width: 8, height: 8)))
                     })
                         .buttonStyle(.plain)
-                    Button(action: {}) {
-                        Text("eee")
-                    }.buttonStyle(BigImageButton(image: Image(systemName: "cross")))
                     Spacer()
                 }.padding(.top, 8)
             }

@@ -13,9 +13,9 @@ import Cocoa
 struct SettingsView: View {
     var body: some View {
         TabView {
-            Text("General").tabItem {
-                Label("General", systemImage: "gear")
-            }
+//            Text("General").tabItem {
+//                Label("General", systemImage: "gear")
+//            }
             KeysSettingsView()
                 .tabItem {
                     Label("Keys", systemImage: "key")

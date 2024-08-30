@@ -72,7 +72,7 @@ class PhishRequestQueue: PhishRequest {
         phishInfo.append(contentsOf: try urlStrings.map({ try PhishInfo($0) }))
     }
     
-    //MARK: Main logic
+    // MARK: Main logic
    
     public func refreshRemoteData(
         onRequestComplete: ((PhishInfo) -> Void)?,
