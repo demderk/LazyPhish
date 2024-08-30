@@ -13,15 +13,15 @@ struct MetricData {
     var value: String
 }
 
-enum Metric: CaseIterable {
-    case isIP
-    case haveWhois
-    case creationDate
-    case urlLength
-    case yandexSQI
-    case OPR
-    case prefixCount
-    case subDomainCount
+enum Metric: Int, CaseIterable {
+    case isIP = 3
+    case haveWhois = 4
+    case creationDate = 0
+    case urlLength = 5
+    case yandexSQI = 1
+    case OPR = 2
+    case prefixCount = 6
+    case subDomainCount = 7
 }
 
 extension MLEntry {
@@ -65,7 +65,13 @@ extension PhishInfo {
                 metrics[i] = MetricData(risk: risk, value: text)
             case .creationDate:
                 let risk = mlModel.getRisk(entry: i)
-                let text = self.whois?.creationDate?.description ?? "Creation data unavailable"
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd MMMM yyyy"
+                var text = "Creation data unavailable"
+                dateFormatter.locale = Locale(identifier: "en_US")
+                if let date = self.whois?.creationDate {
+                    text = "Created: " + dateFormatter.string(from: date)
+                }
                 metrics[i] = MetricData(risk: risk, value: text)
             case .urlLength:
                 let risk = mlModel.getRisk(entry: i)

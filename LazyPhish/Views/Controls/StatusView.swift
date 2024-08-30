@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-//struct StatusViewConfig {
-//    var
-//}
-
 struct StatusView: View {
     @Binding var busy: Bool
     @Binding var iconName: String

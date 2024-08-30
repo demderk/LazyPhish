@@ -43,6 +43,7 @@
 		30815DFB2BF37A1A00A7DBAC /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30815DFA2BF37A1A00A7DBAC /* Server.swift */; };
 		30815E002BF3B55200A7DBAC /* PhishML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30815DFF2BF3B55200A7DBAC /* PhishML.swift */; };
 		30815E022BF3B66C00A7DBAC /* LazyPhishML.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 30815E012BF3B66C00A7DBAC /* LazyPhishML.mlpackage */; };
+		30AA73F52C806A400075FAD3 /* PhishingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA73F42C806A400075FAD3 /* PhishingCard.swift */; };
 		30AF623C2BDABFA80004E8BF /* Authority.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30AF623B2BDABFA80004E8BF /* Authority.plist */; };
 		30AF623E2BDAC6310004E8BF /* PhishFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AF623D2BDAC6310004E8BF /* PhishFile.swift */; };
 		30AF62412BDAC9420004E8BF /* CodableCSV in Frameworks */ = {isa = PBXBuildFile; productRef = 30AF62402BDAC9420004E8BF /* CodableCSV */; };
@@ -107,6 +108,7 @@
 		30815DFA2BF37A1A00A7DBAC /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		30815DFF2BF3B55200A7DBAC /* PhishML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishML.swift; sourceTree = "<group>"; };
 		30815E012BF3B66C00A7DBAC /* LazyPhishML.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = LazyPhishML.mlpackage; sourceTree = "<group>"; };
+		30AA73F42C806A400075FAD3 /* PhishingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishingCard.swift; sourceTree = "<group>"; };
 		30AF623B2BDABFA80004E8BF /* Authority.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Authority.plist; sourceTree = "<group>"; };
 		30AF623D2BDAC6310004E8BF /* PhishFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishFile.swift; sourceTree = "<group>"; };
 		30B1C5CE2BD020E000D275D4 /* ThrowingOPRInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrowingOPRInfoList.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 			children = (
 				304BE3932C73173C001A2AB0 /* PageButton.swift */,
 				304BE3952C73819C001A2AB0 /* StatusView.swift */,
+				30AA73F42C806A400075FAD3 /* PhishingCard.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				300396652BA5BF07001B6C2C /* PhishRequestQueue.swift in Sources */,
 				3037D1572B9B6C280012104E /* MLEntry.swift in Sources */,
 				300367882B95CE5B00D3C84C /* PhishRequest.swift in Sources */,
+				30AA73F52C806A400075FAD3 /* PhishingCard.swift in Sources */,
 				300396612BA5BCD0001B6C2C /* MetricStatus.swift in Sources */,
 				30815DF82BF3756500A7DBAC /* ServerVM.swift in Sources */,
 				30815E002BF3B55200A7DBAC /* PhishML.swift in Sources */,

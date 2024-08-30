@@ -47,7 +47,7 @@ class PhishRequest {
             
                 var result: StrictRemote = base
                 for item in collectMetrics {
-                    taskGroup.addTask { [self] in
+                    taskGroup.addTask {
                         await item.execute(data: base)
                     }
                 }

@@ -13,9 +13,10 @@ class SingleRequestViewModel: ObservableObject {
     @Published var errorText: String?
     @Published var lastRequest: PhishInfo?
     @Published var tagList: [MetricData] = []
-    
-    private var requestIsPending: Bool = false
+    @Published var requestIsPending: Bool = false
+
     private var phishRequest: PhishRequestSingle?
+    private var cardIsPresented: Bool = false
     
     func makeRequest() {
         if !request.isEmpty && !requestIsPending {
@@ -23,13 +24,15 @@ class SingleRequestViewModel: ObservableObject {
                 requestIsPending = true
                 phishRequest = try PhishRequestSingle(request, preActions: [.makeHttp])
                 phishRequest?.refreshRemoteData { data in
-                    withAnimation {
-                        self.lastRequest = data
-                        self.tagList = Array(data.getMetricSet()!.values.sorted(by: { $0.risk > $1.risk }))
-                        self.requestIsPending = false
+                    if !self.cardIsPresented {
+                        withAnimation {
+                            self.presentCard(data: data)
+                        }
+                    } else {
+                        self.presentCard(data: data)
                     }
-                    let predictML = PhishML()
-                    print(predictML.predictPhishing(input: (self.phishRequest?.phishInfo.getMLEntry())!))
+//                    self.cardIsPresented = true
+
                 }
             } catch {
                 // TODO: Show error on page
@@ -38,5 +41,10 @@ class SingleRequestViewModel: ObservableObject {
             }
         }
 //        objectWillChange.send()
+    }
+    
+    func presentCard(data: PhishInfo) {
+        self.lastRequest = data
+        self.requestIsPending = false
     }
 }

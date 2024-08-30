@@ -75,14 +75,22 @@ class PhishRequestQueue: PhishRequest {
         onQueue: DispatchQueue = DispatchQueue.main
     ) {
         Task {
-            phishInfo = await refreshRemoteData(phishInfo, collectMetrics: [YandexSQIPipeline(), OPRPipeline(), WhoisPipeline()], requestCompleted: onRequestComplete)
+            phishInfo = await refreshRemoteData(
+                phishInfo,
+                collectMetrics: [YandexSQIPipeline(),
+                                 OPRPipeline(),
+                                 WhoisPipeline()],
+                requestCompleted: onRequestComplete)
             onQueue.async {
                 onTaskComplete(self.phishInfo)
             }
         }
     }
-    //    
-    override func refreshRemoteData(_ base: any StrictRemote, collectMetrics: [PhishingPipelineObject]) async -> PhishInfo {
+
+    override func refreshRemoteData(
+        _ base: any StrictRemote,
+        collectMetrics: [PhishingPipelineObject]
+    ) async -> PhishInfo {
         await mainSemaphore.wait()
         let x = await super.refreshRemoteData(base, collectMetrics: collectMetrics)
         await mainSemaphore.signal()
@@ -98,7 +106,7 @@ class PhishRequestQueue: PhishRequest {
         var remote = base
 //        remote = await processOPR(remoteObjects: remote)
         
-        var metrics = collectMetrics
+        var metrics: [PhishingPipelineObject] = []
         
         for metric in collectMetrics {
             if let pipe = metric as? PhishingArrayPipelineObject {

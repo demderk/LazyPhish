@@ -21,4 +21,8 @@ extension Logger {
     static let OPRRequestLogger = Logger(
         subsystem: subsystem,
         category: "OPR Request")
+    
+    static let MLModelLogger = Logger(
+        subsystem: subsystem,
+        category: "ML Model")
 }

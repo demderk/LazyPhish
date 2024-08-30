@@ -8,6 +8,7 @@
 import Foundation
 
 import CoreML
+import OSLog
 
 extension RiskLevel {
     var raw64: Int64 {
@@ -32,6 +33,14 @@ extension MLEntry {
 
 class PhishML {
     private var model = LazyPhishML()
+    
+    init() {
+        do {
+            try self.model = LazyPhishML(configuration: MLModelConfiguration())
+        } catch {
+            Logger.MLModelLogger.error("PhishML | LazyPhishML | Initialization error")
+        }
+    }
     
     func predictPhishing(input: MLEntry) -> LazyPhishMLOutput {
         if let predicion = try? model.prediction(input: input.MLInput) {

@@ -52,8 +52,8 @@ class Server {
         server.post("phishing") { req async throws in
             if let body = try? req.content.decode(PhishingInfo.self),
                let request = try? PhishRequestSingle(body.host),
-               let mlEntry = await request.processRequest().getMLEntry() 
-            {
+               let mlEntry = await request.processRequest().getMLEntry() {
+                
                 let prediction = Server.phishML.predictPhishing(input: mlEntry)
                 let response = PhishingSite(
                     host: body.host,

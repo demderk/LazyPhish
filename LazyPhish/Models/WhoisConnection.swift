@@ -124,7 +124,7 @@ class WhoisConnection {
         let establishedConnection = connection ?? establishConnection()
         establishedConnection.start(queue: .global())
         establishedConnection.send(
-            content: "\(host)\r\n".data(using: .utf8),
+            content: Data("\(host)\r\n".utf8),
             completion: .idempotent)
         let response: String = try await withCheckedThrowingContinuation { continuation in
             establishedConnection.receiveMessage { content, _, _, error in
@@ -136,10 +136,7 @@ class WhoisConnection {
                     continuation.resume(throwing: WhoisError.responseIsNil)
                     return
                 }
-                guard let stringResponse = String(data: recievedData, encoding: .utf8) else {
-                    continuation.resume(throwing: WhoisError.badResponse)
-                    return
-                }
+                let stringResponse = String(decoding: recievedData, as: UTF8.self)
                 continuation.resume(returning: stringResponse)
             }
         }
@@ -174,13 +171,13 @@ class WhoisConnection {
             throw WhoisError.badRequest(description: "Host is incorrect. Hostname: \(host)")
         }
            
-        var master = "\(hostComponents[1]).\(hostComponents[0])"
-        let response = try await makeRequest(host: master)
+        let parent = "\(hostComponents[1]).\(hostComponents[0])"
+        let response = try await makeRequest(host: parent)
         let responseArray = buildResponseArray(responseText: response)
         if let refer = responseArray.first(where: { $0.key == "refer" }) {
             server = refer.value
             try await Task.sleep(for: .seconds(0.1))
-            return try await makeRecursiveRequest(host: master)
+            return try await makeRecursiveRequest(host: parent)
         }
         else {
             return response

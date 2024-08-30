@@ -15,8 +15,6 @@ struct SingleRequestView: View {
     @EnvironmentObject var globalVM: GlobalVM
     
     @State var deepMode: Bool = false
-    @State var deepMode2: Bool = false
-    @State var deepMode3: Bool = false
     
     var body: some View {
         ScrollView {
@@ -27,20 +25,13 @@ struct SingleRequestView: View {
             VStack {
                 Spacer()
                     .frame(height: 112)
-                VStack {
-//                    Image("logo")
-//                        .resizable()
-//                        .frame(
-//                            width: 80,
-//                            height: 80)
-//                    Spacer().frame(width: 16)
-                    VStack {
-                        Text("LazyPhish")
-                            .font(.system(size: 48, weight: .heavy, design: .default))
-                            .padding([.bottom], 2)
-                        Text("Phishing Security. Evolved.")
-                            .font(.title2)
-                    }
+                VStack {                    VStack {
+                    Text("LazyPhish")
+                        .font(.system(size: 48, weight: .heavy, design: .default))
+                        .padding([.bottom], 2)
+                    Text("Phishing Security. Evolved.")
+                        .font(.title2)
+                }
                 }
                 VStack {
                     HStack {
@@ -48,6 +39,8 @@ struct SingleRequestView: View {
                             .focused($isEditing)
                             .textFieldStyle(.plain)
                             .font(.title3)
+                            .fontWeight(.semibold)
+                            .opacity(0.9)
                             .lineLimit(1)
                             .padding([.leading], 24)
                             .padding([.vertical], 21)
@@ -70,67 +63,55 @@ struct SingleRequestView: View {
                         Button(action: {
                             vm.makeRequest()
                         }, label: {
-                            Image(systemName: "arrow.forward")
-                                .font(.system(size: 17))
-                                .fontWeight(.bold)
-                                .padding([.horizontal], 24)
-                                .padding([.vertical], 23)
+                            if !vm.requestIsPending {
+                                Image(systemName: "arrow.forward")
+                                    .font(.system(size: 17))
+                                    .fontWeight(.bold)
+                                    .padding([.horizontal], 24)
+                                    .padding([.vertical], 23)
+                            } else {
+                                ProgressView()
+                                    .progressViewStyle(.circular)
+                                    .scaleEffect(
+                                        CGSize(width: 0.6, height: 0.6))
+                                    .frame(width: 17, height: 17)
+                                    .padding([.horizontal], 24)
+                                    .padding([.vertical], 23)
+                            }
                         }).buttonStyle(.borderless)
                     }
                     .background(Color(nsColor: NSColor.controlBackgroundColor))
                     .clipShape(RoundedRectangle(cornerSize: CGSize(width: 16, height: 16)))
                     HStack {
-//                        Spacer()
                         Toggle("Deep Mode", isOn: $deepMode)
-                            .toggleStyle(BigToggleImageButton(image: Image(systemName: "sparkle.magnifyingglass")))
-                        Toggle("LazyPhish AI", isOn: $deepMode2)
-                            .toggleStyle(BigToggleImageButton(image: Image(systemName: "sparkle")))
-                        Toggle("Lookyloo", isOn: $deepMode3)
-                            .toggleStyle(BigToggleImageButton(image: Image(systemName: "eyes")))
+                            .toggleStyle(BigToggleImageButton(
+                                image: Image(systemName: "sparkle.magnifyingglass")))
                         Spacer()
                     }.padding(.top, 4)
-                     .padding(.horizontal, 24)
-                    if let haveResult = vm.lastRequest {
+                        .padding(.horizontal, 24)
+                    if let request = vm.lastRequest {
                         VStack {
-                            HStack {
-                                Text("Request Result")
+                            HStack(alignment: .center) {
+                                Text("LazyPhish")
                                     .font(.title)
                                     .fontWeight(.semibold)
+                                Spacer().frame(width: 8)
+                                Image(systemName: "arrow.right")
+                                    .font(.title3)
+                                    .fontWeight(.bold)
+                                    .fontDesign(.default)
+
+                                Spacer().frame(width: 8)
+                                Text(request.host)
+                                    .font(.title)
+                                    .fontWeight(.semibold)
+                                    .textCase(.lowercase)
+                                    .offset(CGSize(width: 0, height: -2))
                                 Spacer()
                             }.padding([.top], 16)
                                 .padding([.bottom], 8)
                                 .padding([.leading], 8)
-                            VStack {
-                                HStack {
-                                    VStack(alignment: .leading) {
-                                        Text(haveResult.host)
-                                            .textCase(.uppercase)
-                                            .font(.title2)
-                                            .fontWeight(.bold)
-                                        
-                                        WrappingHStack(vm.tagList, id: \.self) { tag in
-                                            Text(tag.value)
-                                                .font(.body)
-                                                .fontWeight(.semibold)
-                                                .lineLimit(1)
-                                                .fixedSize(horizontal: true, vertical: false)
-                                                .padding([.horizontal], 8)
-                                                .padding([.vertical], 4)
-                                                .background(tag.risk.getColor())
-                                                .clipShape(
-                                                    RoundedRectangle(
-                                                        cornerSize:
-                                                            CGSize(
-                                                                width: 16,
-                                                                height: 16)))
-                                                .padding([.vertical], 8)
-                                        }.frame(minWidth: 512)
-                                    }.padding(16)
-                                    //                                Spacer()
-                                }
-                            }
-                            .background(Color(nsColor: NSColor.controlBackgroundColor))
-                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 16, height: 16)))
+                            PhishingCard(request: $vm.lastRequest, bussy: $vm.requestIsPending)
                         }
                     }
                     VStack {
@@ -145,12 +126,12 @@ struct SingleRequestView: View {
                         HStack {
                             PageButton(action: {
                                 globalVM.navigation.append(MainSelectedPage.multi)
-                            }, title: "Reflector", imageSystemName: "tablecells")
-                                .padding([.horizontal], 16)
+                            }, title: "Request Queue", imageSystemName: "tablecells")
+                            .padding([.horizontal], 16)
                             PageButton(action: {
                                 globalVM.navigation.append(MainSelectedPage.server)
                             }, title: "Reflector", imageSystemName: "antenna.radiowaves.left.and.right")
-                                .padding([.horizontal], 16)
+                            .padding([.horizontal], 16)
                             
                             Spacer()
                         }.padding([.horizontal], 16)

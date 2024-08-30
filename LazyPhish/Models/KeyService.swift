@@ -21,7 +21,6 @@ class KeyService {
         lastSucceedOPR
     }
     
-    
     private static let serviceName = "com.LazyFusion.LazyPhish.Keys"
     private static var lastSucceedVTKey: String? {
         didSet {
@@ -37,7 +36,6 @@ class KeyService {
             }
         }
     }
-    
     
     static private func buildReadQuery(path: KeyServicePath) -> CFDictionary {
         let query: [String: Any] = [

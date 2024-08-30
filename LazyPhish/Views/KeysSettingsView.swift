@@ -80,7 +80,7 @@ struct KeysSettingsView: View {
                     Spacer()
                 }.padding(.top, 8)
             }
-        }.onAppear() {
+        }.onAppear {
             KeyService.readKeychainKey(path: .opr) { key in
                 if let val = key {
                     OPRKey = val
@@ -133,7 +133,7 @@ struct KeysSettingsView: View {
     }
     
     func auth() {
-        var authObject = LAContext()
+        let authObject = LAContext()
         var error: NSError?
         
         if authObject.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
@@ -147,8 +147,6 @@ struct KeysSettingsView: View {
         }
     }
 }
-
-
 #Preview {
     KeysSettingsView()
 }
