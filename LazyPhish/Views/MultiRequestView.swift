@@ -122,6 +122,7 @@ struct MultiRequestView: View {
                     HStack {
                         if vm.busy {
                             Button {
+                                vm.cancel()
                             } label: {
                                 Image(systemName: "stop.fill")
                                     .padding(.horizontal, 8)

@@ -34,8 +34,11 @@ actor Semaphore {
 }
 
 class PhishRequestQueue: PhishRequest {
+    private var isCanceled: Bool = false
     private(set) var phishInfo: [PhishInfo] = []
     private var mainSemaphore = Semaphore(count: 100)
+    
+    // MARK: INITS
     
     init(_ urlStrings: [String] ) throws {
         phishInfo.append(contentsOf: try urlStrings.map({ try PhishInfo($0) }))
@@ -57,6 +60,10 @@ class PhishRequestQueue: PhishRequest {
         phishInfo.append(contentsOf: try urls.map({ try PhishInfo(url: $0) }))
     }
     
+    override init() {
+        super.init()
+    }
+    
     convenience init(_ urlStrings: String...) throws {
         try self.init(urlStrings)
     }
@@ -65,6 +72,8 @@ class PhishRequestQueue: PhishRequest {
         phishInfo.append(contentsOf: try urlStrings.map({ try PhishInfo($0) }))
     }
     
+    //MARK: Main logic
+   
     public func refreshRemoteData(
         onRequestComplete: ((PhishInfo) -> Void)?,
         onTaskComplete: @escaping (([PhishInfo]) -> Void),
@@ -91,6 +100,10 @@ class PhishRequestQueue: PhishRequest {
         let x = await super.refreshRemoteData(base, collectMetrics: collectMetrics)
         await mainSemaphore.signal()
         return x
+    }
+    
+    public func cancel() {
+        isCanceled = true
     }
     
     private func refreshRemoteData(
@@ -121,7 +134,9 @@ class PhishRequestQueue: PhishRequest {
             
             var responses: [PhishInfo] = []
             for await response in taskGroup {
-                
+                guard !isCanceled else {
+                    return responses
+                }
                 let result = response
                 onQueue.async {
                     requestCompleted?(result)

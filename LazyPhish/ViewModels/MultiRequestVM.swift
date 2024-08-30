@@ -28,6 +28,7 @@ class MultiRequestVM: ObservableObject {
     @Published var RAWExportIsPresented = false
     @Published var readyForExport = false
     @Published var busy = false
+    @Published var isCanceled = false
     @Published var status: RemoteStatus = .planned
     @Published var statusIconName = "checkmark.circle.fill"
     @Published var statusText = "Ready"
@@ -36,6 +37,7 @@ class MultiRequestVM: ObservableObject {
     @Published var totalParsed = 0
     
     private var engine = PhishRequestQueue()
+    private var lastUrlsCount = -1
     
     var resultingDocument: PhishFile = PhishFile([])
     var RAWResultingDocument: RawPhishFile = RawPhishFile([])
@@ -87,6 +89,7 @@ class MultiRequestVM: ObservableObject {
             self.statusIconName = "xmark.circle.fill"
             return
         }
+        lastUrlsCount = urls.count
         processUI()
         engine.refreshRemoteData { [self] data in
             tableContent.append(data)
@@ -124,15 +127,27 @@ class MultiRequestVM: ObservableObject {
         linesWithErrors = 0
         totalParsed = 0
         self.busy = true
+        self.isCanceled = false
         self.statusText = "Processing..."
         self.statusIconName = "timer"
     }
     
+    func cancel() {
+        engine.cancel()
+        isCanceled = true
+    }
+    
     func completeUI() {
         self.busy = false
-        self.status = .completed
-        self.statusText = "Completed Successfully"
-        self.statusIconName = "checkmark.circle.fill"
+        if isCanceled {
+            self.status = .canceled
+            self.statusText = "Run Canceled | Processed \(totalParsed) of \(lastUrlsCount)"
+            self.statusIconName = "play.slash.fill"
+        } else {
+            self.status = .completed
+            self.statusText = "Completed Successfully"
+            self.statusIconName = "checkmark.circle.fill"
+        }
     }
     
     func completeWithErrorsUI() {
