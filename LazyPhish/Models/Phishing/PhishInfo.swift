@@ -15,10 +15,19 @@ protocol StrictURL {
 
 protocol StrictRemote: StrictURL {
     var remote: PhishInfoRemote { get set }
+    var modules: [any ModuleBehavior] {get set}
+}
+
+extension StrictRemote {
+    mutating func append(remote: StrictRemote) {
+        self.remote.append(remote: remote.remote)
+        self.modules.append(contentsOf: remote.modules)
+    }
 }
 
 struct PhishInfo: StrictRemote {
-    
+    var modules: [any ModuleBehavior] = []
+        
     let url: URL
 
     var remote = PhishInfoRemote()
@@ -55,7 +64,7 @@ struct PhishInfo: StrictRemote {
     init(_ urlString: String) throws {
         url = try PhishInfoFormatter.validURL(urlString)
     }
-
+    
     init(_ urlString: String, preActions: Set<FormatPreaction>) throws {
         url = try PhishInfoFormatter.validURL(urlString, preActions: preActions)
     }

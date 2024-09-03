@@ -22,22 +22,22 @@ struct KeysSettingsView: View {
     
     var securedBody: some View {
         VStack(alignment: .trailing) {
-//            VStack {
-//                HStack {
-//                    Spacer()
-//                    Text("VirusTotal API Key:")
-//                    TextField("VirusTotal", text: $VTKey)
-//                        .textFieldStyle(.squareBorder)
-//                        .frame(width: 512)
-//                        .focused($vtFieldFocus)
-//                        .onChange(of: vtFieldFocus) { _ in
-//                            if !saveMode {
-//                                saveMode = !saveMode
-//                            }
-//                        }
-//                }
-//            }.padding(.horizontal, 32)
-//            Spacer().frame(height: 8)
+            VStack {
+                HStack {
+                    Spacer()
+                    Text("VirusTotal API Key:")
+                    TextField("VirusTotal", text: $VTKey)
+                        .textFieldStyle(.squareBorder)
+                        .frame(width: 512)
+                        .focused($vtFieldFocus)
+                        .onChange(of: vtFieldFocus) { _ in
+                            if !saveMode {
+                                saveMode = !saveMode
+                            }
+                        }
+                }
+            }.padding(.horizontal, 32)
+            Spacer().frame(height: 8)
             VStack {
                 VStack {
                     HStack {

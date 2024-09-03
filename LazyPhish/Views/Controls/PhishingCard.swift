@@ -39,7 +39,7 @@ struct PhishingCard: View {
                         Spacer()
                     }
                 } else {
-                    HStack {
+                    VStack {
                         VStack(alignment: .leading) {
                             HStack {
                                 Text("Summary")
@@ -77,8 +77,65 @@ struct PhishingCard: View {
                                                     height: 16)))
                                     .padding([.vertical], 8)
                             }.frame(minWidth: 512, minHeight: 64)
-                        }.padding(16)
-                        //                                Spacer()
+                        }.padding([.horizontal, .top],16)
+                        if let vtr = request.modules.compactMap({$0 as! VirusTotalModule}).first
+                        {
+                            VStack {
+                                HStack {
+                                    Text("VirusTotal")
+                                        .font(.title2)
+                                        .fontWeight(.bold)
+                                        .foregroundStyle(.primary)
+//                                    Text(vtr.reports?.description ?? "nil!")
+//                                        .font(.title2)
+//                                        .fontWeight(.bold)
+//                                        .foregroundStyle(.primary)
+                                    Spacer()
+                                    HStack {
+                                        if let sum = vtr.summary {
+                                            if sum[AVState.malicious]! > 0 {
+                                                Image(systemName: "xmark.circle.fill")
+                                                    .foregroundColor(.red)
+                                                Text(vtr.summary![AVState.malicious]!.description).offset(CGSize(width: -4, height: 0))
+                                            }
+                                            if sum[AVState.suspicious]! > 0 {
+                                                Image(systemName: "exclamationmark.circle.fill")
+                                                    .foregroundColor(.yellow)
+                                                Text(vtr.summary![AVState.suspicious]!.description).offset(CGSize(width: -4, height: 0))
+                                            }
+                                            if sum[AVState.harmless]! > 0 {
+                                                Image(systemName: "checkmark.circle.fill")
+                                                    .foregroundColor(.green)
+                                                Text(vtr.summary![AVState.harmless]!.description).offset(CGSize(width: -4, height: 0))
+                                            }
+                                            if sum[AVState.undetected]! > 0 {
+                                                Image(systemName: "questionmark.app.fill")
+                                                    .foregroundColor(.black.opacity(0.8))
+                                                Text(vtr.summary![AVState.undetected]!.description).offset(CGSize(width: -4, height: 0))
+                                            }
+                                            if sum[AVState.timeout]! > 0 {
+                                                Image(systemName: "clock.badge.exclamationmark.fill")
+                                                    .foregroundColor(.gray)
+                                                Text(vtr.summary![AVState.harmless]!.description).offset(CGSize(width: -4, height: 0))
+                                            }
+                                      
+                                        }
+                                    }.padding(4)
+                                        .padding(.horizontal, 8)
+                                        .background(Color(
+                                            nsColor: NSColor.lightGray.withAlphaComponent(0.1)))
+                                        .clipShape(Capsule())
+                                }
+                                ForEach(vtr.reports!) { rep in
+                                    HStack {
+                                        Text(rep.engineName)
+                                        Spacer()
+                                        Text(rep.result)
+                                    }.padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                }
+                            }.padding(16)
+                        }
                     }
                 }
             }
@@ -96,4 +153,8 @@ struct PhishingCard: View {
             }
         }).map({$0.value})
     }
+}
+
+extension AVReport: Identifiable {
+    var id: String { self.engineName }
 }

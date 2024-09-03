@@ -23,6 +23,9 @@
 		3037D15A2B9B6C530012104E /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037D1592B9B6C530012104E /* RequestError.swift */; };
 		3037D15C2B9B6CA00012104E /* OPRInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037D15B2B9B6CA00012104E /* OPRInfo.swift */; };
 		3037D15F2B9CA1B00012104E /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 3037D15E2B9CA1B00012104E /* AlamofireImage */; };
+		3038CE5A2C8594BB00379056 /* VirusTotalPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3038CE592C8594BB00379056 /* VirusTotalPipeline.swift */; };
+		3038CE5D2C86D88D00379056 /* ModuleBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3038CE5C2C86D88D00379056 /* ModuleBehavior.swift */; };
+		3038CE5F2C86EF3C00379056 /* VirusTotalModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3038CE5E2C86EF3C00379056 /* VirusTotalModule.swift */; };
 		304BE3912C72F0B5001A2AB0 /* AnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3902C72F0B4001A2AB0 /* AnalyticsView.swift */; };
 		304BE3942C73173C001A2AB0 /* PageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3932C73173C001A2AB0 /* PageButton.swift */; };
 		304BE3962C73819C001A2AB0 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3952C73819C001A2AB0 /* StatusView.swift */; };
@@ -89,6 +92,9 @@
 		3037D1562B9B6C280012104E /* MLEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLEntry.swift; sourceTree = "<group>"; };
 		3037D1592B9B6C530012104E /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
 		3037D15B2B9B6CA00012104E /* OPRInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OPRInfo.swift; sourceTree = "<group>"; };
+		3038CE592C8594BB00379056 /* VirusTotalPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirusTotalPipeline.swift; sourceTree = "<group>"; };
+		3038CE5C2C86D88D00379056 /* ModuleBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBehavior.swift; sourceTree = "<group>"; };
+		3038CE5E2C86EF3C00379056 /* VirusTotalModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirusTotalModule.swift; sourceTree = "<group>"; };
 		304BE3902C72F0B4001A2AB0 /* AnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsView.swift; sourceTree = "<group>"; };
 		304BE3932C73173C001A2AB0 /* PageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageButton.swift; sourceTree = "<group>"; };
 		304BE3952C73819C001A2AB0 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
@@ -255,6 +261,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		3038CE5B2C85C2BD00379056 /* VirusTotal */ = {
+			isa = PBXGroup;
+			children = (
+				3038CE592C8594BB00379056 /* VirusTotalPipeline.swift */,
+				3038CE5E2C86EF3C00379056 /* VirusTotalModule.swift */,
+			);
+			path = VirusTotal;
+			sourceTree = "<group>";
+		};
 		304BE3922C7316F4001A2AB0 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -276,9 +291,11 @@
 		304BE3A12C7EF86A001A2AB0 /* Pipelines */ = {
 			isa = PBXGroup;
 			children = (
+				3038CE5B2C85C2BD00379056 /* VirusTotal */,
 				304BE3A42C7EF9D3001A2AB0 /* OPRPipeline.swift */,
 				304BE3A62C7F11D5001A2AB0 /* WhoisPipeline.swift */,
 				304BE3A82C7F1320001A2AB0 /* YandexSQIPipeline.swift */,
+				3038CE5C2C86D88D00379056 /* ModuleBehavior.swift */,
 			);
 			path = Pipelines;
 			sourceTree = "<group>";
@@ -454,14 +471,17 @@
 			files = (
 				304BE3982C7389EC001A2AB0 /* SettingsView.swift in Sources */,
 				30815DF62BF3753D00A7DBAC /* ServerView.swift in Sources */,
+				3038CE5D2C86D88D00379056 /* ModuleBehavior.swift in Sources */,
 				30AF623E2BDAC6310004E8BF /* PhishFile.swift in Sources */,
 				304BE39B2C7C5A9B001A2AB0 /* KeysSettingsView.swift in Sources */,
 				3003966C2BA7489F001B6C2C /* MultiRequestView.swift in Sources */,
+				3038CE5F2C86EF3C00379056 /* VirusTotalModule.swift in Sources */,
 				304BE39D2C7C5AE3001A2AB0 /* KeyService.swift in Sources */,
 				30137C442BD4108C00905B15 /* MainViewPageHolder.swift in Sources */,
 				300396632BA5BD00001B6C2C /* RiskLevel.swift in Sources */,
 				3037D15C2B9B6CA00012104E /* OPRInfo.swift in Sources */,
 				30E724A82C0F7FD20082ED54 /* WhoisConnection.swift in Sources */,
+				3038CE5A2C8594BB00379056 /* VirusTotalPipeline.swift in Sources */,
 				304BE3A32C7EF883001A2AB0 /* File.swift in Sources */,
 				304BE3A52C7EF9D3001A2AB0 /* OPRPipeline.swift in Sources */,
 				307CBC482BCC57D3004B68A8 /* PhishInfoFormatter.swift in Sources */,

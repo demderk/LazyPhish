@@ -29,12 +29,14 @@ extension Array {
     }
 }
 
+
 class PhishRequest {
         
     public func refreshRemoteData(_ base: StrictRemote) async -> PhishInfo {
         await refreshRemoteData(base, collectMetrics: [YandexSQIPipeline(),
                                                        OPRPipeline(),
-                                                       WhoisPipeline()])
+                                                       WhoisPipeline(),
+                                                      VirusTotalPipeline()])
     }
         
     public func refreshRemoteData(_ base: StrictRemote,
@@ -52,7 +54,7 @@ class PhishRequest {
                     }
                 }
                 for await item in taskGroup {
-                    result.remote.append(remote: item.remote)
+                    result.append(remote: item)
                 }
                 return result
             }
