@@ -23,6 +23,7 @@
 		3037D15A2B9B6C530012104E /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037D1592B9B6C530012104E /* RequestError.swift */; };
 		3037D15C2B9B6CA00012104E /* OPRInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037D15B2B9B6CA00012104E /* OPRInfo.swift */; };
 		3037D15F2B9CA1B00012104E /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 3037D15E2B9CA1B00012104E /* AlamofireImage */; };
+		3038CE612C87102600379056 /* NeoPhishInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3038CE602C87102600379056 /* NeoPhishInfo.swift */; };
 		304BE3912C72F0B5001A2AB0 /* AnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3902C72F0B4001A2AB0 /* AnalyticsView.swift */; };
 		304BE3942C73173C001A2AB0 /* PageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3932C73173C001A2AB0 /* PageButton.swift */; };
 		304BE3962C73819C001A2AB0 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3952C73819C001A2AB0 /* StatusView.swift */; };
@@ -58,6 +59,7 @@
 		30CE1AB22BD6700C001B022F /* ResultTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CE1AB12BD6700C001B022F /* ResultTag.swift */; };
 		30E724A82C0F7FD20082ED54 /* WhoisConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E724A72C0F7FD20082ED54 /* WhoisConnection.swift */; };
 		30E724BD2C11BC6B0082ED54 /* LoggerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E724BC2C11BC6B0082ED54 /* LoggerExtension.swift */; };
+		30FCD7812C99F35500975933 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FCD7802C99F35500975933 /* AsyncOperation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +91,7 @@
 		3037D1562B9B6C280012104E /* MLEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLEntry.swift; sourceTree = "<group>"; };
 		3037D1592B9B6C530012104E /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
 		3037D15B2B9B6CA00012104E /* OPRInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OPRInfo.swift; sourceTree = "<group>"; };
+		3038CE602C87102600379056 /* NeoPhishInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeoPhishInfo.swift; sourceTree = "<group>"; };
 		304BE3902C72F0B4001A2AB0 /* AnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsView.swift; sourceTree = "<group>"; };
 		304BE3932C73173C001A2AB0 /* PageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageButton.swift; sourceTree = "<group>"; };
 		304BE3952C73819C001A2AB0 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
@@ -120,6 +123,7 @@
 		30CE1AB12BD6700C001B022F /* ResultTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTag.swift; sourceTree = "<group>"; };
 		30E724A72C0F7FD20082ED54 /* WhoisConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoisConnection.swift; sourceTree = "<group>"; };
 		30E724BC2C11BC6B0082ED54 /* LoggerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerExtension.swift; sourceTree = "<group>"; };
+		30FCD7802C99F35500975933 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,6 +255,8 @@
 				30E724A72C0F7FD20082ED54 /* WhoisConnection.swift */,
 				30E724BC2C11BC6B0082ED54 /* LoggerExtension.swift */,
 				304BE39C2C7C5AE3001A2AB0 /* KeyService.swift */,
+				3038CE602C87102600379056 /* NeoPhishInfo.swift */,
+				30FCD7802C99F35500975933 /* AsyncOperation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -463,6 +469,7 @@
 				3037D15C2B9B6CA00012104E /* OPRInfo.swift in Sources */,
 				30E724A82C0F7FD20082ED54 /* WhoisConnection.swift in Sources */,
 				304BE3A32C7EF883001A2AB0 /* File.swift in Sources */,
+				3038CE612C87102600379056 /* NeoPhishInfo.swift in Sources */,
 				304BE3A52C7EF9D3001A2AB0 /* OPRPipeline.swift in Sources */,
 				307CBC482BCC57D3004B68A8 /* PhishInfoFormatter.swift in Sources */,
 				307A27052BA5BABC00B9D14A /* PhishInfoRemote.swift in Sources */,
@@ -494,6 +501,7 @@
 				300396612BA5BCD0001B6C2C /* MetricStatus.swift in Sources */,
 				30815DF82BF3756500A7DBAC /* ServerVM.swift in Sources */,
 				30815E002BF3B55200A7DBAC /* PhishML.swift in Sources */,
+				30FCD7812C99F35500975933 /* AsyncOperation.swift in Sources */,
 				304BE3A72C7F11D5001A2AB0 /* WhoisPipeline.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

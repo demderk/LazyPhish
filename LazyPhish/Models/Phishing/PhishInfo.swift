@@ -7,14 +7,12 @@
 
 import Foundation
 
-// guarantees of a mandatory host
-protocol StrictURL {
-    var url: URL { get }
-    var host: String { get }
-}
-
-protocol StrictRemote: StrictURL {
+protocol StrictRemote {
     var remote: PhishInfoRemote { get set }
+    
+    // MARK: DEBUG!!
+    
+    var host: String {get}
 }
 
 struct PhishInfo: StrictRemote {

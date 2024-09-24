@@ -79,17 +79,26 @@ class PhishRequestQueue: PhishRequest {
         onTaskComplete: @escaping (([PhishInfo]) -> Void),
         onQueue: DispatchQueue = DispatchQueue.main
     ) {
-        Task {
-            phishInfo = await refreshRemoteData(
-                phishInfo,
-                collectMetrics: [YandexSQIPipeline(),
-                                 OPRPipeline(),
-                                 WhoisPipeline()],
-                requestCompleted: onRequestComplete)
-            onQueue.async {
-                onTaskComplete(self.phishInfo)
-            }
+        let q = OperationQueue()
+        var mod = OPRModule()
+        var ops = OPROperation(parent: mod)
+        ops.toExecute = phishInfo.map({try! StrictURL(url: $0.url.absoluteString)})
+        ops.completionBlock = {
+            print(ops.result ?? "empty")
         }
+        q.addOperations([ops],waitUntilFinished: true)
+        
+//        Task {
+//            phishInfo = await refreshRemoteData(
+//                phishInfo,
+//                collectMetrics: [YandexSQIPipeline(),
+////                                 OPRPipeline(),
+//                                 WhoisPipeline()],
+//                requestCompleted: onRequestComplete)
+//            onQueue.async {
+//                onTaskComplete(self.phishInfo)
+//            }
+//        }
     }
 
     override func refreshRemoteData(
