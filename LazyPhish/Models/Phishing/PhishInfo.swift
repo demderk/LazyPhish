@@ -7,6 +7,7 @@
 
 import Foundation
 
+@available(*, deprecated, message: "Use StrictURL")
 protocol StrictRemote {
     var remote: PhishInfoRemote { get set }
     
@@ -15,6 +16,7 @@ protocol StrictRemote {
     var host: String {get}
 }
 
+@available(*, deprecated, message: "Use RemoteInfo")
 struct PhishInfo: StrictRemote {
     
     let url: URL

@@ -7,29 +7,46 @@
 
 import Foundation
 
-actor Semaphore {
-    private var count: Int
-    private var waiters: [CheckedContinuation<Void, Never>] = []
-
-    init(count: Int = 0) {
-        self.count = count
-    }
-
-    func wait() async {
-        count -= 1
-        if count >= 0 { return }
-        await withCheckedContinuation {
-            waiters.append($0)
+class NeoPhishRequestQueue {
+    var phishURLS: [StrictURL] = []
+    var globalDependences: [RequestModule] = []
+    
+    func setupModules(_ modules: [DetectTool]) async {
+        for module in modules {
+            switch module {
+            case .opr:
+                if !globalDependences.contains(where: { $0 is BulkOPRModule }) {
+                    let bulkModule = BulkOPRModule()
+                    await bulkModule.bulk(phishURLS)
+                    globalDependences.append(bulkModule)
+                }
+                fallthrough
+            default:
+                break
+            }
         }
     }
-
-    func signal(count: Int = 1) {
-        assert(count >= 1)
-        self.count += count
-        for _ in 0..<count {
-            if waiters.isEmpty { return }
-            waiters.removeFirst().resume()
+    
+    func executeAll(modules: [DetectTool]) async -> [RemoteInfo] {
+        var result: [RemoteInfo] = []
+        await self.setupModules(modules)
+        
+        await withTaskGroup(of: Void.self) { tasks in
+            for url in phishURLS {
+                tasks.addTask {
+                    var info = RemoteInfo(url: url)
+                    for item in modules {
+                        var mod = item.getModule()
+                        mod.dependences.append(contentsOf: self.globalDependences)
+                        info.addModule(mod)
+                    }
+                    await info.executeAll()
+                    result.append(info)
+                }
+            }
         }
+        
+        return result
     }
 }
 
@@ -79,15 +96,16 @@ class PhishRequestQueue: PhishRequest {
         onTaskComplete: @escaping (([PhishInfo]) -> Void),
         onQueue: DispatchQueue = DispatchQueue.main
     ) {
-        let q = OperationQueue()
-        var mod = OPRModule()
-        var ops = OPROperation(parent: mod)
-        ops.toExecute = phishInfo.map({try! StrictURL(url: $0.url.absoluteString)})
-        ops.completionBlock = {
-            print(ops.result ?? "empty")
+        let neo = RemoteInfo(url: try! .init(url: "http://googlek.com"))
+        var bulk = BulkOPRModule()
+//        neo.modules.append(OPRModule(bulk: bulk))
+        Task {
+            await bulk.bulk([try! .init(url: "http://google.com"),
+                             try! .init(url: "http://vk.com"),
+                             try! .init(url: "http://youtube.com")])
+            await neo.executeAll()
         }
-        q.addOperations([ops],waitUntilFinished: true)
-        
+        onTaskComplete(self.phishInfo)
 //        Task {
 //            phishInfo = await refreshRemoteData(
 //                phishInfo,

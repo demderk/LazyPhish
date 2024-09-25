@@ -8,13 +8,7 @@
 import Foundation
 import os
 
-enum RemoteStatus {
-    case planned
-    case completedWithErrors
-    case completed
-    case failed
-    case canceled
-}
+
 
 struct PhishInfoRemote {
     var whois: MetricStatus<WhoisInfo> = .planned { 

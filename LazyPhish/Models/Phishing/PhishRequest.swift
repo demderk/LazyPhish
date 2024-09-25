@@ -29,12 +29,44 @@ extension Array {
     }
 }
 
+enum DetectTool {
+    case sqi
+    case whois
+    case regex
+    case opr
+    
+    func getModule() -> RequestModule {
+        switch self {
+        case .sqi:
+            SQIModule()
+        case .whois:
+            WhoisModule()
+        case .regex:
+            RegexModule()
+        case .opr:
+            OPRModule()
+        }
+    }
+}
+
+class NeoPhishRequest {
+    public func executeRequest(url: StrictURL, modules: [DetectTool]) async -> RemoteInfo {
+        let remote = RemoteInfo(url: url)
+        for mod in modules {
+            remote.addModule(mod.getModule())
+        }
+        await remote.executeAll()
+        return remote
+    }
+}
+
+@available(*, deprecated, message: "Use NeoPhishRequest")
 class PhishRequest {
         
     public func refreshRemoteData(_ base: StrictRemote) async -> PhishInfo {
-        await refreshRemoteData(base, collectMetrics: [YandexSQIPipeline(),
+        await refreshRemoteData(base, collectMetrics: [])
 //                                                       OPRPipeline(),
-                                                       WhoisPipeline()])
+//                                                       WhoisPipeline()])
     }
         
     public func refreshRemoteData(_ base: StrictRemote,
@@ -58,19 +90,5 @@ class PhishRequest {
             }
         // FIXME: Чек на нулл
         return remote as! PhishInfo
-    }
-}
-
-extension CGImage {
-    func increaseContrast() -> CGImage {
-        let inputImage = CIImage(cgImage: self)
-        let parameters = [
-            "inputContrast": NSNumber(value: 2)
-        ]
-        let outputImage = inputImage.applyingFilter("CIColorControls", parameters: parameters)
-        
-        let context = CIContext(options: nil)
-        let img = context.createCGImage(outputImage, from: outputImage.extent)!
-        return img
     }
 }
