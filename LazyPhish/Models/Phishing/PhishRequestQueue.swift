@@ -10,7 +10,7 @@ import Foundation
 class NeoPhishRequestQueue {
     var phishURLS: [StrictURL] = []
     var globalDependences: [RequestModule] = []
-    
+
     func setupModules(_ modules: [DetectTool]) async {
         for module in modules {
             switch module {
@@ -26,11 +26,11 @@ class NeoPhishRequestQueue {
             }
         }
     }
-    
+
     func executeAll(modules: [DetectTool]) async -> [RemoteInfo] {
         var result: [RemoteInfo] = []
         await self.setupModules(modules)
-        
+
         await withTaskGroup(of: Void.self) { tasks in
             for url in phishURLS {
                 tasks.addTask {
@@ -45,7 +45,7 @@ class NeoPhishRequestQueue {
                 }
             }
         }
-        
+
         return result
     }
 }
@@ -54,13 +54,13 @@ class PhishRequestQueue: PhishRequest {
     private var isCanceled: Bool = false
     private(set) var phishInfo: [PhishInfo] = []
     private var mainSemaphore = Semaphore(count: 100)
-    
+
     // MARK: INITS
-    
+
     init(_ urlStrings: [String] ) throws {
         phishInfo.append(contentsOf: try urlStrings.map({ try PhishInfo($0) }))
     }
-    
+
     init(_ urlStrings: [Int: String], preActions: Set<FormatPreaction> ) throws {
         phishInfo.append(contentsOf: try urlStrings.map({ key, value in
             var item = try PhishInfo(value, preActions: preActions)
@@ -68,29 +68,29 @@ class PhishRequestQueue: PhishRequest {
             return item
         }))
     }
-    
+
     init(_ urlStrings: [String], preActions: Set<FormatPreaction> ) throws {
         phishInfo.append(contentsOf: try urlStrings.map({ try PhishInfo($0, preActions: preActions) }))
     }
-    
+
     init(urls: [URL]) throws {
         phishInfo.append(contentsOf: try urls.map({ try PhishInfo(url: $0) }))
     }
-    
+
     override init() {
         super.init()
     }
-    
+
     convenience init(_ urlStrings: String...) throws {
         try self.init(urlStrings)
     }
-    
+
     public func phishInfo(_ urlStrings: [String]) throws {
         phishInfo.append(contentsOf: try urlStrings.map({ try PhishInfo($0) }))
     }
-    
+
     // MARK: Main logic
-   
+
     public func refreshRemoteData(
         onRequestComplete: ((PhishInfo) -> Void)?,
         onTaskComplete: @escaping (([PhishInfo]) -> Void),
@@ -128,11 +128,11 @@ class PhishRequestQueue: PhishRequest {
         await mainSemaphore.signal()
         return x
     }
-    
+
     public func cancel() {
         isCanceled = true
     }
-    
+
     private func refreshRemoteData(
         _ base: [StrictRemote],
         collectMetrics: [PhishingPipelineObject],
@@ -141,7 +141,7 @@ class PhishRequestQueue: PhishRequest {
     ) async -> [PhishInfo] {
         var remote = base
         var metrics: [PhishingPipelineObject] = []
-        
+
         for metric in collectMetrics {
             if let pipe = metric as? PhishingArrayPipelineObject {
                 remote = await pipe.executeAll(data: base)
@@ -150,7 +150,7 @@ class PhishRequestQueue: PhishRequest {
             }
         }
         let finalMetrics = metrics
-        
+
         return await withTaskGroup(of: PhishInfo.self) { taskGroup in
             for item in remote {
                 taskGroup.addTask {
@@ -158,7 +158,7 @@ class PhishRequestQueue: PhishRequest {
                     return response
                 }
             }
-            
+
             var responses: [PhishInfo] = []
             for await response in taskGroup {
                 guard !isCanceled else {

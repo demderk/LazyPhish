@@ -15,14 +15,14 @@ class SQIModule: RequestModule {
     var dependences: [any RequestModule] = []
     var status: ModuleStatus = .planned
     var yandexSQI: Int?
-    
+
     func execute(remote: RemoteInfo) async {
         status = .executing
         let accurate = false
-                
+
         let response = await AF.request("https://yandex.ru/cycounter?\(remote.url.strictHost)")
             .serializingImage(inflateResponseImage: false).result
-        
+
         switch response {
         case .success(let success):
             if let input = success.cgImage(forProposedRect: .none, context: .none, hints: nil) {
@@ -33,11 +33,11 @@ class SQIModule: RequestModule {
                     return
                 }
                 let vision = VNImageRequestHandler(cgImage: image)
-                
+
                 let imageRequest = VNRecognizeTextRequest()
                 imageRequest.recognitionLevel = .fast
                 var recognized: String?
-                
+
                 // Fast algorithm check
                 do {
                     try vision.perform([imageRequest])
@@ -54,7 +54,7 @@ class SQIModule: RequestModule {
                         error: YandexSQIError.yandexSQIVisionPerformError(error))
                     return
                 }
-                
+
                 // Accurate algorithm check if enabled
                 do {
                     if recognized == nil && accurate {
@@ -75,14 +75,14 @@ class SQIModule: RequestModule {
                         error: YandexSQIError.yandexSQIVisionPerformError(error))
                     return
                 }
-                
+
                 guard let output = recognized else {
                     status = .failed(
                         error: YandexSQIError.yandexSQIVisionNotRecognized(
                             image: NSImage(cgImage: image, size: .zero)))
                     return
                 }
-                
+
                 if let sqi = Int(output.replacing(" ", with: "")) {
                     yandexSQI = sqi
                     status = .completed
@@ -109,7 +109,7 @@ extension CGImage {
             "inputContrast": NSNumber(value: 2)
         ]
         let outputImage = inputImage.applyingFilter("CIColorControls", parameters: parameters)
-        
+
         let context = CIContext(options: nil)
         let img = context.createCGImage(outputImage, from: outputImage.extent)!
         return img

@@ -34,7 +34,7 @@ enum DetectTool {
     case whois
     case regex
     case opr
-    
+
     func getModule() -> RequestModule {
         switch self {
         case .sqi:
@@ -50,7 +50,7 @@ enum DetectTool {
 }
 
 class NeoPhishRequest {
-    public func executeRequest(url: StrictURL, modules: [DetectTool]) async -> RemoteInfo {
+    public func executeRequest(url: StrictURL, modules: Set<DetectTool>) async -> RemoteInfo {
         let remote = RemoteInfo(url: url)
         for mod in modules {
             remote.addModule(mod.getModule())
@@ -62,21 +62,21 @@ class NeoPhishRequest {
 
 @available(*, deprecated, message: "Use NeoPhishRequest")
 class PhishRequest {
-        
+
     public func refreshRemoteData(_ base: StrictRemote) async -> PhishInfo {
         await refreshRemoteData(base, collectMetrics: [])
 //                                                       OPRPipeline(),
 //                                                       WhoisPipeline()])
     }
-        
+
     public func refreshRemoteData(_ base: StrictRemote,
                                   collectMetrics: [PhishingPipelineObject]
     ) async -> PhishInfo {
-        
+
         let remote = await withTaskGroup(of: StrictRemote.self,
                                          returning: StrictRemote.self
         ) { taskGroup in
-            
+
                 var result: StrictRemote = base
                 for item in collectMetrics {
                     taskGroup.addTask {

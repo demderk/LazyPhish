@@ -20,7 +20,7 @@ class KeyService {
     public static var OPRKey: String? {
         lastSucceedOPR
     }
-    
+
     private static let serviceName = "com.LazyFusion.LazyPhish.Keys"
     private static var lastSucceedVTKey: String? {
         didSet {
@@ -36,7 +36,7 @@ class KeyService {
             }
         }
     }
-    
+
     static private func buildReadQuery(path: KeyServicePath) -> CFDictionary {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -45,10 +45,10 @@ class KeyService {
             kSecReturnData as String: true,
             kSecMatchLimit as String: kSecMatchLimitOne
         ]
-        
+
         return query as CFDictionary
     }
-    
+
     static private func buildWriteQuery(data: String, path: KeyServicePath) -> CFDictionary {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -56,15 +56,15 @@ class KeyService {
             kSecAttrAccount as String: path.rawValue,
             kSecValueData as String: data.data(using: .utf8)!
         ]
-        
+
         return query as CFDictionary
     }
-    
+
     static private func writeKeychain(data: String, path keyChain: KeyServicePath, force: Bool = false) {
         DispatchQueue.global().async {
-            
+
             let query = buildWriteQuery(data: data, path: keyChain)
-            
+
             if force {
                 SecItemDelete(query as CFDictionary) // Удаление существующего элемента (если есть)
                 SecItemAdd(query as CFDictionary, nil)
@@ -87,19 +87,19 @@ class KeyService {
                     }
                 }
             }
-            
+
         }
     }
-    
+
     static private func readKeychain(path keyChain: KeyServicePath,
                                      action: @escaping (String?) -> Void
     ) {
         DispatchQueue.global().async {
-            
+
             let query = buildReadQuery(path: keyChain)
             var item: AnyObject?
             SecItemCopyMatching(query as CFDictionary, &item)
-            
+
             if let success = item as? Data {
                 let str = String(decoding: success, as: UTF8.self)
                 action(str)
@@ -108,16 +108,16 @@ class KeyService {
             }
         }
     }
-    
+
     static func saveAllKeys(virusTotal: String, opr: String) {
         writeKeychain(data: virusTotal, path: .virusTotal)
         writeKeychain(data: opr, path: .opr)
     }
-    
+
     static func saveKeychainKey(data: String, path: KeyServicePath) {
         writeKeychain(data: data, path: path)
     }
-    
+
     static func readKeychainKey(path: KeyServicePath,
                                 action: @escaping (String?) -> Void
     ) {
@@ -135,7 +135,7 @@ class KeyService {
             action(data)
         }
     }
-    
+
     static func refreshAllKeys() {
         readKeychain(path: .virusTotal) { key in lastSucceedVTKey = key }
         readKeychain(path: .opr) { key in lastSucceedOPR = key }

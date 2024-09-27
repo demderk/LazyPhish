@@ -24,7 +24,7 @@ enum WhoisError: RequestError {
     case timeout
     case dateFormatError
     case unknown(_ underlying: Error)
-    
+
     var isCritical: Bool {
         switch self {
         case .dateFormatError:
@@ -33,7 +33,7 @@ enum WhoisError: RequestError {
             true
         }
     }
-    
+
     var localizedDescription: String {
         switch self {
         case .responseIsNil:
@@ -58,7 +58,7 @@ enum ParserError: RequestError {
     case urlHostIsInvalid(url: String)
     case urlNotAWebRequest(url: String)
     case urlHostIsBroken(url: String)
-        
+
     var localizedDescription: String {
         switch self {
         case .urlNotAWebRequest(url: let url):
@@ -82,7 +82,7 @@ enum OPRError: RequestError {
     case singleRequestCountExceeded
     case apiKeyUnreachable
     case pipelineFirstIsNull
-        
+
     var localizedDescription: String {
         switch self {
         case .unknownError(underlyingError: let underlyingError):
@@ -107,7 +107,7 @@ enum YandexSQIError: RequestError {
     case yandexSQIVisionPerformError(_ underlyingError: Error)
     case yandexSQIVisionNotRecognized(image: NSImage)
     case yandexSQIRequestError(parent: Error)
-    
+
     var isCritical: Bool {
         switch self {
         case .yandexSQIVisionNotRecognized:
@@ -116,7 +116,7 @@ enum YandexSQIError: RequestError {
             true
         }
     }
-    
+
     var localizedDescription: String {
         switch self {
         case .yandexSQIVisionNotRecognized:
@@ -135,7 +135,7 @@ enum YandexSQIError: RequestError {
 
 enum FileError: RequestError {
     case nothingToExport
-        
+
     var localizedDescription: String {
         switch self {
         case .nothingToExport:
@@ -148,7 +148,7 @@ enum RequestCriticalError: RequestError {
     case authorityAccessError
     case unknownUnderlyingError(underlying: Error)
     case unknownError
-    
+
     var localizedDescription: String {
         switch self {
         case .authorityAccessError:

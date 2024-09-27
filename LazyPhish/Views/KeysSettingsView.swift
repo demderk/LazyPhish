@@ -10,16 +10,16 @@ import LocalAuthentication
 
 struct KeysSettingsView: View {
     @Environment(\.controlActiveState) var state
-    
+
     @State var VTKey: String = ""
     @State var abuseIPKey: String = ""
     @State var OPRKey: String = ""
     @State var access: Bool = false
     @State var saveMode: Bool = false
-    
+
     @FocusState var vtFieldFocus: Bool
     @FocusState var oprFieldFocus: Bool
-    
+
     var securedBody: some View {
         VStack(alignment: .trailing) {
 //            VStack {
@@ -90,7 +90,7 @@ struct KeysSettingsView: View {
             }
         }
     }
-    
+
     var body: some View {
         Group {
             if !access {
@@ -122,23 +122,23 @@ struct KeysSettingsView: View {
             }
         }
     }
-    
+
     func deauth() {
         access = false
         saveMode = false
     }
-    
+
     func auth() {
         let authObject = LAContext()
         var error: NSError?
-        
+
         if authObject.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
             authObject.evaluatePolicy(.deviceOwnerAuthentication,
                                       localizedReason: "Access") { success, _ in
                 if success {
                     access = true
                 }
-                
+
             }
         }
     }

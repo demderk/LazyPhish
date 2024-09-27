@@ -11,7 +11,7 @@ struct StatusView: View {
     @Binding var busy: Bool
     @Binding var iconName: String
     @Binding var status: String
-    
+
     var body: some View {
         HStack {
             if busy {

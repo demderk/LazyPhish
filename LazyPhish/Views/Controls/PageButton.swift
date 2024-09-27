@@ -11,7 +11,7 @@ struct PageButton: View {
     @State var action: () -> Void
     @State var title: String
     @State var imageSystemName: String
-    
+
     var body: some View {
         Button(action: action, label: {
             VStack {

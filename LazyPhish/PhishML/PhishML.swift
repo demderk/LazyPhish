@@ -33,7 +33,7 @@ extension MLEntry {
 
 class PhishML {
     private var model: LazyPhishML
-    
+
     init() throws {
         do {
             try self.model = LazyPhishML(configuration: MLModelConfiguration())
@@ -42,7 +42,7 @@ class PhishML {
             throw error
         }
     }
-    
+
     func predictPhishing(input: MLEntry) -> LazyPhishMLOutput {
         if let predicion = try? model.prediction(input: input.MLInput) {
             return predicion

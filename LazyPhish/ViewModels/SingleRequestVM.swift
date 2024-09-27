@@ -11,47 +11,31 @@ import SwiftUI
 class SingleRequestViewModel: ObservableObject {
     @Published var request: String = ""
     @Published var errorText: String?
-    @Published var lastRequest: PhishInfo?
-    @Published var tagList: [MetricData] = []
+    @Published var lastRequest: RemoteInfo?
     @Published var requestIsPending: Bool = false
 
     private var phishRequest: PhishRequestSingle?
     private var cardIsPresented: Bool = false
-    
+
     func makeRequest() {
-        let p = NeoPhishRequest()
-        Task {
-            let x = await p.executeRequest(url: try! StrictURL(
-                url: request, preActions: [.makeHttp]),
-                                           modules: [.opr, .whois, .sqi])
-            print(x)
+        let phishRequest = NeoPhishRequest()
+        if let url = try? StrictURL(url: request, preActions: [.makeHttp]) {
+            Task {
+                await MainActor.run {
+                    withAnimation {
+                        requestIsPending = true
+                    }
+                }
+                let response = await phishRequest.executeRequest(url: url, modules: [.opr, .regex, .sqi, .whois])
+                await MainActor.run {
+                    withAnimation {
+                        requestIsPending = false
+                        lastRequest = response
+                    }
+                }
+            }
+        } else {
+            errorText = "Invalid Request"
         }
-//        if !request.isEmpty && !requestIsPending {
-//            do {
-//                requestIsPending = true
-//                phishRequest = try PhishRequestSingle(request, preActions: [.makeHttp])
-//                phishRequest?.refreshRemoteData { data in
-//                    if !self.cardIsPresented {
-//                        withAnimation {
-//                            self.presentCard(data: data)
-//                        }
-//                    } else {
-//                        self.presentCard(data: data)
-//                    }
-////                    self.cardIsPresented = true
-//
-//                }
-//            } catch {
-//                // TODO: Show error on page
-//                print(error.localizedDescription)
-//                errorText = error.localizedDescription
-//            }
-//        }
-//        objectWillChange.send()
-    }
-    
-    func presentCard(data: PhishInfo) {
-        self.lastRequest = data
-        self.requestIsPending = false
     }
 }

@@ -8,18 +8,18 @@
 import Foundation
 
 class RemoteInfo {
-    //TODO: Make private(set)
-    
+    // TODO: Make private(set)
+
     private(set) var modules: [any RequestModule] = []
-    
+
     var requestID: Int?
     var url: StrictURL
     var status: RemoteStatus = .planned
-    
+
     init(url: StrictURL) {
         self.url = url
     }
-    
+
     func executeAll() async {
         status = .executing
         await withTaskGroup(of: Void.self) { tasks in
@@ -40,15 +40,15 @@ class RemoteInfo {
             status = .completed
         }
     }
-    
+
     func addModule(_ module: any RequestModule) {
         modules.append(module)
     }
-    
+
     func addModule(contentsOf: [any RequestModule]) {
         modules.append(contentsOf: contentsOf)
     }
-    
+
 //    func getMLEntry() -> MLEntry {
 //        if status == .completed {
 //            return MLEntry(<#T##phishInfo: PhishInfo##PhishInfo#>)

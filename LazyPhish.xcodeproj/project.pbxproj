@@ -29,6 +29,9 @@
 		303777542CA3BD89001B8D67 /* RemoteStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303777532CA3BD89001B8D67 /* RemoteStatus.swift */; };
 		303777562CA3DA65001B8D67 /* Semaphore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303777552CA3DA65001B8D67 /* Semaphore.swift */; };
 		303777592CA3DB76001B8D67 /* TagModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303777582CA3DB76001B8D67 /* TagModule.swift */; };
+		3037775D2CA55C4D001B8D67 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037775C2CA55C4D001B8D67 /* TagView.swift */; };
+		3037775F2CA5698E001B8D67 /* ModuleTagBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037775E2CA5698E001B8D67 /* ModuleTagBehavior.swift */; };
+		303777612CA569B0001B8D67 /* ModuleTagBehaviorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303777602CA569B0001B8D67 /* ModuleTagBehaviorExtensions.swift */; };
 		3037D1572B9B6C280012104E /* MLEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037D1562B9B6C280012104E /* MLEntry.swift */; };
 		3037D15A2B9B6C530012104E /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037D1592B9B6C530012104E /* RequestError.swift */; };
 		3037D15C2B9B6CA00012104E /* OPRInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037D15B2B9B6CA00012104E /* OPRInfo.swift */; };
@@ -107,6 +110,9 @@
 		303777532CA3BD89001B8D67 /* RemoteStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteStatus.swift; sourceTree = "<group>"; };
 		303777552CA3DA65001B8D67 /* Semaphore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Semaphore.swift; sourceTree = "<group>"; };
 		303777582CA3DB76001B8D67 /* TagModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagModule.swift; sourceTree = "<group>"; };
+		3037775C2CA55C4D001B8D67 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
+		3037775E2CA5698E001B8D67 /* ModuleTagBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleTagBehavior.swift; sourceTree = "<group>"; };
+		303777602CA569B0001B8D67 /* ModuleTagBehaviorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleTagBehaviorExtensions.swift; sourceTree = "<group>"; };
 		3037D1562B9B6C280012104E /* MLEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLEntry.swift; sourceTree = "<group>"; };
 		3037D1592B9B6C530012104E /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
 		3037D15B2B9B6CA00012104E /* OPRInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OPRInfo.swift; sourceTree = "<group>"; };
@@ -280,6 +286,8 @@
 			isa = PBXGroup;
 			children = (
 				303777582CA3DB76001B8D67 /* TagModule.swift */,
+				303777602CA569B0001B8D67 /* ModuleTagBehaviorExtensions.swift */,
+				3037775E2CA5698E001B8D67 /* ModuleTagBehavior.swift */,
 			);
 			path = ModuleViews;
 			sourceTree = "<group>";
@@ -309,6 +317,7 @@
 		304BE3922C7316F4001A2AB0 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				3037775C2CA55C4D001B8D67 /* TagView.swift */,
 				304BE3932C73173C001A2AB0 /* PageButton.swift */,
 				304BE3952C73819C001A2AB0 /* StatusView.swift */,
 				30AA73F42C806A400075FAD3 /* PhishingCard.swift */,
@@ -529,6 +538,7 @@
 				30CE1AB22BD6700C001B022F /* ResultTag.swift in Sources */,
 				30B1C5D92BD122F300D275D4 /* MainView.swift in Sources */,
 				303777482CA3B966001B8D67 /* RemoteInfo.swift in Sources */,
+				3037775F2CA5698E001B8D67 /* ModuleTagBehavior.swift in Sources */,
 				30B1C5DB2BD1231400D275D4 /* MainViewVM.swift in Sources */,
 				30CE1AAB2BD58A8B001B022F /* GlobalVM.swift in Sources */,
 				300396722BA74FEE001B6C2C /* PhishRequestSingle.swift in Sources */,
@@ -539,6 +549,7 @@
 				303777592CA3DB76001B8D67 /* TagModule.swift in Sources */,
 				300367882B95CE5B00D3C84C /* PhishRequest.swift in Sources */,
 				30AA73F52C806A400075FAD3 /* PhishingCard.swift in Sources */,
+				3037775D2CA55C4D001B8D67 /* TagView.swift in Sources */,
 				300396612BA5BCD0001B6C2C /* MetricStatus.swift in Sources */,
 				303777522CA3BA93001B8D67 /* RegexModule.swift in Sources */,
 				303777452CA3B8C0001B8D67 /* BulkOPRModule.swift in Sources */,
@@ -546,6 +557,7 @@
 				30815E002BF3B55200A7DBAC /* PhishML.swift in Sources */,
 				30FCD7812C99F35500975933 /* AsyncOperation.swift in Sources */,
 				304BE3A72C7F11D5001A2AB0 /* WhoisModule.swift in Sources */,
+				303777612CA569B0001B8D67 /* ModuleTagBehaviorExtensions.swift in Sources */,
 				3037774C2CA3BA24001B8D67 /* RequestModule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

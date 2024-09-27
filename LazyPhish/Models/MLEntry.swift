@@ -7,8 +7,9 @@
 
 import Foundation
 
+@available(*, deprecated)
 struct MLEntry: Codable {
-    
+
     var isIP: RiskLevel
     var haveWhois: RiskLevel
     var creationDate: RiskLevel
@@ -17,14 +18,14 @@ struct MLEntry: Codable {
     var OPR: RiskLevel
     var prefixCount: RiskLevel
     var subDomainCount: RiskLevel
-    
+
     init(_ phishInfo: PhishInfo) {
         isIP = phishInfo.isIP ? .danger : .common
         haveWhois = phishInfo.whois == nil ? .danger : .common
         // FIXME: Creation date
 
         creationDate = .danger
-        
+
         if let date = phishInfo.creationDate {
             if date.distance(to: .now) <= 60*60*24*180 {
                 creationDate = .danger
@@ -34,7 +35,7 @@ struct MLEntry: Codable {
                 creationDate = .common
             }
         }
-        
+
         switch phishInfo {
         case let phish where phish.urlLength < 54:
             urlLength = .common

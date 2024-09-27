@@ -10,21 +10,21 @@ import Foundation
 @available(*, deprecated, message: "Use StrictURL")
 protocol StrictRemote {
     var remote: PhishInfoRemote { get set }
-    
+
     // MARK: DEBUG!!
-    
+
     var host: String {get}
 }
 
 @available(*, deprecated, message: "Use RemoteInfo")
 struct PhishInfo: StrictRemote {
-    
+
     let url: URL
 
     var remote = PhishInfoRemote()
-    
+
     var requestID: Int?
-    
+
     var whois: WhoisInfo? { remote.whois.value ?? nil }
     var yandexSQI: Int? { remote.yandexSQI.value }
     var OPR: OPRInfo? { remote.OPR.value }
@@ -32,7 +32,7 @@ struct PhishInfo: StrictRemote {
     // Много где используется host() у URL. Создать экземпляр класса, где host() == nil
     // невозможно, поэтому использование такого разрешено, однако лучше создать
     // отдельный класс где это указанно явно.
-    
+
     var isIP: Bool { PhishInfoFormatter.getURLIPMode(url) }
     var creationDate: Date? { whois?.creationDate }
     var OPRRank: Int? { OPR?.rank != nil ? Int((OPR?.rank)!) : nil }
@@ -48,7 +48,7 @@ struct PhishInfo: StrictRemote {
     }
     var hasErrors: Bool { remote.hasErrors }
     var remoteStatus: RemoteStatus { remote.status }
-    
+
     // Вроде как, нужно избегать конструкторов, которые могут вернуть ошибку... Так?
     // Инкапсулировал код формата PhishInfo, так как свифт не умеет вызывать
     // экземплярные методы.
@@ -63,7 +63,7 @@ struct PhishInfo: StrictRemote {
     init(url: URL) throws {
         self.url = try PhishInfoFormatter.validURL(url.absoluteString)
     }
-    
+
     init(_ urlString: String, remote: PhishInfoRemote) throws {
         url = try PhishInfoFormatter.validURL(urlString)
         self.remote = remote
@@ -73,7 +73,7 @@ struct PhishInfo: StrictRemote {
         self.url = try PhishInfoFormatter.validURL(url.absoluteString)
         self.remote = remote
     }
-    
+
     func getMLEntry() -> MLEntry? {
         if remote.completed {
             return MLEntry(self)

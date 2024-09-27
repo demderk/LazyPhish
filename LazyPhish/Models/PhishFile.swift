@@ -12,17 +12,17 @@ import CodableCSV
 
 struct PhishFile: FileDocument {
     static var readableContentTypes: [UTType] = [.commaSeparatedText]
-    
+
     private var entries: [MLEntry] = []
-    
+
     init(_ entries: [MLEntry]) {
         self.entries.append(contentsOf: entries)
     }
-    
+
     init(configuration: ReadConfiguration) throws {
 
     }
-    
+
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         guard !entries.isEmpty else {
             throw FileError.nothingToExport
@@ -54,7 +54,7 @@ extension RawPhishInfo {
         prefixCount = info.prefixCount
         subDomainCount = info.subDomainCount
     }
-    
+
     static func getHeaders() -> [String] {
         ["isIP",
          "haveWhois",
@@ -68,17 +68,17 @@ extension RawPhishInfo {
 
 struct RawPhishFile: FileDocument {
     static var readableContentTypes: [UTType] = [.commaSeparatedText]
-    
+
     private var entries: [PhishInfo] = []
-    
+
     init(_ entries: [PhishInfo]) {
         self.entries.append(contentsOf: entries)
     }
-    
+
     init(configuration: ReadConfiguration) throws {
 
     }
-    
+
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         guard !entries.isEmpty else {
             throw FileError.nothingToExport
@@ -86,7 +86,7 @@ struct RawPhishFile: FileDocument {
         let encoder = CSVEncoder { $0.headers = RawPhishInfo.getHeaders() }
         let converted = entries.map({ RawPhishInfo($0) })
         let encodedData = try encoder.encode(converted)
-        
+
         return FileWrapper(regularFileWithContents: encodedData)
     }
 }

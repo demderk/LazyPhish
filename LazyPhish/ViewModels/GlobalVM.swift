@@ -10,5 +10,5 @@ import SwiftUI
 
 class GlobalVM: ObservableObject {
     @Published var navigation: NavigationPath = NavigationPath()
-    
+
 }

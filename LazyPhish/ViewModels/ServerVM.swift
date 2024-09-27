@@ -10,11 +10,11 @@ import Vapor
 
 class ServerVM: ObservableObject {
     let server = Server()
-    
+
     func createServer() {
         server.startServer()
     }
-    
+
     func stop() {
         server.stopServer()
     }

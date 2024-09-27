@@ -14,27 +14,27 @@ class BulkOPRModule: RequestModule {
     var bulkStatus: ModuleStatus = .planned
 
     var cache: [OPRInfo]?
-    
+
     func execute(remote: RemoteInfo) async {
         status = .executing
         await bulk([remote.url])
         status = bulkStatus
     }
-    
+
     func bulk(_ data: [StrictURL]) async {
         guard let apiKey = try? getOPRKey() else {
             bulkStatus = .failed(error: OPRError.apiKeyUnreachable)
             return
         }
-        
+
         var links: [[StrictURL]] = []
-        
+
         if data.count > 100 {
             links = data.chunked(into: 100)
         } else {
             links.append(data)
         }
-        
+
         bulkStatus = .executing
         let infoArray = await withThrowingTaskGroup(
             of: (OPRResponse?).self,
@@ -65,10 +65,10 @@ class BulkOPRModule: RequestModule {
             bulkStatus = .completed
             return result
         }
-        
+
         cache = infoArray
     }
-    
+
     internal func getOPRKey() throws -> String {
         if !KeyService.inited {
             KeyService.refreshAllKeys()
@@ -78,10 +78,10 @@ class BulkOPRModule: RequestModule {
         }
         throw RequestCriticalError.authorityAccessError
     }
-    
+
     func makeRESTRequest(data: [StrictURL], apiKey: String) async throws -> OPRResponse {
         var url = URLComponents(string: "https://openpagerank.com/api/v1.0/getPageRank")!
-        
+
         var querryItems: [URLQueryItem] = []
         for (n, item) in data.enumerated() {
             querryItems.append(
@@ -90,12 +90,12 @@ class BulkOPRModule: RequestModule {
                     value: item.strictHost))
         }
         url.queryItems = querryItems
-        
+
         let urlRequest = try URLRequest(
             url: url,
             method: .get,
             headers: ["API-OPR": apiKey])
-        
+
         var remoteResponse: Data
         do {
             remoteResponse = try await URLSession.shared.data(for: urlRequest).0

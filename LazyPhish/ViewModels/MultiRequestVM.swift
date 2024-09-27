@@ -35,14 +35,14 @@ class MultiRequestVM: ObservableObject {
     @Published var linesWithErrors = 0
     @Published var linesWithWarnings = 0
     @Published var totalParsed = 0
-    
+
     private var engine = PhishRequestQueue()
     private var lastUrlsCount = -1
-    
+
     var resultingDocument: PhishFile = PhishFile([])
     var RAWResultingDocument: RawPhishFile = RawPhishFile([])
     var ignoreWrongLines: Bool = true
-    
+
     @MainActor
     func sendRequestQuerry() {
         let urls: [String] = requestText.components(separatedBy: .newlines)
@@ -50,14 +50,9 @@ class MultiRequestVM: ObservableObject {
         let engine = NeoPhishRequestQueue()
         engine.phishURLS = urls.map({try! .init(url: $0)})
         Task {
-            let p = await engine.executeAll(modules: [.opr, .regex, .whois])
-            let t = p.map({"\($0.url) - \(($0.modules[0] as! OPRModule).OPRInfo?.domain)"})
-//            for i in t {
-//                print(i)
-//            }
-            print(p)
+
         }
-        
+
     }
 //        let urls: [String] = requestText.components(separatedBy: .newlines)
 //            .compactMap({ $0.isEmpty ? nil : $0 })
@@ -133,7 +128,7 @@ class MultiRequestVM: ObservableObject {
 //            }
 //        }
 //    }
-    
+
     func processUI() {
         readyForExport = false
         tableContent.removeAll()
@@ -145,12 +140,12 @@ class MultiRequestVM: ObservableObject {
         self.statusText = "Processing..."
         self.statusIconName = "timer"
     }
-    
+
     func cancel() {
         engine.cancel()
         isCanceled = true
     }
-    
+
     func completeUI() {
         self.busy = false
         if isCanceled {
@@ -163,29 +158,29 @@ class MultiRequestVM: ObservableObject {
             self.statusIconName = "checkmark.circle.fill"
         }
     }
-    
+
     func completeWithErrorsUI() {
         self.busy = false
         self.status = .completedWithErrors
         self.statusText = "Completed With Warnings"
         self.statusIconName = "checkmark.circle.fill"
-        
+
     }
-    
+
     func failedUI() {
         self.status = .failed
         self.statusText = "Completed With Errors"
         self.statusIconName = "xmark.circle.fill"
     }
-    
+
     func exportCSV() {
         resultingDocument = PhishFile(engine.phishInfo.map({ $0.getMLEntry()! }))
         CSVExportIsPresented = true
     }
-    
+
     func exportCSVRAW() {
         RAWResultingDocument = RawPhishFile(engine.phishInfo)
         RAWExportIsPresented = true
     }
-    
+
 }

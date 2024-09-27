@@ -13,7 +13,7 @@ class MainViewPageHolder: ObservableObject {
     var single: some View = SingleRequestView()
     var server: some View = ServerView()
     var analysis: some View = AnalyticsView()
-    
+
     @ViewBuilder func getView(selected: MainSelectedPage) -> some View {
         switch selected {
         case .single:

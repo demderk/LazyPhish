@@ -11,7 +11,7 @@ struct MultiRequestView: View {
     @ObservedObject var vm = MultiRequestVM()
     @State var showExport = false
     @State var sortingTable = [KeyPathComparator(\PhishInfo.requestID, order: .forward)]
-    
+
     @ViewBuilder
     var body: some View {
         HSplitView {
@@ -50,7 +50,7 @@ struct MultiRequestView: View {
                             .padding(.horizontal, 4)
                             .background(type.getMLEntry()?.yandexSQI.getColor() ?? .blue)
                             .clipShape(Capsule())
-                            
+
                         }
                     }.width(min: 64, ideal: 64)
                     TableColumn("OPR Rank", value: \.sortOprInt) { type in
@@ -80,7 +80,7 @@ struct MultiRequestView: View {
                             .padding(.horizontal, 4)
                             .background(type.getMLEntry()?.isIP.getColor() ?? .blue)
                             .clipShape(Capsule())
-                        
+
                     }.width(min: 40, ideal: 40)
                     TableColumn("Prefixes", value: \.prefixCount) { type in
                         Text(type.prefixCount.description)
@@ -190,5 +190,5 @@ struct MultiRequestView: View {
 #Preview {
     MultiRequestView()
         .frame(minWidth: 1000, minHeight: 600)
-    
+
 }

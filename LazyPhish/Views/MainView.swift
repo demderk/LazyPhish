@@ -10,7 +10,7 @@ import SwiftUI
 struct MainView: View {
     @StateObject var vm = MainViewVM()
     @StateObject var globalVM = GlobalVM()
-    
+
     var body: some View {
         NavigationStack(path: $globalVM.navigation) {
                 vm.pageHolder.single
@@ -29,9 +29,9 @@ struct MainView: View {
                         case .server:
                             Text("Whoops... This functionality is disabled")
                         }
-                        
+
                         //                        Spacer()
-                        
+
                     }.frame(
                         minWidth: 0,
                         maxWidth: .infinity,

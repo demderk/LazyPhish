@@ -13,34 +13,34 @@ import os
 struct WhoisInfo {
     /// The domain name, e.g. example.com
     public var domainName: String?
-    
+
     /// The registrar
     public var registrar: String?
-    
+
     /// The registrar Whois server
     public var registrarWhoisServer: String?
-    
+
     /// The registrant contact email
     public var registrantContactEmail: String?
-    
+
     /// The registrant
     public var registrant: String?
-    
+
     /// The creation date
     public var creationDate: Date?
-    
+
     /// The expiration date
     public var expirationDate: String?
-    
+
     /// The last updated date
     public var updateDate: String?
-    
+
     /// The name servers, e.g. ns1.google.com
     public var nameServers: [String]?
-    
+
     /// The domain status, e.g. clientTransferProhibited
     public var domainStatus: [String]?
-    
+
     /// The raw Whois data
     public var rawData: String?
 }
@@ -48,7 +48,7 @@ struct WhoisInfo {
 class WhoisConnection {
     private var server: String = "whois.iana.org"
     private var connection: NWConnection?
-    
+
     private let cacheTldWhoisServer: [String: String] = [
         "com": "whois.verisign-grs.com",
         "net": "whois.verisign-grs.com",
@@ -108,7 +108,7 @@ class WhoisConnection {
         let tld = domain.components(separatedBy: ".").last ?? ""
         return cacheTldWhoisServer[tld]
     }
-    
+
     @discardableResult
     func establishConnection() -> NWConnection {
         let newConnection = NWConnection.init(
@@ -119,7 +119,7 @@ class WhoisConnection {
         self.connection = newConnection
         return newConnection
     }
-    
+
     func makeRequest(host: String) async throws -> String {
         let establishedConnection = connection ?? establishConnection()
         establishedConnection.start(queue: .global())
@@ -144,7 +144,7 @@ class WhoisConnection {
         connection = nil
         return response
     }
-    
+
     func buildResponseArray(responseText: String) -> [(key: String, value: String)] {
         var result: [(String, String)] = []
         let lines = responseText
@@ -161,16 +161,16 @@ class WhoisConnection {
         }
         return result
     }
-    
+
     func makeRecursiveRequest(host: String) async throws -> String {
         if let cached = getCachedWhoisServer(for: host) {
             server = cached
-        } 
+        }
         let hostComponents = Array(host.components(separatedBy: ".").reversed())
         guard hostComponents.count > 1 else {
             throw WhoisError.badRequest(description: "Host is incorrect. Hostname: \(host)")
         }
-           
+
         let parent = "\(hostComponents[1]).\(hostComponents[0])"
         let response = try await makeRequest(host: parent)
         let responseArray = buildResponseArray(responseText: response)
@@ -178,12 +178,11 @@ class WhoisConnection {
             server = refer.value
             try await Task.sleep(for: .seconds(0.1))
             return try await makeRecursiveRequest(host: parent)
-        }
-        else {
+        } else {
             return response
         }
     }
-    
+
     func parseWhoisResponse(_ response: String) -> WhoisInfo {
         var whoisData = WhoisInfo()
         let standardizedResponse = response.replacingOccurrences(of: "\r\n", with: "\n")
@@ -193,10 +192,10 @@ class WhoisConnection {
                 .split(separator: ":", maxSplits: 1)
                 .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             guard parts.count == 2 else { continue }
-            
+
             let key = parts[0].lowercased()
             let value = parts[1]
-            
+
             switch key {
             case "domain name":
                 if whoisData.domainName == nil { whoisData.domainName = value }
@@ -210,7 +209,7 @@ class WhoisConnection {
                 if whoisData.registrar == nil { whoisData.registrar = value }
             case "creation date",
                 "created",
-                "registration time", 
+                "registration time",
                 "登録年月日",
                 "domain record activated":
                 if whoisData.creationDate == nil { whoisData.creationDate = try? getDate(value) }
@@ -228,12 +227,12 @@ class WhoisConnection {
                 whoisData.nameServers = nameServers
             case "domain status":
                 var domainStatus = whoisData.domainStatus ?? []
-                
+
                 // "clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited"
                 if let status = value.split(separator: " ").first, !status.isEmpty {
                     domainStatus.append(String(status))
                 }
-                
+
                 whoisData.domainStatus = domainStatus
             default:
                 break
@@ -242,7 +241,7 @@ class WhoisConnection {
         whoisData.rawData = response
         return whoisData
     }
-    
+
     func lookup(host: String, timeout: Int = 3000) async throws -> WhoisInfo {
         let recursiveTask = Task {
             return try await makeRecursiveRequest(host: host)
@@ -260,9 +259,9 @@ class WhoisConnection {
         case .failure(let x):
             throw x
         }
-        
+
     }
-    
+
     private func getDate(_ whoisDate: String) throws -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
@@ -276,7 +275,7 @@ class WhoisConnection {
         }
         return result
     }
-    
+
     deinit {
         if connection?.state == .cancelled {
             connection?.cancel()

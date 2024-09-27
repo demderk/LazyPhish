@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ServerView: View {
     @ObservedObject var vm = ServerVM()
-    
+
     var body: some View {
         VStack {
             Button("Start") {

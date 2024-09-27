@@ -5,10 +5,10 @@
 ////  Created by Roman Zheglov on 03.09.2024.
 ////
 //
-//import Foundation
-//import OSLog
+// import Foundation
+// import OSLog
 //
-//struct StrictURL {
+// struct StrictURL {
 //    var URL: URL
 //
 //    var strictHost: String {
@@ -22,9 +22,9 @@
 //    init(url: String, preActions: Set<FormatPreaction>) throws {
 //        URL = try PhishInfoFormatter.validURL(url, preActions: preActions)
 //    }
-//}
+// }
 //
-///* Modules:
+/// * Modules:
 // OPRModule
 // SQIModule
 // WhoisModule
@@ -34,12 +34,12 @@
 // Модули могут требовать зависимости.
 // */
 //
-////class NeoPhishInfo {
+//// class NeoPhishInfo {
 ////    var url: StrictURL
 ////    var modules: [PhishModule]
-////}
+//// }
 //
-//class RequestPipeline {
+// class RequestPipeline {
 //    var modules: [PhishModule] = []
 //    private var cachedModules: [PhishModule] = []
 //    private var queue: OperationQueue = OperationQueue()
@@ -52,31 +52,31 @@
 //    func processPipe(phishModule: PhishModule) -> PhishModule {
 //
 //    }
-//}
+// }
 //
-//enum ModuleStatus {
+// enum ModuleStatus {
 //    case planned
 //    case excalated
 //    case failed(error: RequestError)
 //    case canceled
 //    case finished
-//}
+// }
 //
-//protocol PhishModule {
+// protocol PhishModule {
 //    var status: ModuleStatus { get set}
 //    var dependences: [any PhishModule] { get set }
 //    var operation: Operation! { get }
 //    var refreshDependences: Bool {get}
 //    var cacheable: Bool {get}
 //    func validateDeps(_ phishModule: PhishModule) -> Bool
-//}
+// }
 //
-//class NeoPhishRequest {
+// class NeoPhishRequest {
 //
-//}
+// }
 //
 //
-//class OPRModule: PhishModule {
+// class OPRModule: PhishModule {
 //    var status: ModuleStatus = .planned
 //    var dependences: [any PhishModule] = []
 //    var operation: Operation!
@@ -102,9 +102,9 @@
 //    func getOPRInfo(phishInfo: StrictURL) -> OPRInfo {
 //        return (executedArray?.first(where: {$0.domain == phishInfo.strictHost}))!
 //    }
-//}
+// }
 //
-//class OPROperation: AsyncOperation {
+// class OPROperation: AsyncOperation {
 //
 //    weak var parentModule: OPRModule?
 //    var toExecute: [StrictURL] = []
@@ -205,15 +205,7 @@
 //            throw OPRError.remoteError(response: String(decoding: remoteResponse, as: UTF8.self))
 //        }
 //    }
-//}
+// }
 
 import Foundation
 import OSLog
-
-
-
-
-
-
-
-

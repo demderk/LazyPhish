@@ -28,30 +28,30 @@ struct PhishingInfo: Content {
 
 class Server {
     private var app: Application?
-    
+
     private static let log = Logger(
         subsystem: Bundle.main.bundleIdentifier!,
         category: "Reflection Server"
     )
-    
+
     private static let phishML = try! PhishML()
-    
+
     func startServer() {
         guard app == nil else {
             return
         }
-        
+
         app = try! Application(.detect())
-        
+
         guard let server = app else {
             return
         }
-        
+
         server.post("phishing") { req async throws in
             if let body = try? req.content.decode(PhishingInfo.self),
                let request = try? PhishRequestSingle(body.host),
                let mlEntry = await request.processRequest().getMLEntry() {
-                
+
                 let prediction = Server.phishML.predictPhishing(input: mlEntry)
                 let response = PhishingSite(
                     host: body.host,
@@ -64,12 +64,12 @@ class Server {
             }
             return PhishingSite(host: "-1", trustIndex: -1, isPhishing: false, action: .accept)
         }
-        
+
         DispatchQueue.global().async {
             try! server.run()
         }
     }
-    
+
     func stopServer() {
         guard let server = app else {
             return
