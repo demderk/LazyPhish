@@ -8,8 +8,7 @@
 import Foundation
 
 extension WhoisModule: ModuleTagBehavior {
-
-    var risk: RiskLevel {
+    var dateRisk: RiskLevel {
         if let whois = whois {
             if let date = whois.creationDate {
                 if date.distance(to: .now) <= 60*60*24*180 {
@@ -23,39 +22,63 @@ extension WhoisModule: ModuleTagBehavior {
         }
         return .danger
     }
+    var foundRisk: RiskLevel {
+        return whois != nil ? .common : .danger
+    }
 
     var tags: [ModuleTag] {
-        let color = risk.getColor()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMMM yyyy"
         var text = "Creation data unavailable"
+        var foundText = self.whois == nil ? "Whois is empty" : "Whois found"
         dateFormatter.locale = Locale(identifier: "en_US")
         if let date = self.whois?.creationDate {
             text = "Created: " + dateFormatter.string(from: date)
         }
-
+        
         var result: [ModuleTag] = []
-        if let whoisData = self.whois {
+        if whois != nil {
             if case .completed = self.status {
-                result.append(ModuleTag(displayText: text, color: color))
+                result.append(ModuleTag(
+                    displayText: text,
+                    risk: dateRisk,
+                    tagPriority: modulePriority.rawWithTag(tagPriotiry: 0)))
+                result.append(ModuleTag(
+                    displayText: foundText,
+                    risk: foundRisk,
+                    tagPriority: 0))
             }
+        } else {
+            result.append(ModuleTag(
+                displayText: foundText,
+                risk: foundRisk,
+                tagPriority: modulePriority.rawWithTag(tagPriotiry: 1)))
         }
         return result
     }
 }
 
 extension OPRModule: ModuleTagBehavior {
+    var priority: Int { 2 }
+    
     var risk: RiskLevel {
-        return OPRInfo == nil ? .danger : .common
+        return OPRInfo?.rank == nil ? .danger : .common
     }
 
     var tags: [ModuleTag] {
-        let text = self.OPRInfo == nil ? "OPR is empty" : "OPR Rank is \(OPRInfo?.rank ?? "%%")"
-        return [ModuleTag(displayText: text, color: risk.getColor())]
+        let text = self.OPRInfo?.rank == nil ? "OPR is empty" : "OPR Rank is \(OPRInfo?.rank ?? "%%")"
+        return [
+            ModuleTag(
+            displayText: text,
+            risk: risk,
+            tagPriority: modulePriority.rawWithTag(tagPriotiry: 0))
+        ]
     }
 }
 
 extension SQIModule: ModuleTagBehavior {
+    var priority: Int { 1 }
+
     var risk: RiskLevel {
         return self.yandexSQI == nil ? .danger : .common
 
@@ -63,11 +86,16 @@ extension SQIModule: ModuleTagBehavior {
 
     var tags: [ModuleTag] {
         let text = self.yandexSQI == nil ? "Yandex SQI is empty" : "Yandex SQI is \(self.yandexSQI?.description ?? "%%")"
-        return [ModuleTag(displayText: text, color: risk.getColor())]
+        return [
+            ModuleTag(
+                displayText: text,
+                risk: risk,
+                tagPriority: modulePriority.rawWithTag(tagPriotiry: 0))]
     }
 }
 
 extension RegexModule: ModuleTagBehavior {
+    var priority: Int { 0 }
     private var prefixRisk: RiskLevel {
         if self.prefixCount > 1 {
             return .danger
@@ -105,16 +133,28 @@ extension RegexModule: ModuleTagBehavior {
 
     var tags: [ModuleTag] {
         let prefixText = "URL have \(self.prefixCount.description) prefix"
-        let prefixTag = ModuleTag(displayText: prefixText, color: prefixRisk.getColor())
+        let prefixTag = ModuleTag(
+            displayText: prefixText,
+            risk: prefixRisk,
+            tagPriority: modulePriority.rawWithTag(tagPriotiry: 0))
 
         let subdomainsText = "URL have \(self.subdomainCount.description) subdomains"
-        let subdomainsTag = ModuleTag(displayText: subdomainsText, color: subdomainRisk.getColor())
+        let subdomainsTag = ModuleTag(
+            displayText: subdomainsText,
+            risk: subdomainRisk,
+            tagPriority: modulePriority.rawWithTag(tagPriotiry: 1))
 
         let lengthText = "URL have \(self.urlLength) characters"
-        let lengthTag = ModuleTag(displayText: lengthText, color: lengthRisk.getColor())
+        let lengthTag = ModuleTag(
+            displayText: lengthText,
+            risk: lengthRisk,
+            tagPriority: modulePriority.rawWithTag(tagPriotiry: 2))
 
         let ipText = self.isIP ? "It's IP" : "It's Domain"
-        let ipTag = ModuleTag(displayText: ipText, color: ipRisk.getColor())
+        let ipTag = ModuleTag(
+            displayText: ipText,
+            risk: ipRisk,
+            tagPriority: modulePriority.rawWithTag(tagPriotiry: 3))
 
         return [prefixTag, subdomainsTag, lengthTag, ipTag]
     }

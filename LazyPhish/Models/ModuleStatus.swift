@@ -14,5 +14,6 @@ enum ModuleStatus {
     case excalated
     case failed(error: RequestError)
     case canceled
+    case completedWithErrors
     case completed
 }

@@ -10,5 +10,10 @@ import SwiftUI
 
 struct ModuleTag {
     var displayText: String
-    var color: Color
+    var risk: RiskLevel
+    var tagPriority: Int = 0
+}
+
+extension ModuleTag {
+    var color: Color { risk.getColor() }
 }

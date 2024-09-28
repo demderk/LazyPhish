@@ -11,19 +11,16 @@ import OSLog
 class BulkOPRModule: RequestModule {
     var dependences: [any RequestModule] = []
     var status: ModuleStatus = .planned
-    var bulkStatus: ModuleStatus = .planned
 
     var cache: [OPRInfo]?
 
     func execute(remote: RemoteInfo) async {
-        status = .executing
         await bulk([remote.url])
-        status = bulkStatus
     }
 
     func bulk(_ data: [StrictURL]) async {
         guard let apiKey = try? getOPRKey() else {
-            bulkStatus = .failed(error: OPRError.apiKeyUnreachable)
+            status = .failed(error: OPRError.apiKeyUnreachable)
             return
         }
 
@@ -35,7 +32,7 @@ class BulkOPRModule: RequestModule {
             links.append(data)
         }
 
-        bulkStatus = .executing
+        status = .executing
         let infoArray = await withThrowingTaskGroup(
             of: (OPRResponse?).self,
             returning: [OPRInfo].self
@@ -48,21 +45,26 @@ class BulkOPRModule: RequestModule {
             var result: [OPRInfo] = []
             do {
                 for try await part in tasks {
-                    if let success = part,
-                       let oprInfo = success.response as? [OPRInfo] {
-                        result.append(contentsOf: oprInfo)
+                    if let success = part {
+                        if let successInfo = success.response as? [OPRInfo] {
+                            result.append(contentsOf: successInfo)
+                        }
+                        if let failedInfo = success.response as? [FailedOPRInfo] {
+                            status = .failed(error: OPRError.remoteError(response: failedInfo.description))
+                            return []
+                        }
                     }
                 }
             } catch let error as OPRError {
                 Logger.OPRRequestLogger.error("[OPRProcess] \(error.localizedDescription)")
-                bulkStatus = .failed(error: error)
+                status = .failed(error: error)
                 return []
             } catch {
                 Logger.OPRRequestLogger.critical("[OPRProcess] [unexpected] \(error)")
-                bulkStatus = .failed(error: OPRError.unknownError(underlyingError: error))
+                status = .failed(error: OPRError.unknownError(underlyingError: error))
                 return []
             }
-            bulkStatus = .completed
+            status = .completed
             return result
         }
 

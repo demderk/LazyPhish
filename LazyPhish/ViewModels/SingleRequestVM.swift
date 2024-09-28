@@ -13,12 +13,14 @@ class SingleRequestViewModel: ObservableObject {
     @Published var errorText: String?
     @Published var lastRequest: RemoteInfo?
     @Published var requestIsPending: Bool = false
-
+    @Published var statusText: String = ""
+    
     private var phishRequest: PhishRequestSingle?
     private var cardIsPresented: Bool = false
 
     func makeRequest() {
         let phishRequest = NeoPhishRequest()
+        statusText = ""
         if let url = try? StrictURL(url: request, preActions: [.makeHttp]) {
             Task {
                 await MainActor.run {
@@ -31,6 +33,12 @@ class SingleRequestViewModel: ObservableObject {
                     withAnimation {
                         requestIsPending = false
                         lastRequest = response
+                        if let successRequest = lastRequest {
+                            let failedModulesCount = successRequest.modules.count(
+                                where: {if case .failed = $0.status {true} else {false}})
+                            statusText =
+                            "\(successRequest.modules.count - failedModulesCount) modules succeed, \(failedModulesCount) failed"
+                        }
                     }
                 }
             }

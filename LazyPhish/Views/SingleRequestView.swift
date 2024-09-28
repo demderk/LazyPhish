@@ -13,7 +13,7 @@ struct SingleRequestView: View {
     @ObservedObject var vm = SingleRequestViewModel()
     @FocusState var isEditing: Bool
     @EnvironmentObject var globalVM: GlobalVM
-
+    
     @State var deepMode: Bool = false
 
     var body: some View {
@@ -105,6 +105,12 @@ struct SingleRequestView: View {
                                 .padding([.bottom], 8)
                                 .padding([.leading], 8)
                             PhishingCard(request: $vm.lastRequest, bussy: $vm.requestIsPending)
+                            HStack {
+                                Spacer()
+                                Text(vm.statusText)
+                            }.padding([.top], 2)
+                                .padding([.horizontal], 4)
+                                .foregroundStyle(Color(.lightGray))
                         }
                     }
                     VStack {

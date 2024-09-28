@@ -13,17 +13,6 @@ struct PhishingCard: View {
     @Binding var bussy: Bool
     @State var tagList: [MetricData] = []
 
-//    var legitPercent: (percent: Int, risk: RiskLevel) {
-//        let predictML = try! PhishML()
-//        let mlResult = predictML.predictPhishing(input: request.getMLEntry()!)
-//        if let prob = mlResult.IsPhishingProbability.first(where: { $0.key == 0 })?.value {
-//            let percent = Int(prob * 100)
-//            let risk: RiskLevel = 100 - percent > 80 ? .danger : (100 - percent > 50 ? .suspicious : .common)
-//            return (percent, risk)
-//        }
-//        return (-1, .danger)
-//    }
-
     var body: some View {
         VStack {
             VStack {
@@ -75,9 +64,23 @@ struct PhishingCard: View {
 
     func getTags() -> [TagView] {
         var result: [TagView] = []
-        for module in request.modules.compactMap({$0 as? ModuleTagBehavior}) {
-            result.append(contentsOf: module.tagViews)
+        for module in request.modules.compactMap({ $0 as? ModuleTagBehavior }) {
+            for tag in module.tags {
+                var current: ModuleTag = tag
+                switch tag.risk {
+                case .common:
+                    current.tagPriority += 0
+                case .suspicious:
+                    current.tagPriority += 1000
+                case .danger:
+                    current.tagPriority += 2000
+                }
+                result.append(TagView(tag: current))
+            }
         }
+        result.sort(by: {
+            $0.tag.tagPriority > $1.tag.tagPriority
+        })
         return result
     }
 }
