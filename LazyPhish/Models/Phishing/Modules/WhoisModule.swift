@@ -11,7 +11,20 @@ class WhoisModule: RequestModule {
     var dependences: [any RequestModule] = []
     var status: ModuleStatus = .planned
     var whois: WhoisInfo?
-
+    
+    var date: Date? { whois?.creationDate }
+    var dateText: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMMM yyyy"
+        var text = "Creation data unavailable"
+        var foundText = self.whois == nil ? "Whois is empty" : "Whois found"
+        dateFormatter.locale = Locale(identifier: "en_US")
+        if let date = self.whois?.creationDate {
+            text = dateFormatter.string(from: date)
+        }
+        return text
+    }
+    
     private static var whoisSemaphore = Semaphore(count: 1)
     private static var sCount: UInt64 = 1
 

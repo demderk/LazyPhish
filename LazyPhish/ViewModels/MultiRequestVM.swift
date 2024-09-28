@@ -21,9 +21,47 @@ extension PhishInfo {
     var sortDate: Date { self.creationDate ?? Date(timeIntervalSince1970: 0) }
 }
 
+struct PhishTableEntry: Identifiable {
+    var id: Int
+    
+    var host: String
+    var opr, sqi, length, subDomains, prefixCount: Int?
+    var isIP: Bool?
+    var date: String?
+}
+
+extension PhishTableEntry {
+    init(fromRemote: RemoteInfo) {
+        host = fromRemote.url.strictHost
+        id = fromRemote.requestID ?? -1
+        for module in fromRemote.modules {
+            switch module {
+            case let current as OPRModule:
+                self.opr = current.OPRInfo?.pageRankInteger
+            case let current as SQIModule:
+                self.sqi = current.yandexSQI
+            case let current as WhoisModule:
+                self.date = current.dateText
+            case let current as RegexModule:
+                self.length = current.urlLength
+                self.subDomains = current.subdomainCount
+                self.prefixCount = current.prefixCount
+                self.isIP = current.isIP
+            default:
+                break
+            }
+        }
+    }
+}
+
+extension RemoteInfo: Identifiable {
+    var id: Int? { self.requestID }
+}
+
 class MultiRequestVM: ObservableObject {
     @Published var requestText = ""
-    @Published var tableContent: [PhishInfo] = []
+    @Published var remotes: [RemoteInfo] = []
+    @Published var tableContent: [PhishTableEntry] = []
     @Published var CSVExportIsPresented = false
     @Published var RAWExportIsPresented = false
     @Published var readyForExport = false
@@ -50,7 +88,13 @@ class MultiRequestVM: ObservableObject {
         let engine = NeoPhishRequestQueue()
         engine.phishURLS = urls.map({try! .init(url: $0)})
         Task {
-
+            let requestQueue = NeoPhishRequestQueue()
+            requestQueue.phishURLS = urls.map({try! .init(url: $0)})
+            let x = await requestQueue.executeAll(modules: [.opr, .regex, .sqi, .whois])
+            await MainActor.run {
+                remotes = x
+                tableContent = x.map({ PhishTableEntry(fromRemote: $0) })
+            }
         }
 
     }

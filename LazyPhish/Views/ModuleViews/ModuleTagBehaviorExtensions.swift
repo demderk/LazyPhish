@@ -27,30 +27,21 @@ extension WhoisModule: ModuleTagBehavior {
     }
 
     var tags: [ModuleTag] {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMMM yyyy"
-        var text = "Creation data unavailable"
-        var foundText = self.whois == nil ? "Whois is empty" : "Whois found"
-        dateFormatter.locale = Locale(identifier: "en_US")
-        if let date = self.whois?.creationDate {
-            text = "Created: " + dateFormatter.string(from: date)
-        }
-        
         var result: [ModuleTag] = []
         if whois != nil {
             if case .completed = self.status {
                 result.append(ModuleTag(
-                    displayText: text,
+                    displayText: dateText,
                     risk: dateRisk,
                     tagPriority: modulePriority.rawWithTag(tagPriotiry: 0)))
                 result.append(ModuleTag(
-                    displayText: foundText,
+                    displayText: dateText,
                     risk: foundRisk,
                     tagPriority: 0))
             }
         } else {
             result.append(ModuleTag(
-                displayText: foundText,
+                displayText: dateText,
                 risk: foundRisk,
                 tagPriority: modulePriority.rawWithTag(tagPriotiry: 1)))
         }

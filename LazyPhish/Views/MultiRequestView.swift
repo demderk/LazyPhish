@@ -35,71 +35,35 @@ struct MultiRequestView: View {
                     .background(.background)
             }.frame(minWidth: 64)
             HStack {
-                Table(of: PhishInfo.self, sortOrder: $sortingTable) {
-                    TableColumn("ID", value: \.requestID!) { type in
-                        Text(type.requestID?.description ?? "Error")
-                    }.width(min: 32, ideal: 32)
-                    TableColumn("Url", value: \.host) { type in
-                        Text(type.url.formatted())
-                    }.width(min: 144, ideal: 192)
-                    TableColumn("yandexSQI", value: \.sortSqiInt) { type in
-                        VStack {
-                            Text(type.yandexSQI?.formatted() ??
-                                 (type.remote.yandexSQI.error?.localizedDescription ??
-                                  "Ureachable"))
-                            .padding(.horizontal, 4)
-                            .background(type.getMLEntry()?.yandexSQI.getColor() ?? .blue)
-                            .clipShape(Capsule())
-
-                        }
-                    }.width(min: 64, ideal: 64)
-                    TableColumn("OPR Rank", value: \.sortOprInt) { type in
-                        Text(type.OPR?.rank?.description ??
-                             (type.remote.OPR.error?.localizedDescription ??
-                              "Ureachable"))
-                        .padding(.horizontal, 4)
-                        .background(type.getMLEntry()?.OPR.getColor() ?? .blue)
-                        .clipShape(Capsule())
-                    }.width(min: 64, ideal: 64)
-                    TableColumn("Creation Date", value: \.sortDate) { type in
-                        Text(type.creationDate?.formatted() ??
-                             (type.remote.whois.error?.localizedDescription ??
-                              "Ureachable"))
-                        .padding(.horizontal, 4)
-                        .background(type.getMLEntry()?.creationDate.getColor() ?? .blue)
-                        .clipShape(Capsule())
-                    }.width(min: 120, ideal: 120)
-                    TableColumn("Have Whois", value: \.sortHaveWhois) { type in
-                        Text(type.whois != nil ? "Yes" : "No")
-                            .padding(.horizontal, 4)
-                            .background(type.getMLEntry()?.haveWhois.getColor() ?? .blue)
-                            .clipShape(Capsule())
-                    }.width(min: 72, ideal: 72)
-                    TableColumn("Is IP", value: \.sortIsIP) { type in
-                        Text(type.isIP ? "Yes" : "No")
-                            .padding(.horizontal, 4)
-                            .background(type.getMLEntry()?.isIP.getColor() ?? .blue)
-                            .clipShape(Capsule())
-
-                    }.width(min: 40, ideal: 40)
-                    TableColumn("Prefixes", value: \.prefixCount) { type in
-                        Text(type.prefixCount.description)
-                            .padding(.horizontal, 4)
-                            .background(type.getMLEntry()?.prefixCount.getColor() ?? .blue)
-                            .clipShape(Capsule())
-                    }.width(min: 48, ideal: 48)
-                    TableColumn("Subdomains", value: \.subDomainCount) { type in
-                        Text(type.subDomainCount.description)
-                            .padding(.horizontal, 4)
-                            .background(type.getMLEntry()?.subDomainCount.getColor() ?? .blue)
-                            .clipShape(Capsule())
-                    }.width(min: 72, ideal: 72)
-                    TableColumn("URL Length", value: \.urlLength) { type in
-                        Text(type.urlLength.description)
-                            .padding(.horizontal, 4)
-                            .background(type.getMLEntry()?.urlLength.getColor() ?? .blue)
-                            .clipShape(Capsule())
-                    }.width(min: 72, ideal: 72)
+                Table(of: PhishTableEntry.self) {
+                    TableColumn("ID") { item in
+                        Text(item.id.description)
+                    }
+                    TableColumn("Host") { item in
+                        Text(item.host)
+                    }
+                    TableColumn("Creation Date") { item in
+                        Text(item.date ?? "Date Error")
+                    }
+                    TableColumn("OPR") { item in
+                        Text(item.opr?.description ?? "OPR Error")
+                    }
+                    TableColumn("SQI") { item in
+                        Text(item.sqi?.description ?? "SQI Error")
+                    }
+                    TableColumn("Is IP") { item in
+                        Text(item.isIP?.description ?? "Regex Error")
+                    }
+                    TableColumn("Subdomains") { item in
+                        Text(item.subDomains?.description ?? "Regex Error")
+                    }
+                    TableColumn("Prefixes") { item in
+                        Text(item.prefixCount?.description ?? "Regex Error")
+                    }
+                    TableColumn("Length") { item in
+                        Text(item.length?.description ?? "Regex Error")
+                    }
+                    
                 } rows: {
                     ForEach(vm.tableContent) { data in
                         TableRow(data)
@@ -181,8 +145,6 @@ struct MultiRequestView: View {
                     .disabled(!vm.readyForExport)
                     .help("Export as CSV")
                 }
-            }.onChange(of: sortingTable) { sort in
-                vm.tableContent.sort(using: sort)
             }
     }
 }

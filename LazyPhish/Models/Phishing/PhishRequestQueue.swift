@@ -32,9 +32,10 @@ class NeoPhishRequestQueue {
         await self.setupModules(modules)
 
         await withTaskGroup(of: Void.self) { tasks in
-            for url in phishURLS {
+            for (rnumber, url) in phishURLS.enumerated() {
                 tasks.addTask {
                     var info = RemoteInfo(url: url)
+                    info.requestID = rnumber
                     for item in modules {
                         var mod = item.getModule()
                         mod.dependences.append(contentsOf: self.globalDependences)
