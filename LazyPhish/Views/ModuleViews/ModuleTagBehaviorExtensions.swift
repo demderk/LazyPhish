@@ -23,19 +23,20 @@ extension WhoisModule: ModuleTagBehavior {
         return .danger
     }
     var foundRisk: RiskLevel {
-        return whois != nil ? .common : .danger
+        return whois?.domainName != nil ? .common : .danger
     }
 
     var tags: [ModuleTag] {
         var result: [ModuleTag] = []
         if whois != nil {
             if case .completed = self.status {
+                var foundText = whois?.domainName != nil ? "Whois is found" : "Whois not found"
                 result.append(ModuleTag(
                     displayText: dateText,
                     risk: dateRisk,
                     tagPriority: modulePriority.rawWithTag(tagPriotiry: 0)))
                 result.append(ModuleTag(
-                    displayText: dateText,
+                    displayText: foundText,
                     risk: foundRisk,
                     tagPriority: 0))
             }

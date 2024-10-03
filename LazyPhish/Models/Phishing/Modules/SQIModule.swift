@@ -77,9 +77,9 @@ class SQIModule: RequestModule {
                 }
 
                 guard let output = recognized else {
-                    status = .failed(
-                        error: YandexSQIError.yandexSQIVisionNotRecognized(
-                            image: NSImage(cgImage: image, size: .zero)))
+                    status = .completedWithErrors(
+                        errors: [YandexSQIError.yandexSQIVisionNotRecognized(
+                            image: NSImage(cgImage: image, size: .zero))])
                     return
                 }
 
@@ -88,8 +88,10 @@ class SQIModule: RequestModule {
                     status = .completed
                     return
                 } else {
-                    status = .failed(error: YandexSQIError.yandexSQIVisionNotRecognized(
-                        image: NSImage(cgImage: image, size: .zero)))
+                    status = .completedWithErrors(
+                        errors:
+                            [YandexSQIError.yandexSQIVisionNotRecognized(
+                        image: NSImage(cgImage: image, size: .zero))])
                     return
                 }
             }
