@@ -32,7 +32,7 @@ class RegexModule: RequestModule {
 
     }
 
-    func execute(remote: RemoteInfo) async {
+    func execute(remote: RequestInfo) async {
         url = remote.url
         status = .completed
     }

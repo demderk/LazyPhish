@@ -26,7 +26,6 @@ struct StatusView: View {
             Text(status)
         }
         .padding(4)
-        .padding(.trailing, 4)
         .padding(.horizontal, 8)
         .background(Color(
             nsColor: NSColor.lightGray.withAlphaComponent(0.1)))

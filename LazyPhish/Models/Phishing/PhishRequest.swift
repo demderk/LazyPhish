@@ -50,8 +50,8 @@ enum DetectTool {
 }
 
 class NeoPhishRequest {
-    public func executeRequest(url: StrictURL, modules: Set<DetectTool>) async -> RemoteInfo {
-        let remote = RemoteInfo(url: url)
+    public func executeRequest(url: StrictURL, modules: Set<DetectTool>) async -> RequestInfo {
+        let remote = RequestInfo(url: url)
         for mod in modules {
             remote.addModule(mod.getModule())
         }

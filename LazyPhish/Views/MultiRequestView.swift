@@ -84,23 +84,14 @@ struct MultiRequestView: View {
             .toolbar {
                 ToolbarItem(placement: .navigation) {
                     HStack {
-                        if vm.busy {
-                            Button {
-                                vm.cancel()
-                            } label: {
-                                Image(systemName: "stop.fill")
-                                    .padding(.horizontal, 8)
-                            }
-                            .help("Stop Execution")
-                            .keyboardShortcut(".")
-                        }
                         Button {
-                            withAnimation {
+                            if !vm.busy {
                                 vm.sendRequestQuerry()
                             }
                         } label: {
-                            Image(systemName: "play.fill")
+                            Image(systemName: vm.busy ? "stop.fill" : "play.fill")
                                 .padding(.horizontal, 8)
+                                .frame(width: 48)
                         }
                         .disabled(vm.busy)
                         .help("Execute Querry")

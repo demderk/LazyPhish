@@ -16,7 +16,7 @@ class SQIModule: RequestModule {
     var status: ModuleStatus = .planned
     var yandexSQI: Int?
 
-    func execute(remote: RemoteInfo) async {
+    func execute(remote: RequestInfo) async {
         status = .executing
         let accurate = false
 

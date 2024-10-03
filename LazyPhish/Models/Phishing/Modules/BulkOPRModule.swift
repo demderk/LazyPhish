@@ -14,7 +14,7 @@ class BulkOPRModule: RequestModule {
 
     var cache: [OPRInfo]?
 
-    func execute(remote: RemoteInfo) async {
+    func execute(remote: RequestInfo) async {
         await bulk([remote.url])
     }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class RemoteInfo {
+class RequestInfo {
     // TODO: Make private(set)
 
     private(set) var modules: [any RequestModule] = []
@@ -20,12 +20,18 @@ class RemoteInfo {
         self.url = url
     }
 
-    func executeAll() async {
+    func executeAll(
+        onRequestFinished: ((RequestInfo) -> Void)? = nil,
+        onModuleFinished: ((RequestInfo, RequestModule) -> Void)? = nil) async {
         status = .executing
         await withTaskGroup(of: Void.self) { tasks in
             for mod in modules {
                 _ = tasks.addTaskUnlessCancelled {
-                    await mod.execute(remote: self)
+                    if let finished = onModuleFinished {
+                        await mod.execute(remote: self, onFinish: finished)
+                    } else {
+                        await mod.execute(remote: self)
+                    }
                 }
             }
         }
@@ -35,12 +41,14 @@ class RemoteInfo {
             }
             return false
         }) > 0 {
+            onRequestFinished?(self)
             status = .completedWithErrors
         } else {
+            onRequestFinished?(self)
             status = .completed
         }
     }
-
+    
     func addModule(_ module: any RequestModule) {
         modules.append(module)
     }

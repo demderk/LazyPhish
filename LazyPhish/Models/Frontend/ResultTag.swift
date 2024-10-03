@@ -47,7 +47,7 @@ extension MLEntry {
     }
 }
 
-@available(*, deprecated, message: "Use RemoteInfo")
+@available(*, deprecated, message: "Use RequestInfo")
 extension PhishInfo {
     func getMetricSet() -> [Metric: MetricData]? {
         guard let mlModel = self.getMLEntry() else {

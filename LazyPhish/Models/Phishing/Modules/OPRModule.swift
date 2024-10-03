@@ -21,7 +21,7 @@ class OPRModule: RequestModule {
         dependences.append(bulk)
     }
 
-    func execute(remote: RemoteInfo) async {
+    func execute(remote: RequestInfo) async {
         status = .executing
         if let bulkDependency = dependences.first(where: {$0 is BulkOPRModule}) as? BulkOPRModule {
             if let found = bulkDependency.cache?.first(where: {$0.domain == remote.url.strictHost}) {
@@ -39,7 +39,7 @@ class OPRModule: RequestModule {
         status = .completed
     }
 
-    private func singleBulkRequest(remote: RemoteInfo) async throws -> OPRInfo {
+    private func singleBulkRequest(remote: RequestInfo) async throws -> OPRInfo {
         let bulk = BulkOPRModule()
         _ = await bulk.execute(remote: remote)
         if case .failed(let error) = bulk.status {

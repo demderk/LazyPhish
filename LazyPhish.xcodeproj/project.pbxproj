@@ -20,7 +20,7 @@
 		30137C442BD4108C00905B15 /* MainViewPageHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30137C432BD4108C00905B15 /* MainViewPageHolder.swift */; };
 		30137C462BD410B500905B15 /* MainSelectedPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30137C452BD410B500905B15 /* MainSelectedPage.swift */; };
 		303777452CA3B8C0001B8D67 /* BulkOPRModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303777442CA3B8A8001B8D67 /* BulkOPRModule.swift */; };
-		303777482CA3B966001B8D67 /* RemoteInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303777472CA3B966001B8D67 /* RemoteInfo.swift */; };
+		303777482CA3B966001B8D67 /* RequestInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303777472CA3B966001B8D67 /* RequestInfo.swift */; };
 		3037774A2CA3B9CD001B8D67 /* OPRModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303777492CA3B9CD001B8D67 /* OPRModule.swift */; };
 		3037774C2CA3BA24001B8D67 /* RequestModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037774B2CA3BA24001B8D67 /* RequestModule.swift */; };
 		3037774E2CA3BA34001B8D67 /* StrictURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037774D2CA3BA34001B8D67 /* StrictURL.swift */; };
@@ -36,7 +36,6 @@
 		3037D15A2B9B6C530012104E /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037D1592B9B6C530012104E /* RequestError.swift */; };
 		3037D15C2B9B6CA00012104E /* OPRInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3037D15B2B9B6CA00012104E /* OPRInfo.swift */; };
 		3037D15F2B9CA1B00012104E /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 3037D15E2B9CA1B00012104E /* AlamofireImage */; };
-		3038CE612C87102600379056 /* NeoPhishInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3038CE602C87102600379056 /* NeoPhishInfo.swift */; };
 		304BE3912C72F0B5001A2AB0 /* AnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3902C72F0B4001A2AB0 /* AnalyticsView.swift */; };
 		304BE3942C73173C001A2AB0 /* PageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3932C73173C001A2AB0 /* PageButton.swift */; };
 		304BE3962C73819C001A2AB0 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3952C73819C001A2AB0 /* StatusView.swift */; };
@@ -101,7 +100,7 @@
 		30137C432BD4108C00905B15 /* MainViewPageHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewPageHolder.swift; sourceTree = "<group>"; };
 		30137C452BD410B500905B15 /* MainSelectedPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSelectedPage.swift; sourceTree = "<group>"; };
 		303777442CA3B8A8001B8D67 /* BulkOPRModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulkOPRModule.swift; sourceTree = "<group>"; };
-		303777472CA3B966001B8D67 /* RemoteInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteInfo.swift; sourceTree = "<group>"; };
+		303777472CA3B966001B8D67 /* RequestInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestInfo.swift; sourceTree = "<group>"; };
 		303777492CA3B9CD001B8D67 /* OPRModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OPRModule.swift; sourceTree = "<group>"; };
 		3037774B2CA3BA24001B8D67 /* RequestModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestModule.swift; sourceTree = "<group>"; };
 		3037774D2CA3BA34001B8D67 /* StrictURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrictURL.swift; sourceTree = "<group>"; };
@@ -116,7 +115,6 @@
 		3037D1562B9B6C280012104E /* MLEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLEntry.swift; sourceTree = "<group>"; };
 		3037D1592B9B6C530012104E /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
 		3037D15B2B9B6CA00012104E /* OPRInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OPRInfo.swift; sourceTree = "<group>"; };
-		3038CE602C87102600379056 /* NeoPhishInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeoPhishInfo.swift; sourceTree = "<group>"; };
 		304BE3902C72F0B4001A2AB0 /* AnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsView.swift; sourceTree = "<group>"; };
 		304BE3932C73173C001A2AB0 /* PageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageButton.swift; sourceTree = "<group>"; };
 		304BE3952C73819C001A2AB0 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
@@ -238,7 +236,7 @@
 				303777532CA3BD89001B8D67 /* RemoteStatus.swift */,
 				300396602BA5BCD0001B6C2C /* MetricStatus.swift */,
 				304BE3A22C7EF883001A2AB0 /* File.swift */,
-				303777472CA3B966001B8D67 /* RemoteInfo.swift */,
+				303777472CA3B966001B8D67 /* RequestInfo.swift */,
 			);
 			path = Phishing;
 			sourceTree = "<group>";
@@ -305,7 +303,6 @@
 				30E724A72C0F7FD20082ED54 /* WhoisConnection.swift */,
 				30E724BC2C11BC6B0082ED54 /* LoggerExtension.swift */,
 				304BE39C2C7C5AE3001A2AB0 /* KeyService.swift */,
-				3038CE602C87102600379056 /* NeoPhishInfo.swift */,
 				3037774F2CA3BA3F001B8D67 /* ModuleStatus.swift */,
 				3037774D2CA3BA34001B8D67 /* StrictURL.swift */,
 				3037774B2CA3BA24001B8D67 /* RequestModule.swift */,
@@ -514,7 +511,6 @@
 				3037D15C2B9B6CA00012104E /* OPRInfo.swift in Sources */,
 				30E724A82C0F7FD20082ED54 /* WhoisConnection.swift in Sources */,
 				304BE3A32C7EF883001A2AB0 /* File.swift in Sources */,
-				3038CE612C87102600379056 /* NeoPhishInfo.swift in Sources */,
 				307CBC482BCC57D3004B68A8 /* PhishInfoFormatter.swift in Sources */,
 				307A27052BA5BABC00B9D14A /* PhishInfoRemote.swift in Sources */,
 				304BE3A92C7F1320001A2AB0 /* SQIModule.swift in Sources */,
@@ -537,7 +533,7 @@
 				30B1C5D72BD122AE00D275D4 /* SingleRequestVM.swift in Sources */,
 				30CE1AB22BD6700C001B022F /* ResultTag.swift in Sources */,
 				30B1C5D92BD122F300D275D4 /* MainView.swift in Sources */,
-				303777482CA3B966001B8D67 /* RemoteInfo.swift in Sources */,
+				303777482CA3B966001B8D67 /* RequestInfo.swift in Sources */,
 				3037775F2CA5698E001B8D67 /* ModuleTagBehavior.swift in Sources */,
 				30B1C5DB2BD1231400D275D4 /* MainViewVM.swift in Sources */,
 				30CE1AAB2BD58A8B001B022F /* GlobalVM.swift in Sources */,

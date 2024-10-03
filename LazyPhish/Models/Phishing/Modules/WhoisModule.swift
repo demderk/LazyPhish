@@ -17,24 +17,36 @@ class WhoisModule: RequestModule {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMMM yyyy"
         var text = "Creation data unavailable"
-        var foundText = self.whois == nil ? "Whois is empty" : "Whois found"
         dateFormatter.locale = Locale(identifier: "en_US")
         if let date = self.whois?.creationDate {
             text = dateFormatter.string(from: date)
         }
         return text
     }
+    var dateTextIsFormatable: Bool {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMMM yyyy"
+        var result = false
+        dateFormatter.locale = Locale(identifier: "en_US")
+        if let date = self.whois?.creationDate {
+            result = true
+        }
+        return result
+    }
     
     private static var whoisSemaphore = Semaphore(count: 1)
     private static var sCount: UInt64 = 1
 
-    func processWhois(_ remoteObject: RemoteInfo) async {
-        var result = remoteObject
+    func processWhois(_ remoteObject: RequestInfo) async {
         do {
             let connection = WhoisConnection()
             let whois = try await connection.lookup(host: remoteObject.url.strictHost)
             self.whois = whois
-            status = .completed
+            if !dateTextIsFormatable {
+                status = .completedWithErrors(errors: nil)
+            } else {
+                status = .completed
+            }
             return
         } catch let error as WhoisError {
             status = .failed(error: error)
@@ -51,7 +63,7 @@ class WhoisModule: RequestModule {
         }
     }
 
-    public func execute(remote: RemoteInfo) async {
+    public func execute(remote: RequestInfo) async {
         status = .executing
         await WhoisModule.whoisSemaphore.wait()
         await processWhois(remote)

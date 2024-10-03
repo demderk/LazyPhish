@@ -11,7 +11,7 @@ import SwiftUI
 class SingleRequestViewModel: ObservableObject {
     @Published var request: String = ""
     @Published var errorText: String?
-    @Published var lastRequest: RemoteInfo?
+    @Published var lastRequest: RequestInfo?
     @Published var requestIsPending: Bool = false
     @Published var statusText: String = ""
     

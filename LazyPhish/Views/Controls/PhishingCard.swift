@@ -9,7 +9,7 @@ import SwiftUI
 import WrappingHStack
 
 struct PhishingCard: View {
-    @Binding var request: RemoteInfo!
+    @Binding var request: RequestInfo!
     @Binding var bussy: Bool
     @State var tagList: [MetricData] = []
 
