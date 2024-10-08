@@ -80,6 +80,7 @@ class SQIModule: RequestModule {
                     status = .completedWithErrors(
                         errors: [YandexSQIError.yandexSQIVisionNotRecognized(
                             image: NSImage(cgImage: image, size: .zero))])
+                    yandexSQI = 0
                     return
                 }
 

@@ -12,33 +12,43 @@ class OPRModule: RequestModule {
     var dependences: [any RequestModule] = []
     var status: ModuleStatus = .planned
     var OPRInfo: OPRInfo?
-
+    
     init() {
-
+        
     }
-
+    
     init(bulk: BulkOPRModule) {
         dependences.append(bulk)
     }
-
+    
     func execute(remote: RequestInfo) async {
         status = .executing
-        if let bulkDependency = dependences.first(where: {$0 is BulkOPRModule}) as? BulkOPRModule {
-            if let found = bulkDependency.cache?.first(where: {$0.domain == remote.url.strictHost}) {
+        if let bulkDependency = dependences.first(where: {$0 is BulkOPRModule}) as? BulkOPRModule,
+           let found = bulkDependency.cache?.first(where: {$0.domain == remote.url.strictHost}) {
+            if case .failed(let error) = bulkDependency.status {
+                status = .failed(error: error)
+                return
+            } else {
                 OPRInfo = found
+                status = .completed
+                return
             }
+            
         } else {
             do {
                 OPRInfo = try await singleBulkRequest(remote: remote)
+                status = .completed
+                return
             } catch let err as RequestError{
                 status = .failed(error: err)
+                return
             } catch {
                 status = .failed(error: OPRError.unknownError(underlyingError: error))
+                return
             }
         }
-        status = .completed
     }
-
+    
     private func singleBulkRequest(remote: RequestInfo) async throws -> OPRInfo {
         let bulk = BulkOPRModule()
         _ = await bulk.execute(remote: remote)

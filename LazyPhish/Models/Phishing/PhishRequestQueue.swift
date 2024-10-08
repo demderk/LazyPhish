@@ -7,10 +7,12 @@
 
 import Foundation
 
-class NeoPhishRequestQueue {
+class PhishRequestQueue {
     var phishURLS: [StrictURL] = []
     var globalDependences: [RequestModule] = []
-
+    
+    private var lastRequests: [RequestInfo]? = nil
+    
     func setupModules(_ modules: [DetectTool]) async {
         for module in modules {
             switch module {
@@ -26,7 +28,8 @@ class NeoPhishRequestQueue {
             }
         }
     }
-
+    
+    @discardableResult
     func executeAll(modules: [DetectTool],
                     onModuleFinished: ((RequestInfo, RequestModule) -> Void)? = nil,
                     onRequestFinished: ((RequestInfo) -> Void)? = nil,
@@ -40,6 +43,7 @@ class NeoPhishRequestQueue {
                 tasks.addTask { [self] in
                     var info = RequestInfo(url: url)
                     info.requestID = rnumber
+                    info.failedOnModulesCount = 3
                     for item in modules {
                         var mod = item.getModule()
                         mod.dependences.append(contentsOf: self.globalDependences)
@@ -60,7 +64,38 @@ class NeoPhishRequestQueue {
                 }
             }
         }
-
+        lastRequests = result
         return result
+    }
+    
+    @discardableResult
+    func reviseLastRequest(
+        onModuleFinished: ((RequestInfo, RequestModule) -> Void)? = nil,
+        onRequestFinished: ((RequestInfo) -> Void)? = nil,
+        onQueue: DispatchQueue = DispatchQueue.main
+    ) async -> [RequestInfo]? {
+        guard let requests = lastRequests else {
+            return nil
+        }
+        await withTaskGroup(of: Void.self) { tasks in
+            for request in requests {
+                tasks.addTask {
+                    await request.revise(
+                        onRequestFinished: { r in
+                            onQueue.async {
+                                onRequestFinished?(r)
+                            }
+                        },
+                        onModuleFinished: { r, m in
+                            onQueue.async {
+                                onModuleFinished?(r, m)
+                            }
+                        })
+                }
+            }
+        }
+        
+        
+        return lastRequests
     }
 }

@@ -86,6 +86,18 @@ struct MultiRequestView: View {
                     HStack {
                         Button {
                             if !vm.busy {
+                                vm.reviseRequestQuerry()
+                            }
+                        } label: {
+                            Image(systemName: "bandage.fill")
+                                .padding(.horizontal, 8)
+                                .frame(width: 48)
+                        }
+                        .disabled(!vm.reviseable || vm.busy)
+                        .help("Revise Querry")
+                        .keyboardShortcut(.return)
+                        Button {
+                            if !vm.busy {
                                 vm.sendRequestQuerry()
                             }
                         } label: {
@@ -124,10 +136,10 @@ struct MultiRequestView: View {
                 ToolbarItem(placement: .primaryAction) {
                     Menu {
                         Button("Export ML Data") {
-                            vm.exportCSV()
+//                            vm.exportCSV()
                         }
                         Button("Export RAW ML Data") {
-                            vm.exportCSVRAW()
+//                            vm.exportCSVRAW()
                         }
                     } label: {
                         Image(systemName: "square.and.arrow.up")
