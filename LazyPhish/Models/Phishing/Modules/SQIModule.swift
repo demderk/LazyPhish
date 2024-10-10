@@ -12,11 +12,13 @@ import Vision
 import AppKit
 
 class SQIModule: RequestModule {
-    var dependences: [any RequestModule] = []
+    var dependences: DependencyCollection = DependencyCollection()
     var status: ModuleStatus = .planned
     var yandexSQI: Int?
 
     func execute(remote: RequestInfo) async {
+        print("sqi triggered")
+        
         status = .executing
         let accurate = false
 

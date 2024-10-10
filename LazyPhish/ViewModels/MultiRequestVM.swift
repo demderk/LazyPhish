@@ -67,8 +67,7 @@ class MultiRequestVM: ObservableObject {
         lastUrlsCount > 0
     }
     
-    var resultingDocument: PhishFile = PhishFile([])
-    var RAWResultingDocument: RawPhishFile = RawPhishFile([])
+//    var resultingDocument: PhishFile = PhishFile([])
     var ignoreWrongLines: Bool = true
     
     func onModuleFinished(remote: RequestInfo, module: RequestModule) {

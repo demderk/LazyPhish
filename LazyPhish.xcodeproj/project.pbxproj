@@ -46,18 +46,15 @@
 		304BE3A32C7EF883001A2AB0 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3A22C7EF883001A2AB0 /* File.swift */; };
 		304BE3A72C7F11D5001A2AB0 /* WhoisModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3A62C7F11D5001A2AB0 /* WhoisModule.swift */; };
 		304BE3A92C7F1320001A2AB0 /* SQIModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3A82C7F1320001A2AB0 /* SQIModule.swift */; };
-		307A27032BA5BA7F00B9D14A /* PhishInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307A27022BA5BA7F00B9D14A /* PhishInfo.swift */; };
 		307A27052BA5BABC00B9D14A /* PhishInfoRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307A27042BA5BABC00B9D14A /* PhishInfoRemote.swift */; };
 		307CBC482BCC57D3004B68A8 /* PhishInfoFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307CBC472BCC57D3004B68A8 /* PhishInfoFormatter.swift */; };
 		30815DF42BF374B300A7DBAC /* Vapor in Frameworks */ = {isa = PBXBuildFile; productRef = 30815DF32BF374B300A7DBAC /* Vapor */; };
-		30815DF62BF3753D00A7DBAC /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30815DF52BF3753D00A7DBAC /* ServerView.swift */; };
-		30815DF82BF3756500A7DBAC /* ServerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30815DF72BF3756500A7DBAC /* ServerVM.swift */; };
-		30815DFB2BF37A1A00A7DBAC /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30815DFA2BF37A1A00A7DBAC /* Server.swift */; };
 		30815E002BF3B55200A7DBAC /* PhishML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30815DFF2BF3B55200A7DBAC /* PhishML.swift */; };
 		30815E022BF3B66C00A7DBAC /* LazyPhishML.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 30815E012BF3B66C00A7DBAC /* LazyPhishML.mlpackage */; };
+		30A80F902CB64674004C46C7 /* MLModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A80F8F2CB64674004C46C7 /* MLModule.swift */; };
+		30A80F922CB6DACA004C46C7 /* DependencyCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A80F912CB6DACA004C46C7 /* DependencyCollection.swift */; };
 		30AA73F52C806A400075FAD3 /* PhishingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA73F42C806A400075FAD3 /* PhishingCard.swift */; };
 		30AF623C2BDABFA80004E8BF /* Authority.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30AF623B2BDABFA80004E8BF /* Authority.plist */; };
-		30AF623E2BDAC6310004E8BF /* PhishFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AF623D2BDAC6310004E8BF /* PhishFile.swift */; };
 		30AF62412BDAC9420004E8BF /* CodableCSV in Frameworks */ = {isa = PBXBuildFile; productRef = 30AF62402BDAC9420004E8BF /* CodableCSV */; };
 		30B1C5CF2BD020E000D275D4 /* ThrowingOPRInfoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B1C5CE2BD020E000D275D4 /* ThrowingOPRInfoList.swift */; };
 		30B1C5D52BD122A000D275D4 /* SingleRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B1C5D42BD122A000D275D4 /* SingleRequestView.swift */; };
@@ -67,7 +64,6 @@
 		30B9B9A72B9A13410063ADB3 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 30B9B9A62B9A13410063ADB3 /* Alamofire */; };
 		30CE1AAB2BD58A8B001B022F /* GlobalVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CE1AAA2BD58A8B001B022F /* GlobalVM.swift */; };
 		30CE1AB02BD66CD9001B022F /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 30CE1AAF2BD66CD9001B022F /* WrappingHStack */; };
-		30CE1AB22BD6700C001B022F /* ResultTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CE1AB12BD6700C001B022F /* ResultTag.swift */; };
 		30E724A82C0F7FD20082ED54 /* WhoisConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E724A72C0F7FD20082ED54 /* WhoisConnection.swift */; };
 		30E724BD2C11BC6B0082ED54 /* LoggerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E724BC2C11BC6B0082ED54 /* LoggerExtension.swift */; };
 		30FCD7812C99F35500975933 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FCD7802C99F35500975933 /* AsyncOperation.swift */; };
@@ -125,24 +121,20 @@
 		304BE3A22C7EF883001A2AB0 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		304BE3A62C7F11D5001A2AB0 /* WhoisModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoisModule.swift; sourceTree = "<group>"; };
 		304BE3A82C7F1320001A2AB0 /* SQIModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQIModule.swift; sourceTree = "<group>"; };
-		307A27022BA5BA7F00B9D14A /* PhishInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishInfo.swift; sourceTree = "<group>"; };
 		307A27042BA5BABC00B9D14A /* PhishInfoRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishInfoRemote.swift; sourceTree = "<group>"; };
 		307CBC472BCC57D3004B68A8 /* PhishInfoFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishInfoFormatter.swift; sourceTree = "<group>"; };
-		30815DF52BF3753D00A7DBAC /* ServerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerView.swift; sourceTree = "<group>"; };
-		30815DF72BF3756500A7DBAC /* ServerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerVM.swift; sourceTree = "<group>"; };
-		30815DFA2BF37A1A00A7DBAC /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		30815DFF2BF3B55200A7DBAC /* PhishML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishML.swift; sourceTree = "<group>"; };
 		30815E012BF3B66C00A7DBAC /* LazyPhishML.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = LazyPhishML.mlpackage; sourceTree = "<group>"; };
+		30A80F8F2CB64674004C46C7 /* MLModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLModule.swift; sourceTree = "<group>"; };
+		30A80F912CB6DACA004C46C7 /* DependencyCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyCollection.swift; sourceTree = "<group>"; };
 		30AA73F42C806A400075FAD3 /* PhishingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishingCard.swift; sourceTree = "<group>"; };
 		30AF623B2BDABFA80004E8BF /* Authority.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Authority.plist; sourceTree = "<group>"; };
-		30AF623D2BDAC6310004E8BF /* PhishFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishFile.swift; sourceTree = "<group>"; };
 		30B1C5CE2BD020E000D275D4 /* ThrowingOPRInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrowingOPRInfoList.swift; sourceTree = "<group>"; };
 		30B1C5D42BD122A000D275D4 /* SingleRequestView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleRequestView.swift; sourceTree = "<group>"; };
 		30B1C5D62BD122AE00D275D4 /* SingleRequestVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleRequestVM.swift; sourceTree = "<group>"; };
 		30B1C5D82BD122F300D275D4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		30B1C5DA2BD1231400D275D4 /* MainViewVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewVM.swift; sourceTree = "<group>"; };
 		30CE1AAA2BD58A8B001B022F /* GlobalVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalVM.swift; sourceTree = "<group>"; };
-		30CE1AB12BD6700C001B022F /* ResultTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTag.swift; sourceTree = "<group>"; };
 		30E724A72C0F7FD20082ED54 /* WhoisConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoisConnection.swift; sourceTree = "<group>"; };
 		30E724BC2C11BC6B0082ED54 /* LoggerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerExtension.swift; sourceTree = "<group>"; };
 		30FCD7802C99F35500975933 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
@@ -225,7 +217,6 @@
 			children = (
 				303777462CA3B8C6001B8D67 /* Modules */,
 				307CBC472BCC57D3004B68A8 /* PhishInfoFormatter.swift */,
-				307A27022BA5BA7F00B9D14A /* PhishInfo.swift */,
 				3037D1592B9B6C530012104E /* RequestError.swift */,
 				300367872B95CE5B00D3C84C /* PhishRequest.swift */,
 				300396642BA5BF07001B6C2C /* PhishRequestQueue.swift */,
@@ -237,6 +228,7 @@
 				300396602BA5BCD0001B6C2C /* MetricStatus.swift */,
 				304BE3A22C7EF883001A2AB0 /* File.swift */,
 				303777472CA3B966001B8D67 /* RequestInfo.swift */,
+				30A80F912CB6DACA004C46C7 /* DependencyCollection.swift */,
 			);
 			path = Phishing;
 			sourceTree = "<group>";
@@ -247,7 +239,6 @@
 				303777572CA3DB58001B8D67 /* ModuleViews */,
 				304BE39E2C7DC92E001A2AB0 /* ControlStyles */,
 				304BE3922C7316F4001A2AB0 /* Controls */,
-				30815DF52BF3753D00A7DBAC /* ServerView.swift */,
 				30B1C5D42BD122A000D275D4 /* SingleRequestView.swift */,
 				3003966B2BA7489F001B6C2C /* MultiRequestView.swift */,
 				30B1C5D82BD122F300D275D4 /* MainView.swift */,
@@ -263,7 +254,6 @@
 			children = (
 				30137C432BD4108C00905B15 /* MainViewPageHolder.swift */,
 				30137C452BD410B500905B15 /* MainSelectedPage.swift */,
-				30CE1AB12BD6700C001B022F /* ResultTag.swift */,
 			);
 			path = Frontend;
 			sourceTree = "<group>";
@@ -276,6 +266,7 @@
 				303777512CA3BA93001B8D67 /* RegexModule.swift */,
 				304BE3A62C7F11D5001A2AB0 /* WhoisModule.swift */,
 				304BE3A82C7F1320001A2AB0 /* SQIModule.swift */,
+				30A80F8F2CB64674004C46C7 /* MLModule.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -293,13 +284,11 @@
 		3037D1552B9B6C050012104E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				30815DF92BF37A0700A7DBAC /* Server */,
 				30137C422BD4106300905B15 /* Frontend */,
 				3003965F2BA5BC1F001B6C2C /* Phishing */,
 				3037D1562B9B6C280012104E /* MLEntry.swift */,
 				300396622BA5BD00001B6C2C /* RiskLevel.swift */,
 				30B1C5CE2BD020E000D275D4 /* ThrowingOPRInfoList.swift */,
-				30AF623D2BDAC6310004E8BF /* PhishFile.swift */,
 				30E724A72C0F7FD20082ED54 /* WhoisConnection.swift */,
 				30E724BC2C11BC6B0082ED54 /* LoggerExtension.swift */,
 				304BE39C2C7C5AE3001A2AB0 /* KeyService.swift */,
@@ -330,14 +319,6 @@
 			path = ControlStyles;
 			sourceTree = "<group>";
 		};
-		30815DF92BF37A0700A7DBAC /* Server */ = {
-			isa = PBXGroup;
-			children = (
-				30815DFA2BF37A1A00A7DBAC /* Server.swift */,
-			);
-			path = Server;
-			sourceTree = "<group>";
-		};
 		30815DFC2BF3B4F100A7DBAC /* PhishML */ = {
 			isa = PBXGroup;
 			children = (
@@ -354,7 +335,6 @@
 				3003966D2BA7494E001B6C2C /* MultiRequestVM.swift */,
 				30B1C5DA2BD1231400D275D4 /* MainViewVM.swift */,
 				30CE1AAA2BD58A8B001B022F /* GlobalVM.swift */,
-				30815DF72BF3756500A7DBAC /* ServerVM.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -500,9 +480,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				304BE3982C7389EC001A2AB0 /* SettingsView.swift in Sources */,
+				30A80F902CB64674004C46C7 /* MLModule.swift in Sources */,
 				3037774A2CA3B9CD001B8D67 /* OPRModule.swift in Sources */,
-				30815DF62BF3753D00A7DBAC /* ServerView.swift in Sources */,
-				30AF623E2BDAC6310004E8BF /* PhishFile.swift in Sources */,
 				304BE39B2C7C5A9B001A2AB0 /* KeysSettingsView.swift in Sources */,
 				3003966C2BA7489F001B6C2C /* MultiRequestView.swift in Sources */,
 				304BE39D2C7C5AE3001A2AB0 /* KeyService.swift in Sources */,
@@ -518,7 +497,6 @@
 				30815E022BF3B66C00A7DBAC /* LazyPhishML.mlpackage in Sources */,
 				303777542CA3BD89001B8D67 /* RemoteStatus.swift in Sources */,
 				303777562CA3DA65001B8D67 /* Semaphore.swift in Sources */,
-				307A27032BA5BA7F00B9D14A /* PhishInfo.swift in Sources */,
 				304BE3962C73819C001A2AB0 /* StatusView.swift in Sources */,
 				30137C462BD410B500905B15 /* MainSelectedPage.swift in Sources */,
 				303777502CA3BA3F001B8D67 /* ModuleStatus.swift in Sources */,
@@ -529,9 +507,8 @@
 				304BE3912C72F0B5001A2AB0 /* AnalyticsView.swift in Sources */,
 				304BE3A02C7DC983001A2AB0 /* BigToggleButton.swift in Sources */,
 				3037774E2CA3BA34001B8D67 /* StrictURL.swift in Sources */,
-				30815DFB2BF37A1A00A7DBAC /* Server.swift in Sources */,
+				30A80F922CB6DACA004C46C7 /* DependencyCollection.swift in Sources */,
 				30B1C5D72BD122AE00D275D4 /* SingleRequestVM.swift in Sources */,
-				30CE1AB22BD6700C001B022F /* ResultTag.swift in Sources */,
 				30B1C5D92BD122F300D275D4 /* MainView.swift in Sources */,
 				303777482CA3B966001B8D67 /* RequestInfo.swift in Sources */,
 				3037775F2CA5698E001B8D67 /* ModuleTagBehavior.swift in Sources */,
@@ -549,7 +526,6 @@
 				300396612BA5BCD0001B6C2C /* MetricStatus.swift in Sources */,
 				303777522CA3BA93001B8D67 /* RegexModule.swift in Sources */,
 				303777452CA3B8C0001B8D67 /* BulkOPRModule.swift in Sources */,
-				30815DF82BF3756500A7DBAC /* ServerVM.swift in Sources */,
 				30815E002BF3B55200A7DBAC /* PhishML.swift in Sources */,
 				30FCD7812C99F35500975933 /* AsyncOperation.swift in Sources */,
 				304BE3A72C7F11D5001A2AB0 /* WhoisModule.swift in Sources */,
@@ -705,7 +681,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LazyPhish/Preview Content\"";
 				DEVELOPMENT_TEAM = BX3ASU46J7;
@@ -737,7 +713,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LazyPhish/Preview Content\"";
 				DEVELOPMENT_TEAM = BX3ASU46J7;

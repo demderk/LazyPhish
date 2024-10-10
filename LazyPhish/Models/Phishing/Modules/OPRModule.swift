@@ -9,7 +9,7 @@ import Foundation
 import OSLog
 
 class OPRModule: RequestModule {
-    var dependences: [any RequestModule] = []
+    var dependences: DependencyCollection = DependencyCollection()
     var status: ModuleStatus = .planned
     var OPRInfo: OPRInfo?
     
@@ -18,12 +18,12 @@ class OPRModule: RequestModule {
     }
     
     init(bulk: BulkOPRModule) {
-        dependences.append(bulk)
+        dependences.pushDependencyInsecure(bulk)
     }
     
     func execute(remote: RequestInfo) async {
         status = .executing
-        if let bulkDependency = dependences.first(where: {$0 is BulkOPRModule}) as? BulkOPRModule,
+        if let bulkDependency = await dependences.getDependency(module: BulkOPRModule()) as? BulkOPRModule,
            let found = bulkDependency.cache?.first(where: {$0.domain == remote.url.strictHost}) {
             if case .failed(let error) = bulkDependency.status {
                 status = .failed(error: error)

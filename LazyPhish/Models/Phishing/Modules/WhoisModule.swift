@@ -8,7 +8,7 @@
 import Foundation
 
 class WhoisModule: RequestModule {
-    var dependences: [any RequestModule] = []
+    var dependences: DependencyCollection = DependencyCollection()
     var status: ModuleStatus = .planned
     var whois: WhoisInfo?
     

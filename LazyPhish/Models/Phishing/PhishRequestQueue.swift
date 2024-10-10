@@ -36,19 +36,19 @@ class PhishRequestQueue {
                     onQueue: DispatchQueue = DispatchQueue.main
     ) async -> [RequestInfo] {
         var result: [RequestInfo] = []
-        await self.setupModules(modules)
+        var oprBulk = BulkOPRModule()
+        await oprBulk.bulk(phishURLS)
 
         await withTaskGroup(of: Void.self) { tasks in
             for (rnumber, url) in phishURLS.enumerated() {
                 tasks.addTask { [self] in
-                    var info = RequestInfo(url: url)
+                    let info = RequestInfo(url: url)
                     info.requestID = rnumber
                     info.failedOnModulesCount = 3
                     for item in modules {
-                        var mod = item.getModule()
-                        mod.dependences.append(contentsOf: self.globalDependences)
-                        info.addModule(mod)
+                        info.addModule(item.getModule())
                     }
+                    await info.addBroadcastModule(oprBulk)
                     await info.executeAll(
                         onRequestFinished: { r in
                             onQueue.async {

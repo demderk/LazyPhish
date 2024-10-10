@@ -11,7 +11,6 @@ import WrappingHStack
 struct PhishingCard: View {
     @Binding var request: RequestInfo!
     @Binding var bussy: Bool
-    @State var tagList: [MetricData] = []
 
     var body: some View {
         VStack {

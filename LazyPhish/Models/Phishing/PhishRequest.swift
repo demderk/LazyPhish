@@ -34,17 +34,22 @@ enum DetectTool {
     case whois
     case regex
     case opr
+    case ml
 
     func getModule() -> RequestModule {
         switch self {
         case .sqi:
-            SQIModule()
+            return SQIModule()
         case .whois:
-            WhoisModule()
+            return WhoisModule()
         case .regex:
-            RegexModule()
+            return RegexModule()
         case .opr:
-            OPRModule()
+            var oprModule = OPRModule()
+            oprModule.dependences.pushDependencyInsecure(BulkOPRModule())
+            return oprModule
+        case .ml:
+            return MLModule()
         }
     }
 }
@@ -57,38 +62,5 @@ class NeoPhishRequest {
         }
         await remote.executeAll()
         return remote
-    }
-}
-
-@available(*, deprecated, message: "Use NeoPhishRequest")
-class PhishRequest {
-
-    public func refreshRemoteData(_ base: StrictRemote) async -> PhishInfo {
-        await refreshRemoteData(base, collectMetrics: [])
-//                                                       OPRPipeline(),
-//                                                       WhoisPipeline()])
-    }
-
-    public func refreshRemoteData(_ base: StrictRemote,
-                                  collectMetrics: [PhishingPipelineObject]
-    ) async -> PhishInfo {
-
-        let remote = await withTaskGroup(of: StrictRemote.self,
-                                         returning: StrictRemote.self
-        ) { taskGroup in
-
-                var result: StrictRemote = base
-                for item in collectMetrics {
-                    taskGroup.addTask {
-                        await item.execute(data: base)
-                    }
-                }
-                for await item in taskGroup {
-                    result.remote.append(remote: item.remote)
-                }
-                return result
-            }
-        // FIXME: Чек на нулл
-        return remote as! PhishInfo
     }
 }

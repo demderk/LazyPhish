@@ -17,3 +17,16 @@ enum RiskLevel: Int, Comparable, Codable {
         return lhs.rawValue < rhs.rawValue
     }
 }
+
+extension RiskLevel {
+    func getColor() -> Color {
+        switch self {
+        case .common:
+            return Color.green.opacity(0.35)
+        case .suspicious:
+            return Color.yellow.opacity(0.40)
+        case .danger:
+            return Color.red.opacity(0.45)
+        }
+    }
+}

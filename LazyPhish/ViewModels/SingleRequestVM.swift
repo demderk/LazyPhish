@@ -15,7 +15,6 @@ class SingleRequestViewModel: ObservableObject {
     @Published var requestIsPending: Bool = false
     @Published var statusText: String = ""
     
-    private var phishRequest: PhishRequestSingle?
     private var cardIsPresented: Bool = false
 
     func makeRequest() {
@@ -28,7 +27,7 @@ class SingleRequestViewModel: ObservableObject {
                         requestIsPending = true
                     }
                 }
-                let response = await phishRequest.executeRequest(url: url, modules: [.opr, .regex, .sqi, .whois])
+                let response = await phishRequest.executeRequest(url: url, modules: [.opr, .regex, .sqi, .whois, .ml])
                 await MainActor.run {
                     withAnimation {
                         requestIsPending = false

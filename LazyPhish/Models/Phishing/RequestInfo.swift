@@ -12,6 +12,8 @@ class RequestInfo {
     
     private(set) var modules: [any RequestModule] = []
     
+    private var dependencyModules: DependencyCollection = DependencyCollection()
+    
     var requestID: Int?
     var url: StrictURL
     var status: RemoteStatus = .planned
@@ -46,20 +48,37 @@ class RequestInfo {
         }
     }
     
+    var lock = NSLock()
+    
     private func executeModules (
         onModuleFinished: ((RequestInfo, RequestModule) -> Void)?,
         skipCompleted: Bool = false
     ) async -> RemoteStatus {
         await withTaskGroup(of: Void.self) { tasks in
             for mod in modules {
+                tasks.addTask {
+                    let data = await mod.processDependences(remote: self, parentDependences: self.dependencyModules)
+                    await self.dependencyModules.pushDependency(data)
+                }
+            }
+        }
+        
+        await withTaskGroup(of: Void.self) { tasks in
+            for (n, mod) in modules.enumerated() {
                 if skipCompleted, case .completed = mod.status {
                     continue
                 }
-                _ = tasks.addTaskUnlessCancelled {
-                    if let finished = onModuleFinished {
-                        await mod.execute(remote: self, onFinish: finished)
-                    } else {
-                        await mod.execute(remote: self)
+                if let executed = await dependencyModules.getDependency(module: mod),
+                   case .completed = executed.status {
+                    modules[n] = executed
+                } else {
+                _ = tasks.addTaskUnlessCancelled { [self] in
+                        if let finished = onModuleFinished {
+                            await mod.execute(remote: self, onFinish: finished)
+                        } else {
+                            await mod.execute(remote: self)
+                        }
+                    await dependencyModules.pushDependency(mod)
                     }
                 }
             }
@@ -80,6 +99,11 @@ class RequestInfo {
         } else {
             return .completed
         }
+    }
+    
+    func addBroadcastModule(_ module: any RequestModule) async {
+//        await module.execute(remote: self)
+        await dependencyModules.pushDependency(module)
     }
     
     func addModule(_ module: any RequestModule) {

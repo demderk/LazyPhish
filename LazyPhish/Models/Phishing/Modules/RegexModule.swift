@@ -8,7 +8,7 @@
 import Foundation
 
 class RegexModule: RequestModule {
-    var dependences: [any RequestModule] = []
+    var dependences: DependencyCollection = DependencyCollection()
     var status: ModuleStatus = .planned
 
     private var url: StrictURL!

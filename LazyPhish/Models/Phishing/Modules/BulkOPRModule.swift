@@ -9,7 +9,7 @@ import Foundation
 import OSLog
 
 class BulkOPRModule: RequestModule {
-    var dependences: [any RequestModule] = []
+    var dependences: DependencyCollection = DependencyCollection()
     var status: ModuleStatus = .planned
 
     var cache: [OPRInfo]?
@@ -19,6 +19,8 @@ class BulkOPRModule: RequestModule {
     }
 
     func bulk(_ data: [StrictURL]) async {
+        print("bulk triggered")
+        
         guard let apiKey = try? getOPRKey() else {
             status = .failed(error: OPRError.apiKeyUnreachable)
             return

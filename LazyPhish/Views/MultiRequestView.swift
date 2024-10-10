@@ -10,7 +10,6 @@ import SwiftUI
 struct MultiRequestView: View {
     @ObservedObject var vm = MultiRequestVM()
     @State var showExport = false
-    @State var sortingTable = [KeyPathComparator(\PhishInfo.requestID, order: .forward)]
 
     @ViewBuilder
     var body: some View {
@@ -71,16 +70,16 @@ struct MultiRequestView: View {
                 }
             }.frame(minWidth: 64)
         }.navigationTitle("Queue Processor")
-            .fileExporter(
-                isPresented: $vm.CSVExportIsPresented,
-                document: vm.resultingDocument,
-                contentType: .commaSeparatedText,
-                defaultFilename: "PhishList") {_ in}
-            .fileExporter(
-                isPresented: $vm.RAWExportIsPresented,
-                document: vm.RAWResultingDocument,
-                contentType: .commaSeparatedText,
-                defaultFilename: "PhishList") {_ in}
+//            .fileExporter(
+//                isPresented: $vm.CSVExportIsPresented,
+//                document: vm.resultingDocument,
+//                contentType: .commaSeparatedText,
+//                defaultFilename: "PhishList") {_ in}
+//            .fileExporter(
+//                isPresented: $vm.RAWExportIsPresented,
+//                document: vm.RAWResultingDocument,
+//                contentType: .commaSeparatedText,
+//                defaultFilename: "PhishList") {_ in}
             .toolbar {
                 ToolbarItem(placement: .navigation) {
                     HStack {

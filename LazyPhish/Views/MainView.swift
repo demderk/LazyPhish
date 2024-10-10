@@ -26,12 +26,7 @@ struct MainView: View {
                         case .analysis:
                             vm.pageHolder.analysis
                                 .environmentObject(globalVM)
-                        case .server:
-                            Text("Whoops... This functionality is disabled")
                         }
-
-                        //                        Spacer()
-
                     }.frame(
                         minWidth: 0,
                         maxWidth: .infinity,
