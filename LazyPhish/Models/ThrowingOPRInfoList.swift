@@ -5,7 +5,7 @@ struct ThrowingOPRInfoList {
 
 extension ThrowingOPRInfoList: Decodable {
     private struct AnyDecodableValue: Decodable {}
-    
+
     public init(from decoder: Decoder) throws {
         var container = try decoder.unkeyedContainer()
 

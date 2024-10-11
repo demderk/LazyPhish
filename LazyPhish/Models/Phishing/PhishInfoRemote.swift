@@ -8,16 +8,8 @@
 import Foundation
 import os
 
-enum RemoteStatus {
-    case planned
-    case completedWithErrors
-    case completed
-    case failed
-    case canceled
-}
-
 struct PhishInfoRemote {
-    var whois: MetricStatus<WhoisInfo> = .planned { 
+    var whois: MetricStatus<WhoisInfo> = .planned {
         didSet {
             if case .failed(let error) = whois {
                 if error.isCritical {
@@ -52,13 +44,13 @@ struct PhishInfoRemote {
             }
         }
     }
-    
+
     var hasErrors: Bool {
         self.whois.error != nil ||
         self.yandexSQI.error != nil ||
         self.OPR.error != nil
     }
-    
+
     var completed: Bool {
         if case .planned = whois {
             return false
@@ -71,7 +63,7 @@ struct PhishInfoRemote {
         }
         return true
     }
-    
+
     var status: RemoteStatus {
         var current: RemoteStatus = .planned
         if completed {
@@ -88,7 +80,7 @@ struct PhishInfoRemote {
         }
         return current
     }
-    
+
     mutating func forceAppend(remote: PhishInfoRemote) {
         self.whois = remote.whois
         self.yandexSQI = remote.yandexSQI

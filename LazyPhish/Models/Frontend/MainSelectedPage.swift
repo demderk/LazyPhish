@@ -10,23 +10,20 @@ import SwiftUI
 
 enum MainSelectedPage: CaseIterable, Identifiable {
     var id: Self { return self }
-    
+
     case single
     case multi
-    case server
     case analysis
-    
+
     var title: String {
         switch self {
         case .single:
             "Single Request"
         case .multi:
             "Multi Request"
-        case .server:
-            "Reflector Server"
         case .analysis:
             "PhishAnalytics"
         }
-        
+
     }
 }

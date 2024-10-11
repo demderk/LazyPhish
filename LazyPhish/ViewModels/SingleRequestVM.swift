@@ -11,40 +11,38 @@ import SwiftUI
 class SingleRequestViewModel: ObservableObject {
     @Published var request: String = ""
     @Published var errorText: String?
-    @Published var lastRequest: PhishInfo?
-    @Published var tagList: [MetricData] = []
+    @Published var lastRequest: RequestInfo?
     @Published var requestIsPending: Bool = false
-
-    private var phishRequest: PhishRequestSingle?
+    @Published var statusText: String = ""
+    
     private var cardIsPresented: Bool = false
-    
-    func makeRequest() {
-        if !request.isEmpty && !requestIsPending {
-            do {
-                requestIsPending = true
-                phishRequest = try PhishRequestSingle(request, preActions: [.makeHttp])
-                phishRequest?.refreshRemoteData { data in
-                    if !self.cardIsPresented {
-                        withAnimation {
-                            self.presentCard(data: data)
-                        }
-                    } else {
-                        self.presentCard(data: data)
-                    }
-//                    self.cardIsPresented = true
 
+    func makeRequest() {
+        let phishRequest = NeoPhishRequest()
+        statusText = ""
+        if let url = try? StrictURL(url: request, preActions: [.makeHttp]) {
+            Task {
+                await MainActor.run {
+                    withAnimation {
+                        requestIsPending = true
+                    }
                 }
-            } catch {
-                // TODO: Show error on page
-                print(error.localizedDescription)
-                errorText = error.localizedDescription
+                let response = await phishRequest.executeRequest(url: url, modules: [.opr, .regex, .sqi, .whois, .ml])
+                await MainActor.run {
+                    withAnimation {
+                        requestIsPending = false
+                        lastRequest = response
+                        if let successRequest = lastRequest {
+                            let failedModulesCount = successRequest.modules.count(
+                                where: {if case .failed = $0.status {true} else {false}})
+                            statusText =
+                            "\(successRequest.modules.count - failedModulesCount) modules succeed, \(failedModulesCount) failed"
+                        }
+                    }
+                }
             }
+        } else {
+            errorText = "Invalid Request"
         }
-//        objectWillChange.send()
-    }
-    
-    func presentCard(data: PhishInfo) {
-        self.lastRequest = data
-        self.requestIsPending = false
     }
 }

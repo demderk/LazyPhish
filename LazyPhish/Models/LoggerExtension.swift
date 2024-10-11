@@ -13,15 +13,15 @@ extension Logger {
     static let whoisRequestLogger = Logger(
         subsystem: subsystem,
         category: "Whois Request")
-    
+
     static let yandexSQIRequestLogger = Logger(
         subsystem: subsystem,
         category: "Yandex SQI Request")
-    
+
     static let OPRRequestLogger = Logger(
         subsystem: subsystem,
         category: "OPR Request")
-    
+
     static let MLModelLogger = Logger(
         subsystem: subsystem,
         category: "ML Model")

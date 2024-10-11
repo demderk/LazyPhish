@@ -10,7 +10,7 @@ import Foundation
 enum FormatPreaction {
     case makeHttps
     case makeHttp
-    
+
     func execute(_ input: String) -> String {
         switch self {
         case .makeHttps:
@@ -33,7 +33,7 @@ final class PhishInfoFormatter {
 \W{0,}0[xX][0-9a-fA-F]{2}\W{0,}[.] \
 \W{0,}0[xX][0-9a-fA-F]{2}
 """#
-    
+
     static func getURLIPMode(_ url: URL) -> Bool {
         guard let ipv4Regex = try? Regex(URLIPv4Regex),
               let ipv4RegexBin = try? Regex(URLIPv4RegexBinary),
@@ -42,9 +42,9 @@ final class PhishInfoFormatter {
             // TODO: Нужно что-то с регексом придумать
             fatalError("REGEX ERROR")
         }
-        
+
         let URLStr = url.host()!
-        
+
         if let x = (try? ipv4Regex.firstMatch(in: URLStr)) {
             return true
         }
@@ -56,7 +56,7 @@ final class PhishInfoFormatter {
         }
         return false
     }
-    
+
     static func validURL(_ urlString: String) throws -> URL {
         guard urlString.contains("http://") || urlString.contains("https://") else {
             throw ParserError.urlNotAWebRequest(url: urlString)
@@ -69,7 +69,7 @@ final class PhishInfoFormatter {
         }
         return url
     }
-    
+
     static func validURL(_ urlString: String, preActions: Set<FormatPreaction>) throws -> URL {
         var input = urlString
         for action in preActions {
@@ -87,10 +87,10 @@ final class PhishInfoFormatter {
         guard url.host() != nil else {
             throw ParserError.urlHostIsBroken(url: urlString)
         }
-        
+
         return url
     }
-    
+
     static func makeHttps(url: String) -> String {
         guard !url.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return url
@@ -100,7 +100,7 @@ final class PhishInfoFormatter {
         }
         return "https://\(url)"
     }
-    
+
     static func makeHttp(url: String) -> String {
         guard !url.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return url

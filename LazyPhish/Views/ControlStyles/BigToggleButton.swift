@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BigImageButton: ButtonStyle {
     @State var image: Image
-    
+
     func makeBody(configuration: Configuration) -> some View {
         HStack {
             image
@@ -55,7 +55,7 @@ struct BigToggleButton: ToggleStyle {
 
 struct BigToggleImageButton: ToggleStyle {
     @State var image: Image
-    
+
     func makeBody(configuration: Configuration) -> some View {
         Button(action: {
             configuration.isOn.toggle()

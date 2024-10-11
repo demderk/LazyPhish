@@ -8,22 +8,47 @@
 import Foundation
 import SwiftUI
 
-extension PhishInfo: Identifiable {
-    // Я в этом сооооооооовсем не уверен
-    var id: Int { self.requestID ?? Int.random(in: 0...Int.max) }
+struct PhishTableEntry: Identifiable {
+    var id: Int
+    
+    var host: String
+    var opr, sqi, length, subDomains, prefixCount: Int?
+    var isIP: Bool?
+    var date: String?
 }
 
-extension PhishInfo {
-    var sortSqiInt: Int { self.yandexSQI ?? -1 }
-    var sortOprInt: Int { self.OPRRank ?? -1 }
-    var sortHaveWhois: Int { self.whois == nil ? 0 : 1 }
-    var sortIsIP: Int { self.isIP ? 1 : 0 }
-    var sortDate: Date { self.creationDate ?? Date(timeIntervalSince1970: 0) }
+extension PhishTableEntry {
+    init(fromRemote: RequestInfo) {
+        host = fromRemote.url.strictHost
+        id = fromRemote.requestID ?? -1
+        for module in fromRemote.modules {
+            switch module {
+            case let current as OPRModule:
+                self.opr = current.OPRInfo?.rank != nil ? Int(current.OPRInfo!.rank!) : nil
+            case let current as SQIModule:
+                self.sqi = current.yandexSQI
+            case let current as WhoisModule:
+                self.date = current.dateText
+            case let current as RegexModule:
+                self.length = current.urlLength
+                self.subDomains = current.subdomainCount
+                self.prefixCount = current.prefixCount
+                self.isIP = current.isIP
+            default:
+                break
+            }
+        }
+    }
+}
+
+extension RequestInfo: Identifiable {
+    var id: Int? { self.requestID }
 }
 
 class MultiRequestVM: ObservableObject {
     @Published var requestText = ""
-    @Published var tableContent: [PhishInfo] = []
+    @Published var remotes: [RequestInfo] = []
+    @Published var tableContent: [PhishTableEntry] = []
     @Published var CSVExportIsPresented = false
     @Published var RAWExportIsPresented = false
     @Published var readyForExport = false
@@ -36,121 +61,145 @@ class MultiRequestVM: ObservableObject {
     @Published var linesWithWarnings = 0
     @Published var totalParsed = 0
     
-    private var engine = PhishRequestQueue()
-    private var lastUrlsCount = -1
+    private var lastUrlsCount = 0
+    private var queue = PhishRequestQueue()
+    var reviseable: Bool {
+        lastUrlsCount > 0
+    }
     
-    var resultingDocument: PhishFile = PhishFile([])
-    var RAWResultingDocument: RawPhishFile = RawPhishFile([])
+//    var resultingDocument: PhishFile = PhishFile([])
     var ignoreWrongLines: Bool = true
+    
+    func onModuleFinished(remote: RequestInfo, module: RequestModule) {
+//        if case .completedWithErrors = module.status {
+//            linesWithWarnings += 1
+//        }
+        if let found = tableContent.firstIndex(where: { $0.id == remote.requestID }) {
+            tableContent[found] = PhishTableEntry(fromRemote: remote)
+        } else {
+            tableContent.append(PhishTableEntry(fromRemote: remote))
+        }
+    }
+    
+    func onRequestFinished(remote: RequestInfo) {
+        switch remote.status {
+        case .completedWithErrors:
+            linesWithWarnings += 1
+        case .failed:
+            linesWithErrors += 1
+        default:
+            break
+        }
+        totalParsed += 1
+        statusText = "Processing | \(totalParsed) of \(lastUrlsCount)"
+    }
     
     @MainActor
     func sendRequestQuerry() {
-        let urls: [String] = requestText.components(separatedBy: .newlines)
+        let urls: [String] = requestText
+            .components(separatedBy: .newlines)
             .compactMap({ $0.isEmpty ? nil : $0 })
-        var urlsUUIDS: [Int: String] = [:]
-        var id = 0
-        for url in urls {
-            urlsUUIDS[id] = url
-            id += 1
-        }
-        guard !urls.isEmpty else {
-            return
-        }
-        do {
-            engine = try PhishRequestQueue(urlsUUIDS, preActions: [.makeHttp])
-        } catch let error as ParserError {
-            var errorMessage = "Parser error"
-            switch error {
-            case .urlHostIsInvalid(let url):
-                if let num = urls.firstIndex(of: url) {
-                    errorMessage = "Swift host parse error."
-                    errorMessage += "  Line \(num+1)."
-                }
-            case .urlNotAWebRequest(let url):
-                errorMessage = "Not a web request."
-                if let num = urls.firstIndex(of: url) {
-                    errorMessage += "  Line \(num+1)."
-                }
-            case .urlHostIsBroken(let url):
-                errorMessage = "Host is invalid."
-                if let num = urls.firstIndex(of: url) {
-                    errorMessage += " Line \(num+1)."
-                }
-            default:
-                break
-            }
-            self.status = .failed
-            self.statusText = "Run Failed | \(errorMessage)"
-            self.statusIconName = "xmark.circle.fill"
-            return
-        } catch {
-            self.status = .failed
-            self.statusText = "Run Failed | \(error)"
-            self.statusIconName = "xmark.circle.fill"
-            return
+        withAnimation {
+            processUI()
         }
         lastUrlsCount = urls.count
-        processUI()
-        engine.refreshRemoteData { [self] data in
-            tableContent.append(data)
-            totalParsed += 1
-            statusText = "Processing | \(totalParsed) of \(urls.count)"
-            switch data.remoteStatus {
-            case.completedWithErrors:
-                linesWithWarnings += 1
-            case.failed:
-                linesWithErrors += 1
-            default:
-                break
+        Task { [self] in
+            queue.phishURLS = urls.map({try! .init(url: $0, preActions: [.makeHttp])})
+            await queue.executeAll(
+                modules: [.opr, .regex, .sqi, .whois, .ml],
+                onModuleFinished: onModuleFinished,
+                onRequestFinished: onRequestFinished)
+            await MainActor.run {
+                withAnimation {
+                    self.completeUI()
+                }
             }
-        } onTaskComplete: { [self] arr in
-                self.busy = false
-                self.readyForExport = true
-                self.tableContent.sort(by: { $0.id < $1.id })
-            withAnimation {
-                if arr.contains(where: {$0.remoteStatus == .completedWithErrors}) {
-                    completeWithErrorsUI()
-                }
-                if arr.contains(where: {$0.remoteStatus == .failed}) {
-                    failedUI()
-                    return
-                }
-                completeUI()
+        }
+        
+    }
+    
+    func reviseModuleFinished (remote: RequestInfo, module: RequestModule) {
+
+    }
+    
+    func reviseRequestFinished(remote: RequestInfo) {
+        totalParsed += 1
+        statusText = "Revising | \(totalParsed) of \(lastUrlsCount)"
+        if let found = tableContent.firstIndex(where: { $0.id == remote.requestID }) {
+            if case .completed = remote.status {
+                linesWithWarnings -= 1
+                tableContent[found] = PhishTableEntry(fromRemote: remote)
+            }
+        } else {
+            tableContent.append(PhishTableEntry(fromRemote: remote))
+        }
+    }
+    
+    func reviseRequestQuerry() {
+        startReviseUI()
+        Task { [self] in
+            await queue.reviseLastRequest(
+                onModuleFinished: reviseModuleFinished,
+                onRequestFinished: reviseRequestFinished)
+            await MainActor.run {
+                endReviseUI()
             }
         }
     }
     
-    func processUI() {
+    private func startReviseUI() {
+        self.busy = true
+        self.isCanceled = false
+        totalParsed = 0
+        lastUrlsCount = linesWithWarnings + linesWithErrors
+        self.statusText = "Processing request..."
+        self.statusIconName = "timer"
+    }
+    
+    private func endReviseUI() {
+        self.busy = false
+        self.isCanceled = false
+        self.statusText = "Revision complete"
+        self.statusIconName = "checkmark.circle.fill"
+    }
+    
+    private func processUI() {
         readyForExport = false
         tableContent.removeAll()
         linesWithWarnings = 0
+        lastUrlsCount = 0
         linesWithErrors = 0
         totalParsed = 0
         self.busy = true
         self.isCanceled = false
-        self.statusText = "Processing..."
+        self.statusText = "Processing request..."
         self.statusIconName = "timer"
     }
     
-    func cancel() {
-        engine.cancel()
+    private func cancel() {
         isCanceled = true
     }
     
-    func completeUI() {
+    private func completeUI() {
         self.busy = false
         if isCanceled {
             self.status = .canceled
             self.statusText = "Run Canceled | Processed \(totalParsed) of \(lastUrlsCount)"
             self.statusIconName = "play.slash.fill"
         } else {
-            self.status = .completed
-            self.statusText = "Completed Successfully"
-            self.statusIconName = "checkmark.circle.fill"
+            if linesWithErrors > 0 {
+                failedUI()
+            } else if linesWithWarnings > 0 {
+                completeWithErrorsUI()
+            } else {
+                self.status = .completed
+                self.statusText = "Completed Successfully"
+                self.statusIconName = "checkmark.circle.fill"
+            }
         }
     }
     
-    func completeWithErrorsUI() {
+    private func completeWithErrorsUI() {
         self.busy = false
         self.status = .completedWithErrors
         self.statusText = "Completed With Warnings"
@@ -158,19 +207,19 @@ class MultiRequestVM: ObservableObject {
         
     }
     
-    func failedUI() {
+    private func failedUI() {
         self.status = .failed
         self.statusText = "Completed With Errors"
         self.statusIconName = "xmark.circle.fill"
     }
     
-    func exportCSV() {
-        resultingDocument = PhishFile(engine.phishInfo.map({ $0.getMLEntry()! }))
+    private func exportCSV() {
+//        resultingDocument = PhishFile(engine.phishInfo.map({ $0.getMLEntry()! }))
         CSVExportIsPresented = true
     }
     
-    func exportCSVRAW() {
-        RAWResultingDocument = RawPhishFile(engine.phishInfo)
+    private func exportCSVRAW() {
+//        RAWResultingDocument = RawPhishFile(engine.phishInfo)
         RAWExportIsPresented = true
     }
     

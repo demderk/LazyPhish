@@ -15,7 +15,7 @@ struct SingleRequestView: View {
     @EnvironmentObject var globalVM: GlobalVM
     
     @State var deepMode: Bool = false
-    
+
     var body: some View {
         ScrollView {
             // 100% horizontal space for scroll
@@ -83,13 +83,6 @@ struct SingleRequestView: View {
                     }
                     .background(Color(nsColor: NSColor.controlBackgroundColor))
                     .clipShape(RoundedRectangle(cornerSize: CGSize(width: 16, height: 16)))
-//                    HStack {
-//                        Toggle("Deep Mode", isOn: $deepMode)
-//                            .toggleStyle(BigToggleImageButton(
-//                                image: Image(systemName: "sparkle.magnifyingglass")))
-//                        Spacer()
-//                    }.padding(.top, 4)
-//                        .padding(.horizontal, 24)
                     if let request = vm.lastRequest {
                         VStack {
                             HStack(alignment: .center) {
@@ -102,7 +95,7 @@ struct SingleRequestView: View {
                                     .fontWeight(.bold)
                                     .fontDesign(.default)
                                 Spacer().frame(width: 8)
-                                Text(request.host)
+                                Text(request.url.strictHost)
                                     .font(.title)
                                     .fontWeight(.semibold)
                                     .textCase(.lowercase)
@@ -112,6 +105,12 @@ struct SingleRequestView: View {
                                 .padding([.bottom], 8)
                                 .padding([.leading], 8)
                             PhishingCard(request: $vm.lastRequest, bussy: $vm.requestIsPending)
+                            HStack {
+                                Spacer()
+                                Text(vm.statusText)
+                            }.padding([.top], 2)
+                                .padding([.horizontal], 4)
+                                .foregroundStyle(Color(.lightGray))
                         }
                     }
                     VStack {
@@ -128,7 +127,7 @@ struct SingleRequestView: View {
                                 globalVM.navigation.append(MainSelectedPage.multi)
                             }, title: "Request Queue", imageSystemName: "tablecells")
                             .padding([.horizontal], 16)
-                            
+
                             Spacer()
                         }.padding([.horizontal], 16)
                     }

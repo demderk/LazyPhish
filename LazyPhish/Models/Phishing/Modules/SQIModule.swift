@@ -11,30 +11,35 @@ import AlamofireImage
 import Vision
 import AppKit
 
-class YandexSQIPipeline: PhishingPipelineObject {
-    func execute(data remoteObject: any StrictRemote) async -> any StrictRemote {
+class SQIModule: RequestModule {
+    var dependences: DependencyCollection = DependencyCollection()
+    var status: ModuleStatus = .planned
+    var yandexSQI: Int?
+
+    func execute(remote: RequestInfo) async {
+        print("sqi triggered")
+        
+        status = .executing
         let accurate = false
-        
-        var remote: StrictRemote = remoteObject
-        
-        let response = await AF.request("https://yandex.ru/cycounter?\(remoteObject.host)")
+
+        let response = await AF.request("https://yandex.ru/cycounter?\(remote.url.strictHost)")
             .serializingImage(inflateResponseImage: false).result
-        
+
         switch response {
         case .success(let success):
             if let input = success.cgImage(forProposedRect: .none, context: .none, hints: nil) {
                 guard let image = input.cropping(to: CGRect(x: 30, y: 0, width: 58, height: 31))?
                     .increaseContrast()
                 else {
-                    remote.remote.yandexSQI = .failed(error: YandexSQIError.yandexSQICroppingError)
-                    return remote
+                    status = .failed(error: YandexSQIError.yandexSQICroppingError)
+                    return
                 }
                 let vision = VNImageRequestHandler(cgImage: image)
-                
+
                 let imageRequest = VNRecognizeTextRequest()
                 imageRequest.recognitionLevel = .fast
                 var recognized: String?
-                
+
                 // Fast algorithm check
                 do {
                     try vision.perform([imageRequest])
@@ -47,11 +52,11 @@ class YandexSQIPipeline: PhishingPipelineObject {
                         }
                     }
                 } catch {
-                    remote.remote.yandexSQI = .failed(
+                    status = .failed(
                         error: YandexSQIError.yandexSQIVisionPerformError(error))
-                    return remote
+                    return
                 }
-                
+
                 // Accurate algorithm check if enabled
                 do {
                     if recognized == nil && accurate {
@@ -68,33 +73,50 @@ class YandexSQIPipeline: PhishingPipelineObject {
                         }
                     }
                 } catch {
-                    remote.remote.yandexSQI = .failed(
+                    status = .failed(
                         error: YandexSQIError.yandexSQIVisionPerformError(error))
-                    return remote
+                    return
                 }
-                
+
                 guard let output = recognized else {
-                    remote.remote.yandexSQI = .failed(
-                        error: YandexSQIError.yandexSQIVisionNotRecognized(
-                            image: NSImage(cgImage: image, size: .zero)))
-                    return remote
+                    status = .completedWithErrors(
+                        errors: [YandexSQIError.yandexSQIVisionNotRecognized(
+                            image: NSImage(cgImage: image, size: .zero))])
+                    yandexSQI = 0
+                    return
                 }
-                
+
                 if let sqi = Int(output.replacing(" ", with: "")) {
-                    var result = remoteObject
-                    result.remote.yandexSQI = .success(value: sqi)
-                    return result
+                    yandexSQI = sqi
+                    status = .completed
+                    return
                 } else {
-                    remote.remote.yandexSQI = .failed(error: YandexSQIError.yandexSQIVisionNotRecognized(
-                        image: NSImage(cgImage: image, size: .zero)))
-                    return remote
+                    status = .completedWithErrors(
+                        errors:
+                            [YandexSQIError.yandexSQIVisionNotRecognized(
+                        image: NSImage(cgImage: image, size: .zero))])
+                    return
                 }
             }
-            remote.remote.yandexSQI = .failed(error: YandexSQIError.yandexSQIVisionNotRecognizedUnknown)
-            return remote
+            status = .failed(error: YandexSQIError.yandexSQIVisionNotRecognizedUnknown)
+            return
         case .failure(let failure):
-            remote.remote.yandexSQI = .failed(error: YandexSQIError.yandexSQIRequestError(parent: failure))
-            return remote
+            status = .failed(error: YandexSQIError.yandexSQIRequestError(parent: failure))
+            return
         }
+    }
+}
+
+extension CGImage {
+    func increaseContrast() -> CGImage {
+        let inputImage = CIImage(cgImage: self)
+        let parameters = [
+            "inputContrast": NSNumber(value: 2)
+        ]
+        let outputImage = inputImage.applyingFilter("CIColorControls", parameters: parameters)
+
+        let context = CIContext(options: nil)
+        let img = context.createCGImage(outputImage, from: outputImage.extent)!
+        return img
     }
 }
