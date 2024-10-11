@@ -12,6 +12,11 @@ class OPRModule: RequestModule {
     var dependences: DependencyCollection = DependencyCollection()
     var status: ModuleStatus = .planned
     var OPRInfo: OPRInfo?
+    var rank: Int? {
+        if let rank = OPRInfo?.rank {
+            return Int(rank)
+        }
+    }
     
     init() {
         

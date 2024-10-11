@@ -48,8 +48,6 @@ class RequestInfo {
         }
     }
     
-    var lock = NSLock()
-    
     private func executeModules (
         onModuleFinished: ((RequestInfo, RequestModule) -> Void)?,
         skipCompleted: Bool = false
@@ -72,13 +70,13 @@ class RequestInfo {
                    case .completed = executed.status {
                     modules[n] = executed
                 } else {
-                _ = tasks.addTaskUnlessCancelled { [self] in
+                    _ = tasks.addTaskUnlessCancelled { [self] in
                         if let finished = onModuleFinished {
                             await mod.execute(remote: self, onFinish: finished)
                         } else {
                             await mod.execute(remote: self)
                         }
-                    await dependencyModules.pushDependency(mod)
+                        await dependencyModules.pushDependency(mod)
                     }
                 }
             }
@@ -102,7 +100,7 @@ class RequestInfo {
     }
     
     func addBroadcastModule(_ module: any RequestModule) async {
-//        await module.execute(remote: self)
+        //        await module.execute(remote: self)
         await dependencyModules.pushDependency(module)
     }
     
@@ -114,9 +112,15 @@ class RequestInfo {
         modules.append(contentsOf: contentsOf)
     }
     
-    //    func getMLEntry() -> MLEntry {
-    //        if status == .completed {
-    //            return MLEntry(<#T##phishInfo: PhishInfo##PhishInfo#>)
-    //        }
-    //    }
+    func getModule<T: RequestModule>(module: T.Type) -> RequestModule? {
+        return modules.first(where: { type(of: $0) == module })
+    }
+    
+    func getCompletedModule<T: RequestModule>(module: T.Type) -> T? {
+        return modules.first(where: { type(of: $0) == module && $0.completed }) as? T
+    }
+    
+    func getFinishedModule<T: RequestModule>(module: T.Type) -> T? {
+        return modules.first(where: { type(of: $0) == module && $0.finished }) as? T
+    }
 }

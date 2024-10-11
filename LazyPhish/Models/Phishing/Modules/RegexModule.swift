@@ -15,6 +15,7 @@ class RegexModule: RequestModule {
 
     var isIP: Bool { PhishInfoFormatter.getURLIPMode(url.URL) }
     var urlLength: Int { url.URL.formatted().count }
+    var hostLength: Int { url.strictHost.count }
     var prefixCount: Int { url.URL.formatted().components(separatedBy: ["-"]).count - 1 }
     var subdomainCount: Int {
         url.URL.host()!

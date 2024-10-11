@@ -43,4 +43,20 @@ extension RequestModule {
         }
         return internalDependences
     }
+    
+    /// Returns true if module status is completed
+    var completed: Bool {
+        if case .completed = status {
+            return true
+        } else { return false }
+    }
+    
+    /// Returns true if module status is completed or completed with errors
+    var finished: Bool {
+        switch status {
+        case .completed: return true
+        case .completedWithErrors(_): return true
+        default: return false
+        }
+    }
 }

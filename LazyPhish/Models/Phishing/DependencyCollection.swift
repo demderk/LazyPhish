@@ -38,11 +38,19 @@ actor DependencyCollection {
         await dependencyModules.append(contentsOf: dependency.collection)
     }
     
-    func getDependency(module: RequestModule) -> RequestModule? {
+    func getDependency<T: RequestModule>(module: T.Type) -> RequestModule? {
+        return dependencyModules.first(where: {type(of: $0) == module})
+    }
+    
+    func getDependencyIndex(module: RequestModule.Type) -> Int? {
+        return dependencyModules.firstIndex(where: {type(of: $0) == module})
+    }
+    
+    func getDependency(module: any RequestModule) -> RequestModule? {
         return dependencyModules.first(where: {type(of: $0) == type(of: module)})
     }
     
-    func getDependencyIndex(module: RequestModule) -> Int? {
+    func getDependencyIndex(module: any RequestModule) -> Int? {
         return dependencyModules.firstIndex(where: {type(of: $0) == type(of: module)})
     }
     
@@ -66,12 +74,10 @@ actor DependencyCollection {
     }
     
     subscript(module: RequestModule) -> RequestModule? {
-        get {
-            if let foundIndex = getDependencyIndex(module: module) {
-                return dependencyModules[foundIndex]
-            } else {
-                return nil
-            }
+        if let foundIndex = getDependencyIndex(module: module) {
+            return dependencyModules[foundIndex]
+        } else {
+            return nil
         }
     }
 }

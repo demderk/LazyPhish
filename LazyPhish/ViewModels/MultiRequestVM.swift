@@ -106,7 +106,7 @@ class MultiRequestVM: ObservableObject {
         Task { [self] in
             queue.phishURLS = urls.map({try! .init(url: $0, preActions: [.makeHttp])})
             await queue.executeAll(
-                modules: [.opr, .regex, .sqi, .whois],
+                modules: [.opr, .regex, .sqi, .whois, .ml],
                 onModuleFinished: onModuleFinished,
                 onRequestFinished: onRequestFinished)
             await MainActor.run {
