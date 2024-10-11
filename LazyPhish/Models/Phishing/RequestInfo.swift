@@ -55,8 +55,7 @@ class RequestInfo {
         await withTaskGroup(of: Void.self) { tasks in
             for mod in modules {
                 tasks.addTask {
-                    let data = await mod.processDependences(remote: self, parentDependences: self.dependencyModules)
-                    await self.dependencyModules.pushDependency(data)
+                    await mod.processDependences(remote: self, parentDependences: self.dependencyModules)
                 }
             }
         }

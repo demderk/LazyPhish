@@ -24,19 +24,19 @@ extension RequestModule {
     }
     
     func processDependences(remote: RequestInfo, parentDependences: DependencyCollection) async -> DependencyCollection {
-        var internalDependences: DependencyCollection = DependencyCollection()
+        var internalDependences: DependencyCollection = parentDependences
         for dependency in await dependences.collection {
-            if case .completed = dependency.status {
+            if dependency.completed {
                 continue
             }
             if let executed = await parentDependences.getDependency(module: dependency),
-               case .completed = executed.status {
+               executed.completed {
                 await dependences.putDependency(
                     oldModule: dependency,
                     newModule: executed)
             }
             else {
-                await internalDependences.pushDependency(dependency.processDependences(remote: remote, parentDependences: parentDependences))
+                await internalDependences.pushUniqueDependencies(dependency.processDependences(remote: remote, parentDependences: internalDependences))
                 await dependency.execute(remote: remote)
                 await internalDependences.pushDependency(dependency)
             }

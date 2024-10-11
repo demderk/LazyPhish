@@ -38,6 +38,12 @@ actor DependencyCollection {
         await dependencyModules.append(contentsOf: dependency.collection)
     }
     
+    func pushUniqueDependencies(_ dependency: DependencyCollection) async {
+        for dependency in await dependency.dependencyModules where getDependency(module: dependency) == nil {
+            dependencyModules.append(dependency)
+        }
+    }
+    
     func getDependency<T: RequestModule>(module: T.Type) -> RequestModule? {
         return dependencyModules.first(where: {type(of: $0) == module})
     }

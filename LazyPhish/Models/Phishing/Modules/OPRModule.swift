@@ -9,7 +9,9 @@ import Foundation
 import OSLog
 
 class OPRModule: RequestModule {
-    var dependences: DependencyCollection = DependencyCollection()
+    var dependences: DependencyCollection = DependencyCollection([
+        BulkOPRModule()
+    ])
     var status: ModuleStatus = .planned
     var OPRInfo: OPRInfo?
     var rank: Int? {

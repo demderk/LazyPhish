@@ -46,7 +46,7 @@ enum DetectTool {
             return RegexModule()
         case .opr:
             var oprModule = OPRModule()
-            oprModule.dependences.pushDependencyInsecure(BulkOPRModule())
+//            oprModule.dependences.pushDependencyInsecure(BulkOPRModule())
             return oprModule
         case .ml:
             return MLModule()
@@ -55,7 +55,7 @@ enum DetectTool {
 }
 
 class NeoPhishRequest {
-    public func executeRequest(url: StrictURL, modules: Set<DetectTool>) async -> RequestInfo {
+    public func executeRequest(url: StrictURL, modules: [DetectTool]) async -> RequestInfo {
         let remote = RequestInfo(url: url)
         for mod in modules {
             remote.addModule(mod.getModule())
