@@ -15,6 +15,8 @@ class OPRModule: RequestModule {
     var rank: Int? {
         if let rank = OPRInfo?.rank {
             return Int(rank)
+        } else {
+            return nil
         }
     }
     
