@@ -19,9 +19,9 @@ class RegexModule: RequestModule {
     var prefixCount: Int { url.URL.formatted().components(separatedBy: ["-"]).count - 1 }
     var subdomainCount: Int {
         url.URL.host()!
-            .replacing("www.", with: "")
+            .replacing("www.", with: "") // [INSECURE] Это в будующем может быть путем обхода
             .components(separatedBy: ["."])
-            .count - 2
+            .count - (url.isTwoSLD ? 3 : 2)
     }
 
     init(url: StrictURL) {

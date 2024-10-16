@@ -19,6 +19,9 @@ class RequestInfo {
     var status: RemoteStatus = .planned
     var failedOnModulesCount: Int?
     
+    var host: String { url.strictHost }
+    var hostRoot: String { url.hostRoot }
+    
     init(url: StrictURL) {
         self.url = url
     }

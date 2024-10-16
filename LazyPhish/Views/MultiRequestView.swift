@@ -45,7 +45,7 @@ struct MultiRequestView: View {
                         Text(item.date ?? "Date Error")
                     }
                     TableColumn("OPR") { item in
-                        Text(item.opr?.description ?? "OPR Error")
+                        Text(item.opr ?? "OPR ERROR")
                     }
                     TableColumn("SQI") { item in
                         Text(item.sqi?.description ?? "SQI Error")

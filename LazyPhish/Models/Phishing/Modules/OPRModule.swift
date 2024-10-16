@@ -33,7 +33,7 @@ class OPRModule: RequestModule {
     func execute(remote: RequestInfo) async {
         status = .executing
         if let bulkDependency = await dependences.getDependency(module: BulkOPRModule()) as? BulkOPRModule,
-           let found = bulkDependency.cache?.first(where: {$0.domain == remote.url.strictHost}) {
+           let found = bulkDependency.cached(remote.url) {
             if case .failed(let error) = bulkDependency.status {
                 status = .failed(error: error)
                 return
@@ -48,7 +48,7 @@ class OPRModule: RequestModule {
                 OPRInfo = try await singleBulkRequest(remote: remote)
                 status = .completed
                 return
-            } catch let err as RequestError{
+            } catch let err as RequestError {
                 status = .failed(error: err)
                 return
             } catch {
@@ -64,9 +64,10 @@ class OPRModule: RequestModule {
         if case .failed(let error) = bulk.status {
             throw error
         }
-        if let found = bulk.cache?.first(where: {$0.domain == remote.url.strictHost}) {
+        if let found = bulk.cached(remote.url) {
             return found
         }
-        fatalError("pizda...")
+        Logger.OPRRequestLogger.error("\(remote.hostRoot) was not linked.")
+        throw OPRError.failedToLink(url: remote.hostRoot)
     }
 }

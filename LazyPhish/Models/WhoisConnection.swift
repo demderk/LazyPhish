@@ -10,7 +10,95 @@ import Foundation
 import Network
 import os
 
+struct WhoisRecievedDate {
+    var day: Int?
+    var year: Int?
+    
+    var monthText: String?
+    
+    var date: Date? {
+        var monthInt: Int?
+        let allMonthText: [String: Int] = [
+             "january":     1,
+             "february":    2,
+             "march":       3,
+             "april":       4,
+             "may":         5,
+             "june":        6,
+             "july":        7,
+             "august":      8,
+             "september":   9,
+             "october":     10,
+             "november":    11,
+             "december":    12
+        ]
+        let allMonthTextShort: [String: Int] = [
+             "jan":     1,
+             "feb":     2,
+             "mar":     3,
+             "apr":     4,
+             "may":     5,
+             "jun":     6,
+             "jul":     7,
+             "aug":     8,
+             "sep":     9,
+             "oct":     10,
+             "nov":     11,
+             "dec":     12
+        ]
+        
+        guard let monthText = self.monthText else {
+            return nil
+        }
+        
+        if let mInt = allMonthText[monthText] {
+            monthInt = mInt
+        } else if let mInt = allMonthTextShort[monthText] {
+            monthInt = mInt
+        } else if let mInt = Int(monthText) {
+            monthInt = mInt
+        }
+        guard let year = self.year, let monthInt = monthInt, let day = day else {
+            return nil
+        }
+        
+        let dateString = "\(year)-\(monthInt)-\(day)T0:0:0Z"
+        if let date = try? Date(dateString, strategy: .iso8601) {
+            return date
+        } else { return nil }
+    }
+    
+    static func fromDictionary(dictionary: [String: String?]) -> WhoisRecievedDate? {
+        var day, year: Int?
+        var monthText: String?
+        for item in dictionary.keys {
+            switch item {
+            case "month", "monthText", "monthTextShort":
+                if let ditem = dictionary[item], let val = ditem {
+                    monthText = val
+                }
+            case "day":
+                if let ditem = dictionary[item], let val = ditem {
+                    day = Int(val)
+                }
+            case "year":
+                if let ditem = dictionary[item], let val = ditem {
+                    year = Int(val)
+                }
+            default:
+                continue
+            }
+        }
+        if let day = day, let year = year, let monthText = monthText {
+            return WhoisRecievedDate(day: day, year: year, monthText: monthText)
+        } else { return nil }
+    }
+}
+
 struct WhoisInfo {
+    /// Domain zone is blinded
+    public var blinded: Bool = false
+    
     /// The domain name, e.g. example.com
     public var domainName: String?
 
@@ -49,13 +137,26 @@ class WhoisConnection {
     private var server: String = "whois.iana.org"
     private var connection: NWConnection?
 
+    private var dateRegexParsers: [NSRegularExpression] = [
+        try! NSRegularExpression(pattern: #"registered\son:\s(?<day>\d{1,2})-(?<monthTextShort>\w{3})-(?<year>\d{4})"#),
+        try! NSRegularExpression(pattern: #"entry created:\n\t\w+\s(?<day>\d{1,2})(th)\s(?<monthText>\w+)\s(?<year>\d{1,4})"#),
+        try! NSRegularExpression(pattern: #"\[登録年月日\]\s+(?<year>\d{1,4})\/(?<month>\d{1,2})\/(?<day>\d{1,2})"#),
+        try! NSRegularExpression(pattern: #"\[登録年月日\]\s+(?<year>\d{1,4})\/(?<month>\d{1,2})\/(?<day>\d{1,2})"#),
+        try! NSRegularExpression(pattern: #"created:\s+(?<year>\d{4})(?<month>\d{2})(?<day>\d{2})"#),
+        try! NSRegularExpression(pattern: #"created:\s+(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})"#),
+        try! NSRegularExpression(pattern: #"creation date:\s+(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})"#),
+        try! NSRegularExpression(pattern: #"registered:\s+(\w{3})\s(?<monthTextShort>\w{3})\s(?<day>\d{2})\s(?<year>\d{4})"#),
+        try! NSRegularExpression(pattern: #"created:\s+(?<day>\d{2}).(?<month>\d{2}).(?<year>\d{4})"#),
+        try! NSRegularExpression(pattern: #"registration time:\s+(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})"#),
+        try! NSRegularExpression(pattern: #"domain record activated:\s+(?<day>\d{2})-(?<monthTextShort>\w{3})-(?<year>\d{4})"#),
+    ]
+    
     private let cacheTldWhoisServer: [String: String] = [
         "com": "whois.verisign-grs.com",
         "net": "whois.verisign-grs.com",
         "org": "whois.publicinterestregistry.org",
         "cn": "whois.cnnic.cn",
         "ai": "whois.nic.ai",
-        "au": "whois.auda.org.au",
         "co": "whois.nic.co",
         "ca": "whois.cira.ca",
         "do": "whois.nic.do",
@@ -88,24 +189,37 @@ class WhoisConnection {
         "fm": "whois.nic.fm",
         "gov": "whois.dotgov.gov",
         "uk": "whois.nic.uk",
+        "ac.uk": "whois.ac.uk",
         "cz": "whois.nic.cz",
         "edu": "whois.educause.edu",
-        "de": "whois.denic.de",
         "fr": "whois.nic.fr",
         "nl": "whois.domain-registry.nl",
         "tv": "whois.nic.tv",
         "cc": "ccwhois.verisign-grs.com",
-        "eu": "whois.eu",
         "br": "whois.registro.br",
         "la": "whois.nic.la",
         "ly": "whois.nic.ly",
         "be": "whois.dns.be",
-        // FAILING
-        "es": "whois.nic.es"
+        // blinded
+        "de": "blinded",
+        "eu": "blinded",
+        "es": "blinded",
+        "au": "blinded",
+        "mil": "blinded",
+        "gov.cn": "blinded"
+
     ]
 
     private func getCachedWhoisServer(for domain: String) -> String? {
-        let tld = domain.components(separatedBy: ".").last ?? ""
+        var tld: String = ""
+        var toFind = Array(domain.components(separatedBy: ".").reversed())
+        if StrictURL.isTwoSLD(host: domain) {
+            tld = "\(toFind[1]).\(toFind[0])"
+            if let server = cacheTldWhoisServer[tld] {
+                return server
+            }
+        }
+        tld = domain.components(separatedBy: ".").last ?? ""
         return cacheTldWhoisServer[tld]
     }
 
@@ -164,14 +278,16 @@ class WhoisConnection {
 
     func makeRecursiveRequest(host: String) async throws -> String {
         if let cached = getCachedWhoisServer(for: host) {
+            if cached == "blinded" {
+                return "blinded"
+            }
             server = cached
         }
-        let hostComponents = Array(host.components(separatedBy: ".").reversed())
-        guard hostComponents.count > 1 else {
+        
+        guard let parent = StrictURL.getTLD(host: host) else {
             throw WhoisError.badRequest(description: "Host is incorrect. Hostname: \(host)")
         }
-
-        let parent = "\(hostComponents[1]).\(hostComponents[0])"
+        
         let response = try await makeRequest(host: parent)
         let responseArray = buildResponseArray(responseText: response)
         if let refer = responseArray.first(where: { $0.key == "refer" }) {
@@ -185,6 +301,10 @@ class WhoisConnection {
 
     func parseWhoisResponse(_ response: String) -> WhoisInfo {
         var whoisData = WhoisInfo()
+        if response == "blinded" {
+            whoisData.blinded = true
+            return whoisData
+        }
         let standardizedResponse = response.replacingOccurrences(of: "\r\n", with: "\n")
         let lines = standardizedResponse.split(separator: "\n")
         for line in lines {
@@ -207,12 +327,6 @@ class WhoisConnection {
                 if whoisData.registrarWhoisServer == nil { whoisData.registrarWhoisServer = value }
             case "registrar", "sponsoring registrar":
                 if whoisData.registrar == nil { whoisData.registrar = value }
-            case "creation date",
-                "created",
-                "registration time",
-                "登録年月日",
-                "domain record activated":
-                if whoisData.creationDate == nil { whoisData.creationDate = try? getDate(value) }
             case "expiration date",
                 "expires on",
                 "registry expiry date",
@@ -238,6 +352,7 @@ class WhoisConnection {
                 break
             }
         }
+        whoisData.creationDate = processDate(rawWhois: response.lowercased())
         whoisData.rawData = response
         return whoisData
     }
@@ -262,18 +377,37 @@ class WhoisConnection {
 
     }
 
-    private func getDate(_ whoisDate: String) throws -> Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "dd-MMM-yyyy"
-        var res = dateFormatter.date(from: whoisDate)
-        if res == nil {
-            res = try? Date(whoisDate, strategy: .iso8601)
+    private func getRawRange(raw: String) -> NSRange {
+        return NSRange(raw.startIndex..<raw.endIndex, in: raw)
+    }
+    
+    func processDate(rawWhois raw: String) -> Date? {
+        for regex in dateRegexParsers {
+            guard let match = regex.matches(in: raw, range: getRawRange(raw: raw)).first else {
+                continue
+            }
+            
+            var parsedData: [String: String?] = [
+                "month": nil,
+                "day": nil,
+                "year": nil,
+                "monthText": nil,
+                "monthTextShort": nil
+            ]
+            
+            for key in parsedData.keys {
+                let matchRange = match.range(withName: key)
+                
+                // Extract the substring matching the named capture group
+                if let substringRange = Range(matchRange, in: raw) {
+                    let capture = String(raw[substringRange])
+                    parsedData[key] = capture
+                }
+            }
+            
+            return WhoisRecievedDate.fromDictionary(dictionary: parsedData)?.date
         }
-        guard let result = res else {
-            throw WhoisError.dateFormatError
-        }
-        return result
+        return nil
     }
 
     deinit {

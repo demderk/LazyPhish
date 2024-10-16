@@ -82,6 +82,8 @@ enum OPRError: RequestError {
     case singleRequestCountExceeded
     case apiKeyUnreachable
     case pipelineFirstIsNull
+    case creationDateNotParsed
+    case failedToLink(url: String)
 
     var localizedDescription: String {
         switch self {
@@ -97,6 +99,10 @@ enum OPRError: RequestError {
             "OPR HTTPS Request error."
         case .pipelineFirstIsNull:
             "Pipeline execute method failed"
+        case .creationDateNotParsed:
+            "Creation date can't be parsed"
+        case .failedToLink(let url):
+            "Failed to link \(url)"
         }
     }
 }

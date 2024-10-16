@@ -13,13 +13,26 @@ class BulkOPRModule: RequestModule {
     var status: ModuleStatus = .planned
 
     var cache: [OPRInfo]?
-
+    
+    func cached(_ url: StrictURL) -> OPRInfo? {
+        let formatedStrict = url.strictHost
+            .lowercased()
+            .replacingOccurrences(of: "www.", with: "")
+        let formatedRoot = url.hostRoot
+            .lowercased()
+            .replacingOccurrences(of: "www.", with: "")
+            // [INSECURE] Это в будующем может быть путем обхода
+            // www.go.www.ogle.com -> google.com
+        return cache?.first(where: {$0.domain == formatedStrict}) ?? cache?.first(where: {$0.domain == formatedRoot})
+    }
+    
     func execute(remote: RequestInfo) async {
         await bulk([remote.url])
     }
 
     func bulk(_ data: [StrictURL]) async {
         print("bulk triggered")
+        print("Requested by data: \(data) \n")
         
         guard let apiKey = try? getOPRKey() else {
             status = .failed(error: OPRError.apiKeyUnreachable)
@@ -46,16 +59,24 @@ class BulkOPRModule: RequestModule {
             }
             var result: [OPRInfo] = []
             do {
+                var anyFailed: Bool = false
                 for try await part in tasks {
                     if let success = part {
-                        if let successInfo = success.response as? [OPRInfo] {
-                            result.append(contentsOf: successInfo)
-                        }
-                        if let failedInfo = success.response as? [FailedOPRInfo] {
-                            status = .failed(error: OPRError.remoteError(response: failedInfo.description))
-                            return []
+                        for opr in success.response {
+                            if let successInfo = opr as? OPRInfo {
+                                result.append(successInfo)
+                            }
+                            if let failedInfo = opr as? FailedOPRInfo {
+                                anyFailed = true
+                                result.append(OPRInfo(failed: failedInfo))
+                            }
                         }
                     }
+                }
+                if anyFailed {
+                    status = .completedWithErrors()
+                } else {
+                    status = .completed
                 }
             } catch let error as OPRError {
                 Logger.OPRRequestLogger.error("[OPRProcess] \(error.localizedDescription)")
@@ -109,9 +130,19 @@ class BulkOPRModule: RequestModule {
         do {
             let jsonDecoder = JSONDecoder()
             jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+            print(String(decoding: remoteResponse, as: UTF8.self))
             return try jsonDecoder.decode(OPRResponse.self, from: remoteResponse)
         } catch {
             throw OPRError.remoteError(response: String(decoding: remoteResponse, as: UTF8.self))
         }
     }
 }
+
+extension Array {
+    func chunked(into size: Int) -> [[Element]] {
+        return stride(from: 0, to: count, by: size).map {
+            Array(self[$0 ..< Swift.min($0 + size, count)])
+        }
+    }
+}
+

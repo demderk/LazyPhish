@@ -46,11 +46,11 @@
 		304BE3A92C7F1320001A2AB0 /* SQIModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3A82C7F1320001A2AB0 /* SQIModule.swift */; };
 		307A27052BA5BABC00B9D14A /* PhishInfoRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307A27042BA5BABC00B9D14A /* PhishInfoRemote.swift */; };
 		307CBC482BCC57D3004B68A8 /* PhishInfoFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307CBC472BCC57D3004B68A8 /* PhishInfoFormatter.swift */; };
-		30815DF42BF374B300A7DBAC /* Vapor in Frameworks */ = {isa = PBXBuildFile; productRef = 30815DF32BF374B300A7DBAC /* Vapor */; };
 		30815E002BF3B55200A7DBAC /* PhishML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30815DFF2BF3B55200A7DBAC /* PhishML.swift */; };
 		30815E022BF3B66C00A7DBAC /* LazyPhishML.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 30815E012BF3B66C00A7DBAC /* LazyPhishML.mlpackage */; };
 		30A80F902CB64674004C46C7 /* MLModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A80F8F2CB64674004C46C7 /* MLModule.swift */; };
 		30A80F922CB6DACA004C46C7 /* DependencyCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A80F912CB6DACA004C46C7 /* DependencyCollection.swift */; };
+		30A80F942CBF15DA004C46C7 /* StrictURLSLDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A80F932CBF15DA004C46C7 /* StrictURLSLDExtension.swift */; };
 		30AA73F52C806A400075FAD3 /* PhishingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AA73F42C806A400075FAD3 /* PhishingCard.swift */; };
 		30AF623C2BDABFA80004E8BF /* Authority.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30AF623B2BDABFA80004E8BF /* Authority.plist */; };
 		30AF62412BDAC9420004E8BF /* CodableCSV in Frameworks */ = {isa = PBXBuildFile; productRef = 30AF62402BDAC9420004E8BF /* CodableCSV */; };
@@ -123,6 +123,7 @@
 		30815E012BF3B66C00A7DBAC /* LazyPhishML.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = LazyPhishML.mlpackage; sourceTree = "<group>"; };
 		30A80F8F2CB64674004C46C7 /* MLModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLModule.swift; sourceTree = "<group>"; };
 		30A80F912CB6DACA004C46C7 /* DependencyCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyCollection.swift; sourceTree = "<group>"; };
+		30A80F932CBF15DA004C46C7 /* StrictURLSLDExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrictURLSLDExtension.swift; sourceTree = "<group>"; };
 		30AA73F42C806A400075FAD3 /* PhishingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishingCard.swift; sourceTree = "<group>"; };
 		30AF623B2BDABFA80004E8BF /* Authority.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Authority.plist; sourceTree = "<group>"; };
 		30B1C5CE2BD020E000D275D4 /* ThrowingOPRInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThrowingOPRInfoList.swift; sourceTree = "<group>"; };
@@ -144,7 +145,6 @@
 				30B9B9A72B9A13410063ADB3 /* Alamofire in Frameworks */,
 				3037D15F2B9CA1B00012104E /* AlamofireImage in Frameworks */,
 				30AF62412BDAC9420004E8BF /* CodableCSV in Frameworks */,
-				30815DF42BF374B300A7DBAC /* Vapor in Frameworks */,
 				30CE1AB02BD66CD9001B022F /* WrappingHStack in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,6 +288,7 @@
 				304BE39C2C7C5AE3001A2AB0 /* KeyService.swift */,
 				3037774F2CA3BA3F001B8D67 /* ModuleStatus.swift */,
 				3037774D2CA3BA34001B8D67 /* StrictURL.swift */,
+				30A80F932CBF15DA004C46C7 /* StrictURLSLDExtension.swift */,
 				3037774B2CA3BA24001B8D67 /* RequestModule.swift */,
 				30FCD7802C99F35500975933 /* AsyncOperation.swift */,
 			);
@@ -355,7 +356,6 @@
 				3037D15E2B9CA1B00012104E /* AlamofireImage */,
 				30CE1AAF2BD66CD9001B022F /* WrappingHStack */,
 				30AF62402BDAC9420004E8BF /* CodableCSV */,
-				30815DF32BF374B300A7DBAC /* Vapor */,
 			);
 			productName = LazyPhish;
 			productReference = 300367732B95CC1F00D3C84C /* LazyPhish.app */;
@@ -415,7 +415,6 @@
 				3037D15D2B9CA1B00012104E /* XCRemoteSwiftPackageReference "AlamofireImage" */,
 				30CE1AAE2BD66C72001B022F /* XCRemoteSwiftPackageReference "WrappingHStack" */,
 				30AF623F2BDAC9420004E8BF /* XCRemoteSwiftPackageReference "CodableCSV" */,
-				30815DF22BF374B300A7DBAC /* XCRemoteSwiftPackageReference "vapor" */,
 			);
 			productRefGroup = 300367742B95CC1F00D3C84C /* Products */;
 			projectDirPath = "";
@@ -478,6 +477,7 @@
 				3037774A2CA3B9CD001B8D67 /* OPRModule.swift in Sources */,
 				304BE39B2C7C5A9B001A2AB0 /* KeysSettingsView.swift in Sources */,
 				3003966C2BA7489F001B6C2C /* MultiRequestView.swift in Sources */,
+				30A80F942CBF15DA004C46C7 /* StrictURLSLDExtension.swift in Sources */,
 				304BE39D2C7C5AE3001A2AB0 /* KeyService.swift in Sources */,
 				30137C442BD4108C00905B15 /* MainViewPageHolder.swift in Sources */,
 				300396632BA5BD00001B6C2C /* RiskLevel.swift in Sources */,
@@ -673,7 +673,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LazyPhish/Preview Content\"";
 				DEVELOPMENT_TEAM = BX3ASU46J7;
@@ -705,7 +705,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LazyPhish/Preview Content\"";
 				DEVELOPMENT_TEAM = BX3ASU46J7;
@@ -807,14 +807,6 @@
 				minimumVersion = 4.3.0;
 			};
 		};
-		30815DF22BF374B300A7DBAC /* XCRemoteSwiftPackageReference "vapor" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/vapor/vapor";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.99.3;
-			};
-		};
 		30AF623F2BDAC9420004E8BF /* XCRemoteSwiftPackageReference "CodableCSV" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dehesa/CodableCSV";
@@ -854,11 +846,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3037D15D2B9CA1B00012104E /* XCRemoteSwiftPackageReference "AlamofireImage" */;
 			productName = AlamofireImage;
-		};
-		30815DF32BF374B300A7DBAC /* Vapor */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 30815DF22BF374B300A7DBAC /* XCRemoteSwiftPackageReference "vapor" */;
-			productName = Vapor;
 		};
 		30AF62402BDAC9420004E8BF /* CodableCSV */ = {
 			isa = XCSwiftPackageProductDependency;

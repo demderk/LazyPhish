@@ -11,24 +11,6 @@ import Vision
 import AlamofireImage
 import AppKit
 
-/*  Ребят, если кто-то из моих будующих работодаделей или менторов это увидит.
- Не бейте палками ради бога. Я про эти стаил гайды нормального ничего не нашел.
- Мне даже спросить про них не у кого ;(( */
-
-enum PhishRequestMetric {
-    case yandexSQI
-    case OPR
-    case whois
-}
-
-extension Array {
-    func chunked(into size: Int) -> [[Element]] {
-        return stride(from: 0, to: count, by: size).map {
-            Array(self[$0 ..< Swift.min($0 + size, count)])
-        }
-    }
-}
-
 enum DetectTool {
     case sqi
     case whois
@@ -54,9 +36,12 @@ enum DetectTool {
     }
 }
 
-class NeoPhishRequest {
+class PhishRequest {
     public func executeRequest(url: StrictURL, modules: [DetectTool]) async -> RequestInfo {
         let remote = RequestInfo(url: url)
+        let bulkModule = BulkOPRModule()
+        await bulkModule.bulk([url])
+        await remote.addBroadcastModule(bulkModule)
         for mod in modules {
             remote.addModule(mod.getModule())
         }

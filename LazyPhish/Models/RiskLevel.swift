@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 enum RiskLevel: Int, Comparable, Codable {
 
+    case unknown = -1
     case common = 0
     case suspicious = 1
     case danger = 2
@@ -27,6 +28,8 @@ extension RiskLevel {
             return Color.yellow.opacity(0.40)
         case .danger:
             return Color.red.opacity(0.45)
+        case .unknown:
+            return Color.gray.opacity(0.3)
         }
     }
 }

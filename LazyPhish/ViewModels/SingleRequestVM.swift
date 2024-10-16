@@ -18,7 +18,7 @@ class SingleRequestViewModel: ObservableObject {
     private var cardIsPresented: Bool = false
 
     func makeRequest() {
-        let phishRequest = NeoPhishRequest()
+        let phishRequest = PhishRequest()
         statusText = ""
         if let url = try? StrictURL(url: request, preActions: [.makeHttp]) {
             Task {

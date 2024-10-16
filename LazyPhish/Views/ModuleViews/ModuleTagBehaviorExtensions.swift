@@ -10,6 +10,9 @@ import Foundation
 extension WhoisModule: ModuleTagBehavior {
     var dateRisk: RiskLevel {
         if let whois = whois {
+            if let blinded = blinded, blinded {
+                return .unknown
+            }
             if let date = whois.creationDate {
                 if date.distance(to: .now) <= 60*60*24*180 {
                     return .danger
@@ -23,29 +26,20 @@ extension WhoisModule: ModuleTagBehavior {
         return .danger
     }
     var foundRisk: RiskLevel {
-        return whois?.domainName != nil ? .common : .danger
+        return whoisFound ? .common : .danger
     }
 
     var tags: [ModuleTag] {
         var result: [ModuleTag] = []
-        if whois != nil {
-            if case .completed = self.status {
-                var foundText = whois?.domainName != nil ? "Whois is found" : "Whois not found"
-                result.append(ModuleTag(
-                    displayText: dateText,
-                    risk: dateRisk,
-                    tagPriority: modulePriority.rawWithTag(tagPriotiry: 0)))
-                result.append(ModuleTag(
-                    displayText: foundText,
-                    risk: foundRisk,
-                    tagPriority: 0))
-            }
-        } else {
-            result.append(ModuleTag(
-                displayText: dateText,
-                risk: foundRisk,
-                tagPriority: modulePriority.rawWithTag(tagPriotiry: 1)))
-        }
+        let foundText = whoisFound ? "Whois is found" : "Whois not found"
+        result.append(ModuleTag(
+            displayText: dateText,
+            risk: dateRisk,
+            tagPriority: modulePriority.rawWithTag(tagPriotiry: 0)))
+        result.append(ModuleTag(
+            displayText: foundText,
+            risk: foundRisk,
+            tagPriority: 0))
         return result
     }
 }
@@ -58,7 +52,14 @@ extension OPRModule: ModuleTagBehavior {
     }
 
     var tags: [ModuleTag] {
-        let text = self.OPRInfo?.rank == nil ? "OPR is empty" : "OPR Rank is \(OPRInfo?.rank ?? "%%")"
+        var text = "OPR failed"
+        if let opr = self.OPRInfo {
+            if opr.notFound {
+                text = "OPR not found"
+            } else {
+                text = self.OPRInfo?.rank == nil ? "OPR failed" : "OPR Rank is \(OPRInfo?.rank ?? "%%")"
+            }
+        }
         return [
             ModuleTag(
             displayText: text,
@@ -69,10 +70,20 @@ extension OPRModule: ModuleTagBehavior {
 }
 
 extension SQIModule: ModuleTagBehavior {
+    private var yandexSQIMinimum: Int { 0 }
+    
     var priority: Int { 1 }
-
+    
     var risk: RiskLevel {
-        return self.yandexSQI == nil ? .danger : .common
+        if let sqi = yandexSQI {
+            if sqi > yandexSQIMinimum {
+                return .common
+            } else {
+                return .danger
+            }
+        } else {
+            return .danger
+        }
 
     }
 

@@ -12,19 +12,20 @@ struct PhishTableEntry: Identifiable {
     var id: Int
     
     var host: String
-    var opr, sqi, length, subDomains, prefixCount: Int?
+    var sqi, length, subDomains, prefixCount: Int?
     var isIP: Bool?
     var date: String?
+    var opr: String?
 }
 
 extension PhishTableEntry {
     init(fromRemote: RequestInfo) {
-        host = fromRemote.url.strictHost
+        host = fromRemote.host
         id = fromRemote.requestID ?? -1
         for module in fromRemote.modules {
             switch module {
             case let current as OPRModule:
-                self.opr = current.OPRInfo?.rank != nil ? Int(current.OPRInfo!.rank!) : nil
+                self.opr = current.OPRInfo?.rank ?? ((current.OPRInfo?.notFound ?? false) ? "Not Found" : nil)
             case let current as SQIModule:
                 self.sqi = current.yandexSQI
             case let current as WhoisModule:

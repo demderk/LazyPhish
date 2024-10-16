@@ -67,6 +67,8 @@ struct PhishingCard: View {
             for tag in module.tags {
                 var current: ModuleTag = tag
                 switch tag.risk {
+                case .unknown:
+                    current.tagPriority -= 1000
                 case .common:
                     current.tagPriority += 0
                 case .suspicious:

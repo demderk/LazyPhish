@@ -95,7 +95,7 @@ struct SingleRequestView: View {
                                     .fontWeight(.bold)
                                     .fontDesign(.default)
                                 Spacer().frame(width: 8)
-                                Text(request.url.strictHost)
+                                Text(request.host)
                                     .font(.title)
                                     .fontWeight(.semibold)
                                     .textCase(.lowercase)

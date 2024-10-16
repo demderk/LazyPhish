@@ -13,25 +13,21 @@ class WhoisModule: RequestModule {
     var whois: WhoisInfo?
     
     var date: Date? { whois?.creationDate }
+    var blinded: Bool? { whois?.blinded }
+    var whoisFound: Bool { whois != nil }
+    
     var dateText: String {
+        if let blinded = blinded, blinded {
+            return "Domain zone is blinded"
+        }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMMM yyyy"
-        var text = "Creation data unavailable"
+        var text = "Creation data failed"
         dateFormatter.locale = Locale(identifier: "en_US")
-        if let date = self.whois?.creationDate {
+        if let date = self.date {
             text = dateFormatter.string(from: date)
         }
         return text
-    }
-    var dateTextIsFormatable: Bool {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMMM yyyy"
-        var result = false
-        dateFormatter.locale = Locale(identifier: "en_US")
-        if let date = self.whois?.creationDate {
-            result = true
-        }
-        return result
     }
     
     private static var whoisSemaphore = Semaphore(count: 1)
@@ -40,10 +36,10 @@ class WhoisModule: RequestModule {
     func processWhois(_ remoteObject: RequestInfo) async {
         do {
             let connection = WhoisConnection()
-            let whois = try await connection.lookup(host: remoteObject.url.strictHost)
+            let whois = try await connection.lookup(host: remoteObject.host)
             self.whois = whois
-            if !dateTextIsFormatable {
-                status = .completedWithErrors(errors: nil)
+            if whois.creationDate == nil, !whois.blinded {
+                status = .failed(error: OPRError.creationDateNotParsed)
             } else {
                 status = .completed
             }
