@@ -100,12 +100,27 @@ class MultiRequestVM: ObservableObject {
         let urls: [String] = requestText
             .components(separatedBy: .newlines)
             .compactMap({ $0.isEmpty ? nil : $0 })
+        lastUrlsCount = urls.count
+        
+        var correctURLS: [StrictURL] =  []
+        for (n, item) in urls.enumerated() {
+            do {
+                let correctDomain = try StrictURL(url: item, preActions: [.makeHttp])
+                correctURLS.append(correctDomain)
+            } catch _ as ParserError {
+                badRequest(n+1)
+                return
+            } catch {
+                badRequest(n+1)
+            }
+        }
+        queue.phishURLS = correctURLS
+        
         withAnimation {
             processUI()
         }
-        lastUrlsCount = urls.count
+        
         Task { [self] in
-            queue.phishURLS = urls.map({try! .init(url: $0, preActions: [.makeHttp])})
             await queue.executeAll(
                 modules: [.opr, .regex, .sqi, .whois, .ml],
                 onModuleFinished: onModuleFinished,
@@ -116,7 +131,6 @@ class MultiRequestVM: ObservableObject {
                 }
             }
         }
-        
     }
     
     func reviseModuleFinished (remote: RequestInfo, module: RequestModule) {
@@ -211,7 +225,12 @@ class MultiRequestVM: ObservableObject {
     private func failedUI() {
         self.status = .failed
         self.statusText = "Completed With Errors"
+    }
+    
+    private func badRequest(_ lineNumber: Int) {
+        self.status = .failed
         self.statusIconName = "xmark.circle.fill"
+        self.statusText = "Wrong url at line \(lineNumber)"
     }
     
     private func exportCSV() {

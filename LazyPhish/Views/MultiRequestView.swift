@@ -70,16 +70,6 @@ struct MultiRequestView: View {
                 }
             }.frame(minWidth: 64)
         }.navigationTitle("Queue Processor")
-//            .fileExporter(
-//                isPresented: $vm.CSVExportIsPresented,
-//                document: vm.resultingDocument,
-//                contentType: .commaSeparatedText,
-//                defaultFilename: "PhishList") {_ in}
-//            .fileExporter(
-//                isPresented: $vm.RAWExportIsPresented,
-//                document: vm.RAWResultingDocument,
-//                contentType: .commaSeparatedText,
-//                defaultFilename: "PhishList") {_ in}
             .toolbar {
                 ToolbarItem(placement: .navigation) {
                     HStack {
@@ -94,7 +84,6 @@ struct MultiRequestView: View {
                         }
                         .disabled(!vm.reviseable || vm.busy)
                         .help("Revise Querry")
-                        .keyboardShortcut(.return)
                         Button {
                             if !vm.busy {
                                 vm.sendRequestQuerry()

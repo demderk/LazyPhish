@@ -57,26 +57,16 @@ final class PhishInfoFormatter {
         return false
     }
 
-    static func validURL(_ urlString: String) throws -> URL {
-        guard urlString.contains("http://") || urlString.contains("https://") else {
-            throw ParserError.urlNotAWebRequest(url: urlString)
-        }
-        guard let url = URL(string: urlString) else {
-            throw ParserError.urlHostIsInvalid(url: urlString)
-        }
-        guard url.host() != nil else {
-            throw ParserError.urlHostIsBroken(url: urlString)
-        }
-        return url
-    }
-
-    static func validURL(_ urlString: String, preActions: Set<FormatPreaction>) throws -> URL {
+    static func validURL(_ urlString: String, preActions: Set<FormatPreaction> = []) throws -> URL {
         var input = urlString
         for action in preActions {
             input = action.execute(input)
         }
         guard !input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             throw ParserError.requestIsEmpty
+        }
+        guard input.split(separator: ".").count > 1 else {
+            throw ParserError.urlNotAWebRequest(url: urlString)
         }
         guard input.prefix(4) == "http" else {
             throw ParserError.urlNotAWebRequest(url: urlString)
