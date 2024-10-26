@@ -13,7 +13,7 @@ class BulkOPRModule: RequestModule {
     var status: ModuleStatus = .planned
 
     var cache: [OPRInfo]?
-    
+
     func cached(_ url: StrictURL) -> OPRInfo? {
         let formatedStrict = url.strictHost
             .lowercased()
@@ -21,11 +21,12 @@ class BulkOPRModule: RequestModule {
         let formatedRoot = url.hostRoot
             .lowercased()
             .replacingOccurrences(of: "www.", with: "")
-            // [INSECURE] Это в будующем может быть путем обхода
+            // FIXME: [INSECURE] Это в будующем может быть путем обхода
             // www.go.www.ogle.com -> google.com
-        return cache?.first(where: {$0.domain == formatedStrict}) ?? cache?.first(where: {$0.domain == formatedRoot})
+        return cache?.first(where: {$0.domain == formatedStrict})
+                ?? cache?.first(where: {$0.domain == formatedRoot})
     }
-    
+
     func execute(remote: RequestInfo) async {
         await bulk([remote.url])
     }
@@ -33,7 +34,7 @@ class BulkOPRModule: RequestModule {
     func bulk(_ data: [StrictURL]) async {
         print("bulk triggered")
         print("Requested by data: \(data) \n")
-        
+
         guard let apiKey = try? getOPRKey() else {
             status = .failed(error: OPRError.apiKeyUnreachable)
             return
@@ -130,10 +131,9 @@ class BulkOPRModule: RequestModule {
         do {
             let jsonDecoder = JSONDecoder()
             jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-            print(String(decoding: remoteResponse, as: UTF8.self))
             return try jsonDecoder.decode(OPRResponse.self, from: remoteResponse)
         } catch {
-            throw OPRError.remoteError(response: String(decoding: remoteResponse, as: UTF8.self))
+            throw OPRError.remoteError(response: String(data: remoteResponse, encoding: .utf8) ?? "")
         }
     }
 }
@@ -145,4 +145,3 @@ extension Array {
         }
     }
 }
-

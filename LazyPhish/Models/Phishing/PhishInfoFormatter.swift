@@ -45,7 +45,7 @@ final class PhishInfoFormatter {
 
         let URLStr = url.host()!
 
-        if let x = (try? ipv4Regex.firstMatch(in: URLStr)) {
+        if (try? ipv4Regex.firstMatch(in: URLStr)) != nil {
             return true
         }
         if (try? ipv4RegexBin.firstMatch(in: URLStr)) != nil {

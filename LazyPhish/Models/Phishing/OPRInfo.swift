@@ -23,7 +23,7 @@ enum OPRExternalError: Int, Error {
     case unknown = -1
     case notFound = 404
     case incorrectDomain = 400
-    
+
     init(_ errorCode: Int) {
         if let found = OPRExternalError(rawValue: errorCode) {
             self = found
@@ -41,7 +41,7 @@ struct OPRInfo: OPRFailable {
     var rank: String?
     var domain: String
     var notFound: Bool { statusCode == 404 }
-    var externalError: OPRExternalError?  { OPRExternalError(statusCode) }
+    var externalError: OPRExternalError? { OPRExternalError(statusCode) }
 }
 
 extension OPRInfo {

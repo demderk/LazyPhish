@@ -11,7 +11,7 @@ enum ModulePriority: Int {
     case opr = 3
     case sqi = 2
     case regex = 1
-    
+
     static func getModulePriority(module: ModuleTagBehavior) -> ModulePriority {
         switch module {
         case is OPRModule:      return self.opr
@@ -21,7 +21,7 @@ enum ModulePriority: Int {
         default:                return self.unknown
         }
     }
-    
+
     func rawWithTag(tagPriotiry: Int) -> Int {
         return self.rawValue * 10 + tagPriotiry
     }

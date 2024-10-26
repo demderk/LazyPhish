@@ -11,7 +11,7 @@ import CoreML
 import OSLog
 
 class PhishML {
-    
+
 }
 
 extension RiskLevel {

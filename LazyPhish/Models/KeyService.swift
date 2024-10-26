@@ -100,8 +100,7 @@ class KeyService {
             var item: AnyObject?
             SecItemCopyMatching(query as CFDictionary, &item)
 
-            if let success = item as? Data {
-                let str = String(decoding: success, as: UTF8.self)
+            if let success = item as? Data, let str = String(data: success, encoding: .utf8) {
                 action(str)
             } else {
                 action(nil)

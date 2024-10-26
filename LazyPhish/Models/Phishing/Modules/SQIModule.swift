@@ -19,12 +19,13 @@ class SQIModule: RequestModule {
     func execute(remote: RequestInfo) async {
         status = .executing
         let accurate = false
-
+        
+        // TODO: We need to migrate from Alamofire.
         let response = await AF.request("https://yandex.ru/cycounter?\(remote.host)")
             .serializingImage(inflateResponseImage: false).result
-        
+
         // FIXME: When YandexSQI is 100% failed, it returns the result as 0 instead of an error #47
-        
+
         switch response {
         case .success(let success):
             if let input = success.cgImage(forProposedRect: .none, context: .none, hints: nil) {

@@ -34,42 +34,47 @@ struct MultiRequestView: View {
                     .background(.background)
             }.frame(minWidth: 64)
             HStack {
-                Table(of: PhishTableEntry.self) {
+                Table(of: VisualPhishingEntry.self) {
                     TableColumn("ID") { item in
                         Text(item.id.description)
                     }
-                    TableColumn("Host") { item in
-                        Text(item.host)
+                    TableColumn("URL") { item in
+                        Text(item.url)
                     }
                     TableColumn("Creation Date") { item in
-                        Text(item.date ?? "Date Error")
+                        Text(item.date)
                     }
                     TableColumn("OPR") { item in
-                        Text(item.opr ?? "OPR ERROR")
+                        Text(item.opr)
                     }
                     TableColumn("SQI") { item in
-                        Text(item.sqi?.description ?? "SQI Error")
+                        Text(item.sqi)
                     }
                     TableColumn("Is IP") { item in
-                        Text(item.isIP?.description ?? "Regex Error")
+                        Text(item.isIP)
                     }
                     TableColumn("Subdomains") { item in
-                        Text(item.subDomains?.description ?? "Regex Error")
+                        Text(item.subDomains)
                     }
                     TableColumn("Prefixes") { item in
-                        Text(item.prefixCount?.description ?? "Regex Error")
+                        Text(item.prefixCount)
                     }
                     TableColumn("Length") { item in
-                        Text(item.length?.description ?? "Regex Error")
+                        Text(item.length)
                     }
-                    
+
                 } rows: {
                     ForEach(vm.tableContent) { data in
-                        TableRow(data)
+                        TableRow(data.visual)
                     }
                 }
             }.frame(minWidth: 64)
         }.navigationTitle("Queue Processor")
+            .fileExporter(
+                isPresented: $vm.educationalExportIsPresented,
+                document: vm.educationalFile,
+                contentType: .commaSeparatedText,
+                defaultFilename: "PhishList") {_ in}
             .toolbar {
                 ToolbarItem(placement: .navigation) {
                     HStack {
@@ -123,11 +128,11 @@ struct MultiRequestView: View {
                 }
                 ToolbarItem(placement: .primaryAction) {
                     Menu {
-                        Button("Export ML Data") {
-//                            vm.exportCSV()
-                        }
                         Button("Export RAW ML Data") {
 //                            vm.exportCSVRAW()
+                        }
+                        Button("Export Results") {
+                            vm.exportEducationalFile()
                         }
                     } label: {
                         Image(systemName: "square.and.arrow.up")

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MLError : RequestError {
+enum MLError: RequestError {
     case modulesNotFinished
 }
 
@@ -29,7 +29,7 @@ extension MLEntry {
         else {
             throw MLError.modulesNotFinished
         }
-        
+
         OPRScore = oprModule.rank ?? -1
         SQIScore = sqiModule.yandexSQI ?? -1
         haveWhois = whoisModule.whois != nil
@@ -46,17 +46,17 @@ class MLModule: RequestModule {
         WhoisModule(),
         RegexModule()
     ])
-    
+
     var status: ModuleStatus = .planned
     var prediction: Bool?
     var predictionPercent: Int?
-    
+
     func execute(remote: RequestInfo) async {
         status = .executing
-        
+
 //        LazyPhishML
-        
+
         status = .completed
     }
-    
+
 }

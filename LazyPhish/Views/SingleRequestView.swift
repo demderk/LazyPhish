@@ -13,7 +13,7 @@ struct SingleRequestView: View {
     @ObservedObject var vm = SingleRequestViewModel()
     @FocusState var isEditing: Bool
     @EnvironmentObject var globalVM: GlobalVM
-    
+
     @State var deepMode: Bool = false
 
     var body: some View {

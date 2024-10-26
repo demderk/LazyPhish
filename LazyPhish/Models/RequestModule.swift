@@ -14,7 +14,12 @@ protocol RequestModule: AnyObject {
 
     func execute(remote: RequestInfo) async
     func execute(remote: RequestInfo, onFinish: (RequestInfo, RequestModule) -> Void) async
-    func processDependences(remote: RequestInfo, parentDependences: DependencyCollection) async -> DependencyCollection
+    
+    @discardableResult
+    func processDependences(
+        remote: RequestInfo,
+        parentDependences: DependencyCollection
+    ) async -> DependencyCollection
 }
 
 extension RequestModule {
@@ -23,8 +28,12 @@ extension RequestModule {
         onFinish(remote, self)
     }
     
-    func processDependences(remote: RequestInfo, parentDependences: DependencyCollection) async -> DependencyCollection {
-        var internalDependences: DependencyCollection = parentDependences
+    @discardableResult
+    func processDependences(
+        remote: RequestInfo,
+        parentDependences: DependencyCollection
+    ) async -> DependencyCollection {
+        let internalDependences: DependencyCollection = parentDependences
         for dependency in await dependences.collection {
             if dependency.completed {
                 continue
@@ -34,19 +43,27 @@ extension RequestModule {
                 await dependences.putDependency(
                     oldModule: dependency,
                     newModule: executed)
-            }
-            else {
-                await internalDependences.pushUniqueDependencies(dependency.processDependences(remote: remote, parentDependences: internalDependences))
+            } else {
+                await internalDependences.pushUniqueDependencies(
+                    dependency.processDependences(
+                        remote: remote,
+                        parentDependences: internalDependences))
                 await dependency.execute(remote: remote)
                 await internalDependences.pushDependency(dependency)
             }
         }
         return internalDependences
     }
-    
+
     /// Returns true if module status is completed
     var completed: Bool {
         if case .completed = status {
+            return true
+        } else { return false }
+    }
+
+    var failed: Bool {
+        if case .failed = status {
             return true
         } else { return false }
     }
@@ -55,7 +72,7 @@ extension RequestModule {
     var finished: Bool {
         switch status {
         case .completed: return true
-        case .completedWithErrors(_): return true
+        case .completedWithErrors: return true
         default: return false
         }
     }

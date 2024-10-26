@@ -7,7 +7,7 @@
 
 import Foundation
 
-// swiftlint:disable all
+// swiftlint:disable file_length
 
 extension StrictURL {
     
@@ -1679,6 +1679,8 @@ extension StrictURL {
         "org.zw"
     ]
     
+    //
+    
     static func getTLD(host: String) -> String? {
         let splited = Array(host.split(separator: ".").reversed())
         guard splited.count > 1 else {
@@ -1696,7 +1698,7 @@ extension StrictURL {
         guard splited.count > 1 else {
             return false
         }
-        var root = "\(splited[1]).\(splited[0])"
+        let root = "\(splited[1]).\(splited[0])"
         if StrictURL.twoSLDs.contains(where: { $0 == root }), splited.count > 2 {
             return true
         }

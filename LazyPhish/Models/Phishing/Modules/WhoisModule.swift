@@ -11,11 +11,11 @@ class WhoisModule: RequestModule {
     var dependences: DependencyCollection = DependencyCollection()
     var status: ModuleStatus = .planned
     var whois: WhoisInfo?
-    
+
     var date: Date? { whois?.creationDate }
     var blinded: Bool? { whois?.blinded }
     var whoisFound: Bool { whois != nil }
-    
+
     var dateText: String {
         if let blinded = blinded, blinded {
             return "Domain zone is blinded"
@@ -29,7 +29,7 @@ class WhoisModule: RequestModule {
         }
         return text
     }
-    
+
     private static var whoisSemaphore = Semaphore(count: 1)
     private static var sCount: UInt64 = 1
 

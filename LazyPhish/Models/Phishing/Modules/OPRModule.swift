@@ -21,15 +21,15 @@ class OPRModule: RequestModule {
             return nil
         }
     }
-    
+
     init() {
-        
+
     }
-    
+
     init(bulk: BulkOPRModule) {
         dependences.pushDependencyInsecure(bulk)
     }
-    
+
     func execute(remote: RequestInfo) async {
         status = .executing
         if let bulkDependency = await dependences.getDependency(module: BulkOPRModule()) as? BulkOPRModule,
@@ -42,7 +42,7 @@ class OPRModule: RequestModule {
                 status = .completed
                 return
             }
-            
+
         } else {
             do {
                 OPRInfo = try await singleBulkRequest(remote: remote)
@@ -57,7 +57,7 @@ class OPRModule: RequestModule {
             }
         }
     }
-    
+
     private func singleBulkRequest(remote: RequestInfo) async throws -> OPRInfo {
         let bulk = BulkOPRModule()
         _ = await bulk.execute(remote: remote)

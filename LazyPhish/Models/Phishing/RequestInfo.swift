@@ -7,25 +7,26 @@
 
 import Foundation
 
-class RequestInfo {
+class RequestInfo: Identifiable {
     // TODO: Make private(set)
-    
+    var id: Int? { self.requestID }
+
     private(set) var modules: [any RequestModule] = []
-    
+
     private var dependencyModules: DependencyCollection = DependencyCollection()
-    
+
     var requestID: Int?
     var url: StrictURL
     var status: RemoteStatus = .planned
     var failedOnModulesCount: Int?
-    
+
     var host: String { url.strictHost }
     var hostRoot: String { url.hostRoot }
-    
+
     init(url: StrictURL) {
         self.url = url
     }
-    
+
     func executeAll(
         onRequestFinished: ((RequestInfo) -> Void)? = nil,
         onModuleFinished: ((RequestInfo, RequestModule) -> Void)? = nil
@@ -34,7 +35,7 @@ class RequestInfo {
         status = await executeModules(onModuleFinished: onModuleFinished)
         onRequestFinished?(self)
     }
-    
+
     func revise(
         onRequestFinished: ((RequestInfo) -> Void)? = nil,
         onModuleFinished: ((RequestInfo, RequestModule) -> Void)? = nil
@@ -44,13 +45,13 @@ class RequestInfo {
                 onRequestFinished: onRequestFinished,
                 onModuleFinished: onModuleFinished)
             return
-        } else if case .completedWithErrors = status  {
+        } else if case .completedWithErrors = status {
             status = .executing
             status = await executeModules(onModuleFinished: onModuleFinished, skipCompleted: true)
             onRequestFinished?(self)
         }
     }
-    
+
     private func executeModules (
         onModuleFinished: ((RequestInfo, RequestModule) -> Void)?,
         skipCompleted: Bool = false
@@ -62,7 +63,7 @@ class RequestInfo {
                 }
             }
         }
-        
+
         await withTaskGroup(of: Void.self) { tasks in
             for (n, mod) in modules.enumerated() {
                 if skipCompleted, case .completed = mod.status {
@@ -89,39 +90,38 @@ class RequestInfo {
             }
             return false
         })
-        
+
         let failedOn = failedOnModulesCount ?? modules.count
         if failedModules >= failedOn {
             return .failed
-        }
-        else if failedModules > 0 {
+        } else if failedModules > 0 {
             return .completedWithErrors
         } else {
             return .completed
         }
     }
-    
+
     func addBroadcastModule(_ module: any RequestModule) async {
         //        await module.execute(remote: self)
         await dependencyModules.pushDependency(module)
     }
-    
+
     func addModule(_ module: any RequestModule) {
         modules.append(module)
     }
-    
+
     func addModule(contentsOf: [any RequestModule]) {
         modules.append(contentsOf: contentsOf)
     }
-    
+
     func getModule<T: RequestModule>(module: T.Type) -> RequestModule? {
         return modules.first(where: { type(of: $0) == module })
     }
-    
+
     func getCompletedModule<T: RequestModule>(module: T.Type) -> T? {
         return modules.first(where: { type(of: $0) == module && $0.completed }) as? T
     }
-    
+
     func getFinishedModule<T: RequestModule>(module: T.Type) -> T? {
         return modules.first(where: { type(of: $0) == module && $0.finished }) as? T
     }

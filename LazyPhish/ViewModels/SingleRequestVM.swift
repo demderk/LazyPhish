@@ -14,7 +14,7 @@ class SingleRequestViewModel: ObservableObject {
     @Published var lastRequest: RequestInfo?
     @Published var requestIsPending: Bool = false
     @Published var statusText: String = ""
-    
+
     private var cardIsPresented: Bool = false
 
     func makeRequest() {
@@ -27,16 +27,17 @@ class SingleRequestViewModel: ObservableObject {
                         requestIsPending = true
                     }
                 }
-                let response = await phishRequest.executeRequest(url: url, modules: [.opr, .regex, .sqi, .whois, .ml])
+                let response = await phishRequest.executeRequest(
+                    url: url,
+                    modules: [.opr, .regex, .sqi, .whois, .ml])
                 await MainActor.run {
                     withAnimation {
                         requestIsPending = false
                         lastRequest = response
                         if let successRequest = lastRequest {
-                            let failedModulesCount = successRequest.modules.count(
-                                where: {if case .failed = $0.status {true} else {false}})
-                            statusText =
-                            "\(successRequest.modules.count - failedModulesCount) modules succeed, \(failedModulesCount) failed"
+                            let failedModulesCount = successRequest.modules.count(where: { $0.failed })
+                            let succeedModules = successRequest.modules.count - failedModulesCount
+                            statusText = "\(succeedModules) modules succeed, \(failedModulesCount) failed"
                         }
                     }
                 }

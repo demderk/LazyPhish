@@ -46,7 +46,7 @@ extension WhoisModule: ModuleTagBehavior {
 
 extension OPRModule: ModuleTagBehavior {
     var priority: Int { 2 }
-    
+
     var risk: RiskLevel {
         return OPRInfo?.rank == nil ? .danger : .common
     }
@@ -71,9 +71,9 @@ extension OPRModule: ModuleTagBehavior {
 
 extension SQIModule: ModuleTagBehavior {
     private var yandexSQIMinimum: Int { 0 }
-    
+
     var priority: Int { 1 }
-    
+
     var risk: RiskLevel {
         if let sqi = yandexSQI {
             if sqi > yandexSQIMinimum {
@@ -88,7 +88,9 @@ extension SQIModule: ModuleTagBehavior {
     }
 
     var tags: [ModuleTag] {
-        let text = self.yandexSQI == nil ? "Yandex SQI is empty" : "Yandex SQI is \(self.yandexSQI?.description ?? "%%")"
+        let text = self.yandexSQI == nil
+        ? "Yandex SQI is empty"
+        : "Yandex SQI is \(self.yandexSQI?.description ?? "%%")"
         return [
             ModuleTag(
                 displayText: text,

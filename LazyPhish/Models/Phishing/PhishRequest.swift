@@ -27,9 +27,7 @@ enum DetectTool {
         case .regex:
             return RegexModule()
         case .opr:
-            var oprModule = OPRModule()
-//            oprModule.dependences.pushDependencyInsecure(BulkOPRModule())
-            return oprModule
+            return OPRModule()
         case .ml:
             return MLModule()
         }
