@@ -21,8 +21,8 @@ struct VisualPhishingEntry: Identifiable {
     init(_ entry: PhishingEntry) {
         self.id = entry.id
         self.url = entry.url
-        self.sqi = entry.sqi?.description ?? "SQI failed"
-        self.opr = entry.opr?.description ?? "OPR failed"
+        self.sqi = entry.sqi.description
+        self.opr = entry.opr.description
         self.date = entry.dateText ?? (entry.whoisBlinded ? "Domain zone is blinded" : "Date parsing error")
         self.length = entry.urlLength.description
         self.subDomains = entry.subDomains.description
@@ -60,14 +60,20 @@ struct PhishingEntry: Identifiable {
     var whoisFound: Bool = false
     var whoisBlinded: Bool = false
     var date: Date?
-    var dateFromNow: TimeInterval?
     var dateText: String?
-    var sqi: Int?
-    var opr: Int?
+    var sqi: Int = -1
+    var opr: Int = -1
     var subDomains: Int = 0
     var prefixCount: Int = 0
     var isIP: Bool = false
 
+    var whoisBlindedInt: Int {
+        whoisBlinded ? 1 : 0
+    }
+    
+    var dateFromNow: TimeInterval {
+        (date?.timeIntervalSinceNow ?? 1) * -1
+    }
     var visual: VisualPhishingEntry { VisualPhishingEntry(self) }
 }
 
@@ -81,14 +87,13 @@ extension PhishingEntry {
         for module in fromRemote.modules {
             switch module {
             case let current as OPRModule:
-                self.opr = current.rank
+                self.opr = current.rank ?? -1
             case let current as SQIModule:
-                self.sqi = current.yandexSQI
+                self.sqi = current.yandexSQI ?? -1
             case let current as WhoisModule:
                 self.date = current.date
-                self.dateFromNow = current.date?.timeIntervalSinceNow
                 self.dateText = current.dateText
-                self.whoisBlinded = current.blinded ?? false
+                self.whoisBlinded = current.blinded
                 self.whoisFound = current.whois == nil ? false : true
             case let current as RegexModule:
                 self.urlLength = current.urlLength
@@ -128,16 +133,16 @@ extension PhishingEntry {
             url,
             hostLength.description,
             urlLength.description,
-            (sqi ?? -1).description,
+            sqi.description,
             subDomains.description,
             prefixCount.description,
             isIP ? "1" : "0",
             whoisBlinded ? "1" : "0",
-            date?.timeIntervalSince1970.description ?? "",
-            dateFromNow?.description ?? "",
-            (opr ?? -1).description,
+            date?.timeIntervalSince1970.description ?? "-1",
+            dateFromNow.description,
+            opr.description,
             "0"
         ]
-        return result.joined(separator: ",")
+        return result.map({ "\($0)" }).joined(separator: ",")
     }
 }

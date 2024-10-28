@@ -13,11 +13,11 @@ class WhoisModule: RequestModule {
     var whois: WhoisInfo?
 
     var date: Date? { whois?.creationDate }
-    var blinded: Bool? { whois?.blinded }
+    var blinded: Bool { whois?.blinded ?? false }
     var whoisFound: Bool { whois != nil }
 
     var dateText: String {
-        if let blinded = blinded, blinded {
+        if blinded {
             return "Domain zone is blinded"
         }
         let dateFormatter = DateFormatter()

@@ -43,11 +43,10 @@
 		304BE3A02C7DC983001A2AB0 /* BigToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE39F2C7DC983001A2AB0 /* BigToggleButton.swift */; };
 		304BE3A72C7F11D5001A2AB0 /* WhoisModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3A62C7F11D5001A2AB0 /* WhoisModule.swift */; };
 		304BE3A92C7F1320001A2AB0 /* SQIModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3A82C7F1320001A2AB0 /* SQIModule.swift */; };
+		3052B7AC2CCEFEC600556CFA /* PhishML.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 308DF4D32CCEF55C0088C645 /* PhishML.mlpackage */; };
 		307A27052BA5BABC00B9D14A /* PhishInfoRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307A27042BA5BABC00B9D14A /* PhishInfoRemote.swift */; };
 		307CBC482BCC57D3004B68A8 /* PhishInfoFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307CBC472BCC57D3004B68A8 /* PhishInfoFormatter.swift */; };
-		30815E002BF3B55200A7DBAC /* PhishML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30815DFF2BF3B55200A7DBAC /* PhishML.swift */; };
-		30815E022BF3B66C00A7DBAC /* LazyPhishML.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 30815E012BF3B66C00A7DBAC /* LazyPhishML.mlpackage */; };
-		30A80F902CB64674004C46C7 /* MLModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A80F8F2CB64674004C46C7 /* MLModule.swift */; };
+		308DF4D62CCEF7400088C645 /* MLModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308DF4D52CCEF7400088C645 /* MLModule.swift */; };
 		30A80F922CB6DACA004C46C7 /* DependencyCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A80F912CB6DACA004C46C7 /* DependencyCollection.swift */; };
 		30A80F942CBF15DA004C46C7 /* StrictURLSLDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A80F932CBF15DA004C46C7 /* StrictURLSLDExtension.swift */; };
 		30A80F962CC2BE9E004C46C7 /* EducationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A80F952CC2BE9E004C46C7 /* EducationFile.swift */; };
@@ -106,9 +105,8 @@
 		304BE3A82C7F1320001A2AB0 /* SQIModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQIModule.swift; sourceTree = "<group>"; };
 		307A27042BA5BABC00B9D14A /* PhishInfoRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishInfoRemote.swift; sourceTree = "<group>"; };
 		307CBC472BCC57D3004B68A8 /* PhishInfoFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishInfoFormatter.swift; sourceTree = "<group>"; };
-		30815DFF2BF3B55200A7DBAC /* PhishML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishML.swift; sourceTree = "<group>"; };
-		30815E012BF3B66C00A7DBAC /* LazyPhishML.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = LazyPhishML.mlpackage; sourceTree = "<group>"; };
-		30A80F8F2CB64674004C46C7 /* MLModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLModule.swift; sourceTree = "<group>"; };
+		308DF4D32CCEF55C0088C645 /* PhishML.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = PhishML.mlpackage; sourceTree = "<group>"; };
+		308DF4D52CCEF7400088C645 /* MLModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLModule.swift; sourceTree = "<group>"; };
 		30A80F912CB6DACA004C46C7 /* DependencyCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyCollection.swift; sourceTree = "<group>"; };
 		30A80F932CBF15DA004C46C7 /* StrictURLSLDExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrictURLSLDExtension.swift; sourceTree = "<group>"; };
 		30A80F952CC2BE9E004C46C7 /* EducationFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationFile.swift; sourceTree = "<group>"; };
@@ -239,7 +237,6 @@
 				303777512CA3BA93001B8D67 /* RegexModule.swift */,
 				304BE3A62C7F11D5001A2AB0 /* WhoisModule.swift */,
 				304BE3A82C7F1320001A2AB0 /* SQIModule.swift */,
-				30A80F8F2CB64674004C46C7 /* MLModule.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -295,8 +292,8 @@
 		30815DFC2BF3B4F100A7DBAC /* PhishML */ = {
 			isa = PBXGroup;
 			children = (
-				30815E012BF3B66C00A7DBAC /* LazyPhishML.mlpackage */,
-				30815DFF2BF3B55200A7DBAC /* PhishML.swift */,
+				308DF4D32CCEF55C0088C645 /* PhishML.mlpackage */,
+				308DF4D52CCEF7400088C645 /* MLModule.swift */,
 			);
 			path = PhishML;
 			sourceTree = "<group>";
@@ -416,8 +413,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3052B7AC2CCEFEC600556CFA /* PhishML.mlpackage in Sources */,
+				308DF4D62CCEF7400088C645 /* MLModule.swift in Sources */,
 				304BE3982C7389EC001A2AB0 /* SettingsView.swift in Sources */,
-				30A80F902CB64674004C46C7 /* MLModule.swift in Sources */,
 				3037774A2CA3B9CD001B8D67 /* OPRModule.swift in Sources */,
 				304BE39B2C7C5A9B001A2AB0 /* KeysSettingsView.swift in Sources */,
 				3003966C2BA7489F001B6C2C /* MultiRequestView.swift in Sources */,
@@ -433,7 +431,6 @@
 				307A27052BA5BABC00B9D14A /* PhishInfoRemote.swift in Sources */,
 				304BE3A92C7F1320001A2AB0 /* SQIModule.swift in Sources */,
 				30B1C5CF2BD020E000D275D4 /* ThrowingOPRInfoList.swift in Sources */,
-				30815E022BF3B66C00A7DBAC /* LazyPhishML.mlpackage in Sources */,
 				303777542CA3BD89001B8D67 /* RemoteStatus.swift in Sources */,
 				303777562CA3DA65001B8D67 /* Semaphore.swift in Sources */,
 				304BE3962C73819C001A2AB0 /* StatusView.swift in Sources */,
@@ -463,7 +460,6 @@
 				300396612BA5BCD0001B6C2C /* MetricStatus.swift in Sources */,
 				303777522CA3BA93001B8D67 /* RegexModule.swift in Sources */,
 				303777452CA3B8C0001B8D67 /* BulkOPRModule.swift in Sources */,
-				30815E002BF3B55200A7DBAC /* PhishML.swift in Sources */,
 				304BE3A72C7F11D5001A2AB0 /* WhoisModule.swift in Sources */,
 				303777612CA569B0001B8D67 /* ModuleTagBehaviorExtensions.swift in Sources */,
 				3037774C2CA3BA24001B8D67 /* RequestModule.swift in Sources */,
@@ -611,7 +607,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Roman Zheglov.\nPublished under the MIT License.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -643,7 +639,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Roman Zheglov.\nPublished under the MIT License.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

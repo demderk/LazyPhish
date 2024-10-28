@@ -1,0 +1,12 @@
+{
+  "MLModelVersionStringKey" : "1.1",
+  "MLModelDescriptionKey" : "A LazyPhish ML Module",
+  "MLModelCreatorDefinedKey" : {
+    "com.apple.createml.version" : "15.0.0",
+    "com.apple.createml.app.tag" : "150",
+    "com.apple.coreml.model.preview.type" : "tabularClassifier",
+    "com.apple.createml.app.version" : "6.0 Beta"
+  },
+  "MLModelAuthorKey" : "Roman Zheglov",
+  "MLModelLicenseKey" : "MIT"
+}

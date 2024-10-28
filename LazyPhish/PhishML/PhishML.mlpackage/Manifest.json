@@ -1,0 +1,24 @@
+{
+    "fileFormatVersion": "1.0.0",
+    "itemInfoEntries": {
+        "0935838B-8982-4157-8E98-0FD724C958A9": {
+            "author": "com.apple.CoreML",
+            "description": "CoreML Model Specification",
+            "name": "PhishML.mlmodel",
+            "path": "com.apple.CoreML/PhishML.mlmodel"
+        },
+        "273BB152-A83A-4F08-A4BA-9CDA3F25B3C6": {
+            "author": "com.apple.CoreML",
+            "description": "External FeatureDescription Overlay",
+            "name": "FeatureDescriptions.json",
+            "path": "com.apple.CoreML/FeatureDescriptions.json"
+        },
+        "93214B5A-AE08-4BEA-8DA9-62E61C7374B8": {
+            "author": "com.apple.CoreML",
+            "description": "External Metadata Overlay",
+            "name": "Metadata.json",
+            "path": "com.apple.CoreML/Metadata.json"
+        }
+    },
+    "rootModelIdentifier": "0935838B-8982-4157-8E98-0FD724C958A9"
+}

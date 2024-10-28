@@ -1,0 +1,42 @@
+{
+  "Inputs" : {
+    "hostLength" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "dateFromNow" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "subDomains" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "sqi" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "urlLength" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "prefixCount" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "whoisBlinded" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "opr" : {
+      "MLFeatureShortDescription" : "--"
+    }
+  },
+  "Outputs" : {
+    "isPhishingProbability" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "isPhishing" : {
+      "MLFeatureShortDescription" : "--"
+    }
+  },
+  "TrainingInputs" : {
+
+  },
+  "States" : {
+
+  }
+}

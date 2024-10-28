@@ -1,9 +1,0 @@
-{
-  "MLModelCreatorDefinedKey" : {
-    "com.apple.createml.app.tag" : "121.4",
-    "com.apple.createml.version" : "14.3.0",
-    "com.apple.coreml.model.preview.type" : "tabularClassifier",
-    "com.apple.createml.app.version" : "5.0"
-  },
-  "MLModelAuthorKey" : "Roman Zheglov"
-}

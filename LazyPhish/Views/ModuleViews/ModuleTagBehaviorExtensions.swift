@@ -10,7 +10,7 @@ import Foundation
 extension WhoisModule: ModuleTagBehavior {
     var dateRisk: RiskLevel {
         if let whois = whois {
-            if let blinded = blinded, blinded {
+            if blinded {
                 return .unknown
             }
             if let date = whois.creationDate {
@@ -162,5 +162,29 @@ extension RegexModule: ModuleTagBehavior {
             tagPriority: modulePriority.rawWithTag(tagPriotiry: 3))
 
         return [prefixTag, subdomainsTag, lengthTag, ipTag]
+    }
+}
+
+extension MLModule: ModuleTagBehavior {
+    var risk: RiskLevel {
+        guard let prediction = prediction else {
+            return .danger
+        }
+        if prediction < 0.5 {
+            return .common
+        } else {
+            return .danger
+        }
+    }
+    
+    var text: String {
+        guard let prediction = prediction else {
+            return "error"
+        }
+        return String(format: "%.3f", prediction)
+    }
+    
+    var tags: [ModuleTag] {
+        return [ ModuleTag(displayText: text, risk: risk, tagPriority: 9999) ]
     }
 }

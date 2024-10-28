@@ -17,7 +17,16 @@ actor DependencyCollection {
     }
 
     var collection: [any RequestModule] { dependencyModules }
-
+    
+    var finished: Bool {
+        for dependencyModule in dependencyModules {
+            if !dependencyModule.finished {
+                return false
+            }
+        }
+        return true
+    }
+    
     nonisolated func pushDependencyInsecure(_ dep: any RequestModule) {
         Task {
             await pushDependency(dep)
@@ -42,8 +51,8 @@ actor DependencyCollection {
         }
     }
 
-    func getDependency<T: RequestModule>(module: T.Type) -> RequestModule? {
-        return dependencyModules.first(where: {type(of: $0) == module})
+    func getDependency<T: RequestModule>(module: T.Type) -> T? {
+        return dependencyModules.first(where: {type(of: $0) == module}) as? T
     }
 
     func getDependencyIndex(module: RequestModule.Type) -> Int? {
