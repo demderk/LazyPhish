@@ -179,9 +179,9 @@ extension MLModule: ModuleTagBehavior {
     
     var text: String {
         guard let prediction = prediction else {
-            return "error"
+            return "Not enough ML data"
         }
-        return String(format: "%.3f", prediction)
+        return "􀫸 ML Trust: " + String(format: "%.0f", 100 - prediction*100) + "%"
     }
     
     var tags: [ModuleTag] {

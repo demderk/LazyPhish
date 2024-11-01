@@ -50,7 +50,7 @@ struct VisualPhishingEntry: Identifiable {
     }
 }
 
-struct PhishingEntry: Identifiable {
+struct PhishingEntry: Identifiable, Codable {
     var id: Int
 
     var host: String
@@ -66,6 +66,7 @@ struct PhishingEntry: Identifiable {
     var subDomains: Int = 0
     var prefixCount: Int = 0
     var isIP: Bool = false
+    var isPhishing: Int = 0
 
     var whoisBlindedInt: Int {
         whoisBlinded ? 1 : 0
@@ -75,6 +76,30 @@ struct PhishingEntry: Identifiable {
         (date?.timeIntervalSinceNow ?? 1) * -1
     }
     var visual: VisualPhishingEntry { VisualPhishingEntry(self) }
+    
+    static var csvHeader: [String] {
+        let result = [
+            "id",
+            "host",
+            "hostLength",
+            "url",
+            "urlLength",
+            "whoisFound",
+            "whoisBlinded",
+            "date",
+            "dateText",
+            "sqi",
+            "opr",
+            "subDomains",
+            "prefixCount",
+            "isPhishing"
+        ]
+        return result
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case id, host, hostLength, url, urlLength, whoisFound, whoisBlinded, date, dateText, sqi, opr, subDomains, prefixCount, isPhishing
+    }
 }
 
 extension PhishingEntry {
@@ -104,45 +129,5 @@ extension PhishingEntry {
                 break
             }
         }
-    }
-
-    static var csvHeader: String {
-        let result = [
-            "id",
-            "host",
-            "url",
-            "hostLength",
-            "urlLength",
-            "sqi",
-            "subDomains",
-            "prefixCount",
-            "isIP",
-            "whoisBlinded",
-            "date",
-            "dateFromNow",
-            "opr",
-            "isPhishing"
-        ]
-        return result.joined(separator: ",")
-    }
-
-    var csv: String {
-        let result: [String] = [
-            id.description,
-            host,
-            url,
-            hostLength.description,
-            urlLength.description,
-            sqi.description,
-            subDomains.description,
-            prefixCount.description,
-            isIP ? "1" : "0",
-            whoisBlinded ? "1" : "0",
-            date?.timeIntervalSince1970.description ?? "-1",
-            dateFromNow.description,
-            opr.description,
-            "0"
-        ]
-        return result.map({ "\($0)" }).joined(separator: ",")
     }
 }

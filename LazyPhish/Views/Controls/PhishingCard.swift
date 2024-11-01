@@ -11,7 +11,8 @@ import WrappingHStack
 struct PhishingCard: View {
     @Binding var request: RequestInfo!
     @Binding var bussy: Bool
-
+    @State var MLTag: ModuleTag?
+    
     var body: some View {
         VStack {
             VStack {
@@ -35,17 +36,6 @@ struct PhishingCard: View {
                                     .fontWeight(.bold)
                                     .foregroundStyle(.primary)
                                 Spacer().frame(width: 8)
-//                                HStack {
-//                                    Text("AI Trust")
-//                                    Divider()
-//                                    Text("􀫸  \(legitPercent.percent)%")
-//                                        .offset(CGSize(width: 0, height: -1))
-//                                }.fontWeight(.semibold)
-//                                    .foregroundStyle(.primary)
-//                                    .padding(4)
-//                                    .padding(.horizontal, 4)
-//                                    .background(legitPercent.risk.getColor())
-//                                    .clipShape(.capsule)
                             }
 
                             WrappingHStack(getTags(), id: \.self) { tag in
@@ -83,5 +73,20 @@ struct PhishingCard: View {
             $0.tag.tagPriority > $1.tag.tagPriority
         })
         return result
+    }
+    
+    func getMLTag() -> ModuleTag? {
+        if let tag = MLTag {
+            return tag
+        } else {
+            for module in request.modules where module is MLModule {
+                if let tag = module as? ModuleTagBehavior,
+                   let text = tag.tags.first
+                {
+                    return text
+                }
+            }
+        }
+        return nil
     }
 }

@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
+import CodableCSV
 
 struct EducationFile: FileDocument {
     static var readableContentTypes: [UTType] = [.commaSeparatedText]
@@ -35,11 +36,10 @@ struct EducationFile: FileDocument {
     }
 
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        var result = PhishingEntry.csvHeader + "\n"
-        for item in educationData {
-            result.append(item.csv + "\n")
-        }
-        return FileWrapper(regularFileWithContents: result.data(using: .utf8)!)
+        let encoder = CSVEncoder { $0.headers = PhishingEntry.csvHeader }
+        let encodedData = try encoder.encode(educationData)
+        print(String(decoding: encodedData, as: UTF8.self))
+        return FileWrapper(regularFileWithContents: encodedData)
     }
 
 }
