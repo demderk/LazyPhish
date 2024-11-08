@@ -259,6 +259,10 @@ class WhoisConnection {
         establishedConnection.send(
             content: Data("\(host)\r\n".utf8),
             completion: .idempotent)
+        defer {
+            connection?.cancel()
+            connection = nil
+        }
         let response: String = try await withCheckedThrowingContinuation { continuation in
             establishedConnection.receiveMessage { content, _, _, error in
                 if let failed = error {
@@ -273,8 +277,6 @@ class WhoisConnection {
                 continuation.resume(returning: stringResponse)
             }
         }
-        connection?.cancel()
-        connection = nil
         return response
     }
 

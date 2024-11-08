@@ -106,7 +106,7 @@ extension PhishingEntry {
 
     init(fromRemote: RequestInfo) {
         host = fromRemote.host
-        hostLength = host.count
+        hostLength = -1
         url = fromRemote.url.URL.description
         id = fromRemote.requestID ?? -1
         for module in fromRemote.modules {

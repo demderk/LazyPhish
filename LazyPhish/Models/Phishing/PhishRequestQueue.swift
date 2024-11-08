@@ -38,8 +38,9 @@ class PhishRequestQueue {
         var result: [RequestInfo] = []
         let oprBulk = BulkOPRModule()
         await oprBulk.bulk(phishURLS)
-
+        
         await withTaskGroup(of: Void.self) { tasks in
+            let taskSemaphore = Semaphore(count: 300)
             for (rnumber, url) in phishURLS.enumerated() {
                 tasks.addTask {
                     let info = RequestInfo(url: url)
@@ -49,8 +50,12 @@ class PhishRequestQueue {
                         info.addModule(item.getModule())
                     }
                     await info.addBroadcastModule(oprBulk)
+                    await taskSemaphore.wait()
                     await info.executeAll(
                         onRequestFinished: { request in
+                            Task {
+                                await taskSemaphore.signal()
+                            }
                             onQueue.async {
                                 onRequestFinished?(request)
                             }

@@ -14,12 +14,11 @@ class RegexModule: RequestModule {
     private var url: StrictURL!
 
     var isIP: Bool { PhishInfoFormatter.getURLIPMode(url.URL) }
-    var urlLength: Int { url.URL.formatted().count }
-    var hostLength: Int { url.strictHost.count }
+    var urlLength: Int { url.cleanURL.count }
+    var hostLength: Int { url.cleanHost.count }
     var prefixCount: Int { url.strictHost.components(separatedBy: ["-"]).count - 1 }
     var subdomainCount: Int {
-        url.URL.host()!
-            .replacing("www.", with: "") // [INSECURE] Это в будующем может быть путем обхода
+        url.cleanHost
             .components(separatedBy: ["."])
             .count - (url.isTwoSLD ? 3 : 2)
     }

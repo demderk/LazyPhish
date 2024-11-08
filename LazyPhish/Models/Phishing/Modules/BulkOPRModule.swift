@@ -15,14 +15,10 @@ class BulkOPRModule: RequestModule {
     var cache: [OPRInfo]?
 
     func cached(_ url: StrictURL) -> OPRInfo? {
-        let formatedStrict = url.strictHost
+        let formatedStrict = url.cleanHost
             .lowercased()
-            .replacingOccurrences(of: "www.", with: "")
         let formatedRoot = url.hostRoot
             .lowercased()
-            .replacingOccurrences(of: "www.", with: "")
-            // FIXME: [INSECURE] Это в будующем может быть путем обхода
-            // www.go.www.ogle.com -> google.com
         return cache?.first(where: {$0.domain == formatedStrict})
                 ?? cache?.first(where: {$0.domain == formatedRoot})
     }

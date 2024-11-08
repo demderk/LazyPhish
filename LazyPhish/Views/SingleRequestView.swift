@@ -80,6 +80,7 @@ struct SingleRequestView: View {
                                     .padding([.vertical], 23)
                             }
                         }).buttonStyle(.borderless)
+                            .keyboardShortcut(.return)
                     }
                     .background(Color(nsColor: NSColor.controlBackgroundColor))
                     .clipShape(RoundedRectangle(cornerSize: CGSize(width: 16, height: 16)))
@@ -95,7 +96,7 @@ struct SingleRequestView: View {
                                     .fontWeight(.bold)
                                     .fontDesign(.default)
                                 Spacer().frame(width: 8)
-                                Text(request.host)
+                                Text(request.url.cleanHost)
                                     .font(.title)
                                     .fontWeight(.semibold)
                                     .textCase(.lowercase)
@@ -125,7 +126,7 @@ struct SingleRequestView: View {
                         HStack {
                             PageButton(action: {
                                 globalVM.navigation.append(MainSelectedPage.multi)
-                            }, title: "Request Queue", imageSystemName: "tablecells")
+                            }, title: "Bulk Request", imageSystemName: "tablecells")
                             .padding([.horizontal], 16)
 
                             Spacer()
