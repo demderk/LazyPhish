@@ -12,7 +12,7 @@ class OPRModule: RequestModule {
     var dependences: DependencyCollection = DependencyCollection([
         BulkOPRModule()
     ])
-    var status: ModuleStatus = .planned
+    var status: RemoteJobStatus = .planned
     var OPRInfo: OPRInfo?
     var rank: Int? {
         if let rank = OPRInfo?.rank {
@@ -30,12 +30,12 @@ class OPRModule: RequestModule {
         dependences.pushDependencyInsecure(bulk)
     }
 
-    func execute(remote: RequestInfo) async {
+    func execute(remote: RemoteRequest) async {
         status = .executing
         if let bulkDependency = await dependences.getDependency(module: BulkOPRModule()) as? BulkOPRModule,
            let found = bulkDependency.cached(remote.url) {
             if case .failed(let error) = bulkDependency.status {
-                status = .failed(error: error)
+                status = .failed(error)
                 return
             } else {
                 OPRInfo = found
@@ -48,17 +48,17 @@ class OPRModule: RequestModule {
                 OPRInfo = try await singleBulkRequest(remote: remote)
                 status = .completed
                 return
-            } catch let err as RequestError {
-                status = .failed(error: err)
+            } catch let err as RemoteJobError {
+                status = .failed(err)
                 return
             } catch {
-                status = .failed(error: OPRError.unknownError(underlyingError: error))
+                status = .failed(OPRError.unknownError(underlyingError: error))
                 return
             }
         }
     }
 
-    private func singleBulkRequest(remote: RequestInfo) async throws -> OPRInfo {
+    private func singleBulkRequest(remote: RemoteRequest) async throws -> OPRInfo {
         let bulk = BulkOPRModule()
         _ = await bulk.execute(remote: remote)
         if case .failed(let error) = bulk.status {

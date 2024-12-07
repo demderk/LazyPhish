@@ -9,7 +9,7 @@ import Foundation
 
 class RegexModule: RequestModule {
     var dependences: DependencyCollection = DependencyCollection()
-    var status: ModuleStatus = .planned
+    var status: RemoteJobStatus = .planned
 
     private var url: StrictURL!
 
@@ -32,7 +32,7 @@ class RegexModule: RequestModule {
 
     }
 
-    func execute(remote: RequestInfo) async {
+    func execute(remote: RemoteRequest) async {
         url = remote.url
         status = .completed
     }

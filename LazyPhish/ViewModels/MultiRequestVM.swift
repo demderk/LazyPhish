@@ -8,16 +8,20 @@
 import Foundation
 import SwiftUI
 
+enum UIRemoteError {
+    case anyError
+}
+
 class MultiRequestVM: ObservableObject {
     @Published var requestText = ""
-    @Published var remotes: [RequestInfo] = []
+    @Published var remotes: [RemoteRequest] = []
     @Published var tableContent: [PhishingEntry] = []
     @Published var CSVExportIsPresented = false
     @Published var educationalExportIsPresented = false
     @Published var readyForExport = false
     @Published var busy = false
     @Published var isCanceled = false
-    @Published var status: RemoteStatus = .planned
+    @Published var status: RemoteJobStatus = .planned
     @Published var statusIconName = "checkmark.circle.fill"
     @Published var statusText = "Ready"
     @Published var linesWithErrors = 0
@@ -35,7 +39,7 @@ class MultiRequestVM: ObservableObject {
 //    var resultingDocument: PhishFile = PhishFile([])
     var ignoreWrongLines: Bool = true
 
-    func onModuleFinished(remote: RequestInfo, module: RequestModule) {
+    func onModuleFinished(remote: RemoteRequest, module: RequestModule) {
 //        if case .completedWithErrors = module.status {
 //            linesWithWarnings += 1
 //        }
@@ -46,7 +50,7 @@ class MultiRequestVM: ObservableObject {
         }
     }
 
-    func onRequestFinished(remote: RequestInfo) {
+    func onRequestFinished(remote: RemoteRequest) {
         switch remote.status {
         case .completedWithErrors:
             linesWithWarnings += 1
@@ -87,7 +91,7 @@ class MultiRequestVM: ObservableObject {
 
         Task { [self] in
             await queue.executeAll(
-                modules: [.opr, .regex, .sqi, .whois, .ml],
+                modules: [DetectTool.whois],
                 onModuleFinished: onModuleFinished,
                 onRequestFinished: onRequestFinished)
             await MainActor.run {
@@ -98,11 +102,11 @@ class MultiRequestVM: ObservableObject {
         }
     }
 
-    func reviseModuleFinished (remote: RequestInfo, module: RequestModule) {
+    func reviseModuleFinished (remote: RemoteRequest, module: RequestModule) {
 
     }
 
-    func reviseRequestFinished(remote: RequestInfo) {
+    func reviseRequestFinished(remote: RemoteRequest) {
         totalParsed += 1
         statusText = "Revising | \(totalParsed) of \(lastUrlsCount)"
         if let found = tableContent.firstIndex(where: { $0.id == remote.requestID }) {
@@ -182,19 +186,19 @@ class MultiRequestVM: ObservableObject {
 
     private func completeWithErrorsUI() {
         self.busy = false
-        self.status = .completedWithErrors
+        self.status = .completedWithErrors()
         self.statusText = "Completed With Warnings"
         self.statusIconName = "checkmark.circle.fill"
 
     }
 
     private func failedUI() {
-        self.status = .failed
+//        self.status = .failed()
         self.statusText = "Completed With Errors"
     }
 
     private func badRequest(_ lineNumber: Int) {
-        self.status = .failed
+//        self.status = .failed
         self.statusIconName = "xmark.circle.fill"
         self.statusText = "Wrong url at line \(lineNumber)"
     }

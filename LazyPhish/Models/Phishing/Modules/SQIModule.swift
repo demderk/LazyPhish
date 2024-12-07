@@ -13,10 +13,10 @@ import AppKit
 
 class SQIModule: RequestModule {
     var dependences: DependencyCollection = DependencyCollection()
-    var status: ModuleStatus = .planned
+    var status: RemoteJobStatus = .planned
     var yandexSQI: Int?
 
-    func execute(remote: RequestInfo) async {
+    func execute(remote: RemoteRequest) async {
         status = .executing
         let accurate = false
         
@@ -32,7 +32,7 @@ class SQIModule: RequestModule {
                 guard let image = input.cropping(to: CGRect(x: 30, y: 0, width: 58, height: 31))?
                     .increaseContrast()
                 else {
-                    status = .failed(error: YandexSQIError.yandexSQICroppingError)
+                    status = .failed(YandexSQIError.yandexSQICroppingError)
                     return
                 }
                 let vision = VNImageRequestHandler(cgImage: image)
@@ -54,7 +54,7 @@ class SQIModule: RequestModule {
                     }
                 } catch {
                     status = .failed(
-                        error: YandexSQIError.yandexSQIVisionPerformError(error))
+                        YandexSQIError.yandexSQIVisionPerformError(error))
                     return
                 }
 
@@ -75,13 +75,13 @@ class SQIModule: RequestModule {
                     }
                 } catch {
                     status = .failed(
-                        error: YandexSQIError.yandexSQIVisionPerformError(error))
+                        YandexSQIError.yandexSQIVisionPerformError(error))
                     return
                 }
 
                 guard let output = recognized else {
                     status = .completedWithErrors(
-                        errors: [YandexSQIError.yandexSQIVisionNotRecognized(
+                        [YandexSQIError.yandexSQIVisionNotRecognized(
                             image: NSImage(cgImage: image, size: .zero))])
                     yandexSQI = 0
                     return
@@ -93,16 +93,15 @@ class SQIModule: RequestModule {
                     return
                 } else {
                     status = .completedWithErrors(
-                        errors:
-                            [YandexSQIError.yandexSQIVisionNotRecognized(
-                        image: NSImage(cgImage: image, size: .zero))])
+                        [YandexSQIError.yandexSQIVisionNotRecognized(
+                            image: NSImage(cgImage: image, size: .zero))])
                     return
                 }
             }
-            status = .failed(error: YandexSQIError.yandexSQIVisionNotRecognizedUnknown)
+            status = .failed(YandexSQIError.yandexSQIVisionNotRecognizedUnknown)
             return
         case .failure(let failure):
-            status = .failed(error: YandexSQIError.yandexSQIRequestError(parent: failure))
+            status = .failed(YandexSQIError.yandexSQIRequestError(parent: failure))
             return
         }
     }

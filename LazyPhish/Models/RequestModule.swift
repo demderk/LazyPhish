@@ -10,27 +10,27 @@ import OSLog
 
 protocol RequestModule: AnyObject {
     var dependences: DependencyCollection { get set }
-    var status: ModuleStatus { get }
+    var status: RemoteJobStatus { get }
 
-    func execute(remote: RequestInfo) async
-    func execute(remote: RequestInfo, onFinish: (RequestInfo, RequestModule) -> Void) async
+    func execute(remote: RemoteRequest) async
+    func execute(remote: RemoteRequest, onFinish: ((RemoteRequest, RequestModule) -> Void)?) async
     
     @discardableResult
     func processDependences(
-        remote: RequestInfo,
+        remote: RemoteRequest,
         parentDependences: DependencyCollection
     ) async -> DependencyCollection
 }
 
 extension RequestModule {
-    func execute(remote: RequestInfo, onFinish: (RequestInfo, RequestModule) -> Void) async {
+    func execute(remote: RemoteRequest, onFinish: ((RemoteRequest, RequestModule) -> Void)?) async {
         await execute(remote: remote)
-        onFinish(remote, self)
+        onFinish?(remote, self)
     }
     
     @discardableResult
     func processDependences(
-        remote: RequestInfo,
+        remote: RemoteRequest,
         parentDependences: DependencyCollection
     ) async -> DependencyCollection {
         let internalDependences: DependencyCollection = parentDependences

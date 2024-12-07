@@ -35,8 +35,8 @@ enum DetectTool {
 }
 
 class PhishRequest {
-    public func executeRequest(url: StrictURL, modules: [DetectTool]) async -> RequestInfo {
-        let remote = RequestInfo(url: url)
+    public func executeRequest(url: StrictURL, modules: [DetectTool]) async -> RemoteRequest {
+        let remote = RemoteRequest(url: url)
         let bulkModule = BulkOPRModule()
         await bulkModule.bulk([url])
         await remote.addBroadcastModule(bulkModule)

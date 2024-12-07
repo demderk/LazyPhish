@@ -7,38 +7,43 @@
 
 import Foundation
 
-class RequestInfo: Identifiable {
+enum RemoteRequestError: RemoteJobError {
+    case anyModulesFailed(collection: [ModuleError])
+}
+
+class RemoteRequest: Identifiable {
     // TODO: Make private(set)
     var id: Int? { self.requestID }
-
+    
     private(set) var modules: [any RequestModule] = []
-
+    
     private var dependencyModules: DependencyCollection = DependencyCollection()
-
+    
     var requestID: Int?
     var url: StrictURL
-    var status: RemoteStatus = .planned
+    var status: RemoteJobStatus = .planned
     var failedOnModulesCount: Int?
-
+    
     var host: String { url.strictHost }
     var hostRoot: String { url.hostRoot }
-
+    
     init(url: StrictURL) {
         self.url = url
     }
-
+    
+    @available(*, deprecated)
     func executeAll(
-        onRequestFinished: ((RequestInfo) -> Void)? = nil,
-        onModuleFinished: ((RequestInfo, RequestModule) -> Void)? = nil
+        onRequestFinished: ((RemoteRequest) -> Void)? = nil,
+        onModuleFinished: ((RemoteRequest, RequestModule) -> Void)? = nil
     ) async {
         status = .executing
         status = await executeModules(onModuleFinished: onModuleFinished)
         onRequestFinished?(self)
     }
-
+    
     func revise(
-        onRequestFinished: ((RequestInfo) -> Void)? = nil,
-        onModuleFinished: ((RequestInfo, RequestModule) -> Void)? = nil
+        onRequestFinished: ((RemoteRequest) -> Void)? = nil,
+        onModuleFinished: ((RemoteRequest, RequestModule) -> Void)? = nil
     ) async {
         if case .failed = status {
             await executeAll(
@@ -51,11 +56,14 @@ class RequestInfo: Identifiable {
             onRequestFinished?(self)
         }
     }
-
+    
     private func executeModules (
-        onModuleFinished: ((RequestInfo, RequestModule) -> Void)?,
+        onModuleFinished: ((RemoteRequest, RequestModule) -> Void)?,
         skipCompleted: Bool = false
-    ) async -> RemoteStatus {
+    ) async -> RemoteJobStatus {
+        
+        // Processing dependences first
+        
         await withTaskGroup(of: Void.self) { tasks in
             for mod in modules {
                 tasks.addTask {
@@ -63,65 +71,79 @@ class RequestInfo: Identifiable {
                 }
             }
         }
-
+        
+        let arrayMutex = Mutex()
+        
+        // Continue execution with finished dependences
+        
         await withTaskGroup(of: Void.self) { tasks in
+            // TODO: rewrite modules array to ModulesCollection Actor
+            
             for (n, mod) in modules.enumerated() {
                 if skipCompleted, case .completed = mod.status {
                     continue
                 }
                 if let executed = await dependencyModules.getDependency(module: mod),
                    case .completed = executed.status {
-                    modules[n] = executed
+                    await arrayMutex.withLock { [self] in
+                        modules[n] = executed
+                    }
                 } else {
-                    _ = tasks.addTaskUnlessCancelled { [self] in
-                        if let finished = onModuleFinished {
-                            await mod.execute(remote: self, onFinish: finished)
-                        } else {
-                            await mod.execute(remote: self)
-                        }
+                    tasks.addTask { [self] in
+                        await mod.execute(remote: self, onFinish: onModuleFinished)
                         await dependencyModules.pushDependency(mod)
                     }
                 }
             }
         }
-        let failedModules = modules.count(where: {
-            if case ModuleStatus.failed(_) = $0.status {
-                return true
-            }
-            return false
-        })
-
+        
+        let moduleErrors = modules
+            .compactMap({
+                if case .failed(let error) = $0.status {
+                    return error as? ModuleError
+                }
+                return nil
+            })
+        
+        let moduleWarinigs = modules
+            .flatMap({
+                if case .completedWithErrors(let error) = $0.status {
+                    return error ?? []
+                }
+                return []
+            })
+        
         let failedOn = failedOnModulesCount ?? modules.count
-        if failedModules >= failedOn {
-            return .failed
-        } else if failedModules > 0 {
-            return .completedWithErrors
+        if moduleErrors.count >= failedOn {
+            return .failed(RemoteRequestError.anyModulesFailed(collection: moduleErrors))
+        } else if moduleWarinigs.count > 0 {
+            return .completedWithErrors(moduleWarinigs)
         } else {
             return .completed
         }
     }
-
+    
     func addBroadcastModule(_ module: any RequestModule) async {
         //        await module.execute(remote: self)
         await dependencyModules.pushDependency(module)
     }
-
+    
     func addModule(_ module: any RequestModule) {
         modules.append(module)
     }
-
+    
     func addModule(contentsOf: [any RequestModule]) {
         modules.append(contentsOf: contentsOf)
     }
-
+    
     func getModule<T: RequestModule>(module: T.Type) -> RequestModule? {
         return modules.first(where: { type(of: $0) == module })
     }
-
+    
     func getCompletedModule<T: RequestModule>(module: T.Type) -> T? {
         return modules.first(where: { type(of: $0) == module && $0.completed }) as? T
     }
-
+    
     func getFinishedModule<T: RequestModule>(module: T.Type) -> T? {
         return modules.first(where: { type(of: $0) == module && $0.finished }) as? T
     }

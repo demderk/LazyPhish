@@ -104,7 +104,7 @@ struct PhishingEntry: Identifiable, Codable {
 
 extension PhishingEntry {
 
-    init(fromRemote: RequestInfo) {
+    init(fromRemote: RemoteRequest) {
         host = fromRemote.host
         hostLength = -1
         url = fromRemote.url.URL.description
@@ -119,7 +119,7 @@ extension PhishingEntry {
                 self.date = current.date
                 self.dateText = current.dateText
                 self.whoisBlinded = current.blinded
-                self.whoisFound = current.whois == nil ? false : true
+                self.whoisFound = current.whoisFound
             case let current as RegexModule:
                 self.urlLength = current.urlLength
                 self.subDomains = current.subdomainCount

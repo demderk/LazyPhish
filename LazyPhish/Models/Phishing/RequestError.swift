@@ -8,16 +8,15 @@
 import Foundation
 import AppKit
 
-protocol RequestError: Error {
-    var isCritical: Bool {get}
+protocol RemoteJobError: Error {
     var localizedDescription: String { get }
 }
 
-extension RequestError {
-    var isCritical: Bool { true }
+protocol ModuleError: RemoteJobError {
+    
 }
 
-enum WhoisError: RequestError {
+enum WhoisError: ModuleError {
     case responseIsNil
     case badRequest(description: String)
     case badResponse
@@ -52,7 +51,7 @@ enum WhoisError: RequestError {
     }
 }
 
-enum ParserError: RequestError {
+enum ParserError: ModuleError {
     case requestIsEmpty
     case ipCheckRegexError
     case urlHostIsInvalid(url: String)
@@ -75,7 +74,7 @@ enum ParserError: RequestError {
     }
 }
 
-enum OPRError: RequestError {
+enum OPRError: ModuleError {
     case unknownError(underlyingError: Error)
     case requestError(underlyingError: Error)
     case remoteError(response: String)
@@ -107,7 +106,7 @@ enum OPRError: RequestError {
     }
 }
 
-enum YandexSQIError: RequestError {
+enum YandexSQIError: ModuleError {
     case yandexSQICroppingError
     case yandexSQIVisionNotRecognizedUnknown
     case yandexSQIVisionPerformError(_ underlyingError: Error)
@@ -135,34 +134,6 @@ enum YandexSQIError: RequestError {
             "Yandex SQI Cropping Error."
         case .yandexSQIVisionPerformError:
             "Yandex SQI Vision Error."
-        }
-    }
-}
-
-enum FileError: RequestError {
-    case nothingToExport
-
-    var localizedDescription: String {
-        switch self {
-        case .nothingToExport:
-            "Export data is empty."
-        }
-    }
-}
-
-enum RequestCriticalError: RequestError {
-    case authorityAccessError
-    case unknownUnderlyingError(underlying: Error)
-    case unknownError
-
-    var localizedDescription: String {
-        switch self {
-        case .authorityAccessError:
-            "Authority is inaccessible."
-        case .unknownUnderlyingError(let underlying):
-            "Unknown error. Underlying error: \(underlying)"
-        case .unknownError:
-            "Unknown error."
         }
     }
 }

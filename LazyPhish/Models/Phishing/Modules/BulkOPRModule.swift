@@ -10,7 +10,7 @@ import OSLog
 
 class BulkOPRModule: RequestModule {
     var dependences: DependencyCollection = DependencyCollection()
-    var status: ModuleStatus = .planned
+    var status: RemoteJobStatus = .planned
 
     var cache: [OPRInfo]?
 
@@ -23,7 +23,7 @@ class BulkOPRModule: RequestModule {
                 ?? cache?.first(where: {$0.domain == formatedRoot})
     }
 
-    func execute(remote: RequestInfo) async {
+    func execute(remote: RemoteRequest) async {
         await bulk([remote.url])
     }
 
@@ -32,7 +32,7 @@ class BulkOPRModule: RequestModule {
         print("Requested by data: \(data) \n")
 
         guard let apiKey = try? getOPRKey() else {
-            status = .failed(error: OPRError.apiKeyUnreachable)
+            status = .failed(OPRError.apiKeyUnreachable)
             return
         }
 
@@ -77,11 +77,11 @@ class BulkOPRModule: RequestModule {
                 }
             } catch let error as OPRError {
                 Logger.OPRRequestLogger.error("[OPRProcess] \(error.localizedDescription)")
-                status = .failed(error: error)
+                status = .failed(error)
                 return []
             } catch {
                 Logger.OPRRequestLogger.critical("[OPRProcess] [unexpected] \(error)")
-                status = .failed(error: OPRError.unknownError(underlyingError: error))
+                status = .failed(OPRError.unknownError(underlyingError: error))
                 return []
             }
             status = .completed
@@ -98,7 +98,7 @@ class BulkOPRModule: RequestModule {
         if let opr = KeyService.OPRKey {
             return opr
         }
-        throw RequestCriticalError.authorityAccessError
+        throw OPRError.apiKeyUnreachable
     }
 
     func makeRESTRequest(data: [StrictURL], apiKey: String) async throws -> OPRResponse {

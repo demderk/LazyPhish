@@ -11,7 +11,7 @@ class PhishRequestQueue {
     var phishURLS: [StrictURL] = []
     var globalDependences: [RequestModule] = []
 
-    private var lastRequests: [RequestInfo]?
+    private var lastRequests: [RemoteRequest]?
 
     func setupModules(_ modules: [DetectTool]) async {
         for module in modules {
@@ -31,31 +31,29 @@ class PhishRequestQueue {
 
     @discardableResult
     func executeAll(modules: [DetectTool],
-                    onModuleFinished: ((RequestInfo, RequestModule) -> Void)? = nil,
-                    onRequestFinished: ((RequestInfo) -> Void)? = nil,
+                    onModuleFinished: ((RemoteRequest, RequestModule) -> Void)? = nil,
+                    onRequestFinished: ((RemoteRequest) -> Void)? = nil,
                     onQueue: DispatchQueue = DispatchQueue.main
-    ) async -> [RequestInfo] {
-        var result: [RequestInfo] = []
+    ) async -> [RemoteRequest] {
+        var result: [RemoteRequest] = []
         let oprBulk = BulkOPRModule()
         await oprBulk.bulk(phishURLS)
         
         await withTaskGroup(of: Void.self) { tasks in
-            let taskSemaphore = Semaphore(count: 300)
+            
+            let resultMutex = Mutex()
+            
             for (rnumber, url) in phishURLS.enumerated() {
                 tasks.addTask {
-                    let info = RequestInfo(url: url)
+                    let info = RemoteRequest(url: url)
                     info.requestID = rnumber
                     info.failedOnModulesCount = 3
                     for item in modules {
                         info.addModule(item.getModule())
                     }
                     await info.addBroadcastModule(oprBulk)
-                    await taskSemaphore.wait()
                     await info.executeAll(
                         onRequestFinished: { request in
-                            Task {
-                                await taskSemaphore.signal()
-                            }
                             onQueue.async {
                                 onRequestFinished?(request)
                             }
@@ -65,7 +63,9 @@ class PhishRequestQueue {
                                 onModuleFinished?(request, module)
                             }
                         })
-                    result.append(info)
+                    await resultMutex.withLock {
+                        result.append(info)
+                    }
                 }
             }
         }
@@ -75,10 +75,10 @@ class PhishRequestQueue {
 
     @discardableResult
     func reviseLastRequest(
-        onModuleFinished: ((RequestInfo, RequestModule) -> Void)? = nil,
-        onRequestFinished: ((RequestInfo) -> Void)? = nil,
+        onModuleFinished: ((RemoteRequest, RequestModule) -> Void)? = nil,
+        onRequestFinished: ((RemoteRequest) -> Void)? = nil,
         onQueue: DispatchQueue = DispatchQueue.main
-    ) async -> [RequestInfo]? {
+    ) async -> [RemoteRequest]? {
         guard let requests = lastRequests else {
             return nil
         }

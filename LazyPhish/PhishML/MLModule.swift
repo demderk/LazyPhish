@@ -23,7 +23,7 @@ extension PhishingEntry {
     }
 }
 
-enum MLError: RequestError {
+enum MLError: ModuleError {
     case modulesNotFinished
     case modelInitFailed
 }
@@ -37,7 +37,7 @@ class MLModule: RequestModule {
         WhoisModule()
     ])
     
-    var status: ModuleStatus = .planned
+    var status: RemoteJobStatus = .planned
     var prediction: Double?
     private var model: PhishML?
     
@@ -49,13 +49,13 @@ class MLModule: RequestModule {
         }
     }
     
-    func execute(remote: RequestInfo) async {
+    func execute(remote: RemoteRequest) async {
         guard await dependences.finished else {
-            status = .failed(error: MLError.modulesNotFinished)
+            status = .failed(MLError.modulesNotFinished)
             return
         }
         guard let model = model else {
-            status = .failed(error: MLError.modelInitFailed)
+            status = .failed(MLError.modelInitFailed)
             return
         }
         
@@ -64,7 +64,7 @@ class MLModule: RequestModule {
               let whoisModule = await dependences.getDependency(module: WhoisModule.self),
               let regexModule = await dependences.getDependency(module: RegexModule.self)
         else {
-            status = .failed(error: MLError.modelInitFailed)
+            status = .failed(MLError.modelInitFailed)
             return
         }
         
