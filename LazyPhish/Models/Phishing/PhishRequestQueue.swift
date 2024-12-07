@@ -40,7 +40,8 @@ class PhishRequestQueue {
         await oprBulk.bulk(phishURLS)
         
         await withTaskGroup(of: Void.self) { tasks in
-            let taskSemaphore = Semaphore(count: 300)
+//            let taskSemaphore = Semaphore(count: 40)
+            let resultMutex = Semaphore(count: 1)
             for (rnumber, url) in phishURLS.enumerated() {
                 tasks.addTask {
                     let info = RequestInfo(url: url)
@@ -50,11 +51,11 @@ class PhishRequestQueue {
                         info.addModule(item.getModule())
                     }
                     await info.addBroadcastModule(oprBulk)
-                    await taskSemaphore.wait()
+//                    await taskSemaphore.wait()
                     await info.executeAll(
                         onRequestFinished: { request in
                             Task {
-                                await taskSemaphore.signal()
+//                                await taskSemaphore.signal()
                             }
                             onQueue.async {
                                 onRequestFinished?(request)
@@ -65,7 +66,9 @@ class PhishRequestQueue {
                                 onModuleFinished?(request, module)
                             }
                         })
+                    await resultMutex.wait()
                     result.append(info)
+                    await resultMutex.signal()
                 }
             }
         }

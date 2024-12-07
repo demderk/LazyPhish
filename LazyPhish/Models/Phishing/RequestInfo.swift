@@ -27,6 +27,7 @@ class RequestInfo: Identifiable {
         self.url = url
     }
 
+    @available(*, deprecated)
     func executeAll(
         onRequestFinished: ((RequestInfo) -> Void)? = nil,
         onModuleFinished: ((RequestInfo, RequestModule) -> Void)? = nil

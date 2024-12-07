@@ -16,4 +16,16 @@ enum ModuleStatus {
     case canceled
     case completedWithErrors(errors: [Error]? = nil)
     case completed
+    
+    /// If status equal completed or completedWithErrors
+    var justCompleted: Bool {
+        switch self {
+        case .completedWithErrors(let errors):
+            fallthrough
+        case .completed:
+            return true
+        default:
+            return false
+        }
+    }
 }

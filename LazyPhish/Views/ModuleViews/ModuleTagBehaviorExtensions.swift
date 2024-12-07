@@ -9,11 +9,11 @@ import Foundation
 
 extension WhoisModule: ModuleTagBehavior {
     var dateRisk: RiskLevel {
-        if let whois = whois {
+        if let whois = whoisData {
             if blinded {
                 return .unknown
             }
-            if let date = whois.creationDate {
+            if let date = whois.date {
                 if date.distance(to: .now) <= 60*60*24*180 {
                     return .danger
                 } else if date.distance(to: .now) <= 60*60*24*365 {
