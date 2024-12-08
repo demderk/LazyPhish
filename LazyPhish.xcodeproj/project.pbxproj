@@ -33,6 +33,13 @@
 		3037D15F2B9CA1B00012104E /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 3037D15E2B9CA1B00012104E /* AlamofireImage */; };
 		3045DA822D048D5A00B74608 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3045DA812D048D5A00B74608 /* Mutex.swift */; };
 		3045DA842D04926C00B74608 /* RemoteJobStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3045DA832D04926C00B74608 /* RemoteJobStatus.swift */; };
+		3045DA862D05DBE100B74608 /* WhoisModuleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3045DA852D05DBE100B74608 /* WhoisModuleError.swift */; };
+		3045DA8A2D05DC2400B74608 /* WhoisData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3045DA892D05DC2400B74608 /* WhoisData.swift */; };
+		3045DA8C2D05DC3800B74608 /* WhoisRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3045DA8B2D05DC3800B74608 /* WhoisRequestHandler.swift */; };
+		3045DA8E2D05DF8700B74608 /* WhoisRecievedDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3045DA8D2D05DF8700B74608 /* WhoisRecievedDate.swift */; };
+		3045DA902D06163200B74608 /* WhoisServerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3045DA8F2D06163200B74608 /* WhoisServerInfo.swift */; };
+		3045DA922D061EAD00B74608 /* WhoisServerConductor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3045DA912D061EAD00B74608 /* WhoisServerConductor.swift */; };
+		3045DA942D062C1B00B74608 /* WhoisCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3045DA932D062C1B00B74608 /* WhoisCache.swift */; };
 		304BE3912C72F0B5001A2AB0 /* AnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3902C72F0B4001A2AB0 /* AnalyticsView.swift */; };
 		304BE3942C73173C001A2AB0 /* PageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3932C73173C001A2AB0 /* PageButton.swift */; };
 		304BE3962C73819C001A2AB0 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3952C73819C001A2AB0 /* StatusView.swift */; };
@@ -40,7 +47,6 @@
 		304BE39B2C7C5A9B001A2AB0 /* KeysSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE39A2C7C5A9A001A2AB0 /* KeysSettingsView.swift */; };
 		304BE39D2C7C5AE3001A2AB0 /* KeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE39C2C7C5AE3001A2AB0 /* KeyService.swift */; };
 		304BE3A02C7DC983001A2AB0 /* BigToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE39F2C7DC983001A2AB0 /* BigToggleButton.swift */; };
-		304BE3A72C7F11D5001A2AB0 /* WhoisModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3A62C7F11D5001A2AB0 /* WhoisModule.swift */; };
 		304BE3A92C7F1320001A2AB0 /* SQIModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3A82C7F1320001A2AB0 /* SQIModule.swift */; };
 		3052B7AC2CCEFEC600556CFA /* PhishML.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 308DF4D32CCEF55C0088C645 /* PhishML.mlpackage */; };
 		307CBC482BCC57D3004B68A8 /* PhishInfoFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307CBC472BCC57D3004B68A8 /* PhishInfoFormatter.swift */; };
@@ -93,6 +99,13 @@
 		3037D15B2B9B6CA00012104E /* OPRInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OPRInfo.swift; sourceTree = "<group>"; };
 		3045DA812D048D5A00B74608 /* Mutex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mutex.swift; sourceTree = "<group>"; };
 		3045DA832D04926C00B74608 /* RemoteJobStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteJobStatus.swift; sourceTree = "<group>"; };
+		3045DA852D05DBE100B74608 /* WhoisModuleError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoisModuleError.swift; sourceTree = "<group>"; };
+		3045DA892D05DC2400B74608 /* WhoisData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoisData.swift; sourceTree = "<group>"; };
+		3045DA8B2D05DC3800B74608 /* WhoisRequestHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoisRequestHandler.swift; sourceTree = "<group>"; };
+		3045DA8D2D05DF8700B74608 /* WhoisRecievedDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoisRecievedDate.swift; sourceTree = "<group>"; };
+		3045DA8F2D06163200B74608 /* WhoisServerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoisServerInfo.swift; sourceTree = "<group>"; };
+		3045DA912D061EAD00B74608 /* WhoisServerConductor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoisServerConductor.swift; sourceTree = "<group>"; };
+		3045DA932D062C1B00B74608 /* WhoisCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoisCache.swift; sourceTree = "<group>"; };
 		304BE3902C72F0B4001A2AB0 /* AnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsView.swift; sourceTree = "<group>"; };
 		304BE3932C73173C001A2AB0 /* PageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageButton.swift; sourceTree = "<group>"; };
 		304BE3952C73819C001A2AB0 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
@@ -100,7 +113,6 @@
 		304BE39A2C7C5A9A001A2AB0 /* KeysSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeysSettingsView.swift; sourceTree = "<group>"; };
 		304BE39C2C7C5AE3001A2AB0 /* KeyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyService.swift; sourceTree = "<group>"; };
 		304BE39F2C7DC983001A2AB0 /* BigToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigToggleButton.swift; sourceTree = "<group>"; };
-		304BE3A62C7F11D5001A2AB0 /* WhoisModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoisModule.swift; sourceTree = "<group>"; };
 		304BE3A82C7F1320001A2AB0 /* SQIModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQIModule.swift; sourceTree = "<group>"; };
 		307CBC472BCC57D3004B68A8 /* PhishInfoFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhishInfoFormatter.swift; sourceTree = "<group>"; };
 		308DF4D32CCEF55C0088C645 /* PhishML.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = PhishML.mlpackage; sourceTree = "<group>"; };
@@ -231,12 +243,11 @@
 		303777462CA3B8C6001B8D67 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				3045DA882D05DBFC00B74608 /* WhoisModule */,
 				303777442CA3B8A8001B8D67 /* BulkOPRModule.swift */,
 				303777492CA3B9CD001B8D67 /* OPRModule.swift */,
 				303777512CA3BA93001B8D67 /* RegexModule.swift */,
-				304BE3A62C7F11D5001A2AB0 /* WhoisModule.swift */,
 				304BE3A82C7F1320001A2AB0 /* SQIModule.swift */,
-				3096550B2CEA3C90003806BC /* WhoisModule2.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -267,6 +278,21 @@
 				30A80F952CC2BE9E004C46C7 /* EducationFile.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		3045DA882D05DBFC00B74608 /* WhoisModule */ = {
+			isa = PBXGroup;
+			children = (
+				3045DA852D05DBE100B74608 /* WhoisModuleError.swift */,
+				3096550B2CEA3C90003806BC /* WhoisModule2.swift */,
+				3045DA912D061EAD00B74608 /* WhoisServerConductor.swift */,
+				3045DA8D2D05DF8700B74608 /* WhoisRecievedDate.swift */,
+				3045DA8B2D05DC3800B74608 /* WhoisRequestHandler.swift */,
+				3045DA892D05DC2400B74608 /* WhoisData.swift */,
+				3045DA8F2D06163200B74608 /* WhoisServerInfo.swift */,
+				3045DA932D062C1B00B74608 /* WhoisCache.swift */,
+			);
+			path = WhoisModule;
 			sourceTree = "<group>";
 		};
 		304BE3922C7316F4001A2AB0 /* Controls */ = {
@@ -415,20 +441,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				3052B7AC2CCEFEC600556CFA /* PhishML.mlpackage in Sources */,
+				3045DA8E2D05DF8700B74608 /* WhoisRecievedDate.swift in Sources */,
 				308DF4D62CCEF7400088C645 /* MLModule.swift in Sources */,
 				304BE3982C7389EC001A2AB0 /* SettingsView.swift in Sources */,
 				3037774A2CA3B9CD001B8D67 /* OPRModule.swift in Sources */,
 				304BE39B2C7C5A9B001A2AB0 /* KeysSettingsView.swift in Sources */,
+				3045DA8C2D05DC3800B74608 /* WhoisRequestHandler.swift in Sources */,
 				3003966C2BA7489F001B6C2C /* MultiRequestView.swift in Sources */,
 				30A80F942CBF15DA004C46C7 /* StrictURLSLDExtension.swift in Sources */,
 				30A80F962CC2BE9E004C46C7 /* EducationFile.swift in Sources */,
 				304BE39D2C7C5AE3001A2AB0 /* KeyService.swift in Sources */,
+				3045DA922D061EAD00B74608 /* WhoisServerConductor.swift in Sources */,
 				30137C442BD4108C00905B15 /* MainViewPageHolder.swift in Sources */,
 				300396632BA5BD00001B6C2C /* RiskLevel.swift in Sources */,
 				3037D15C2B9B6CA00012104E /* OPRInfo.swift in Sources */,
 				30E724A82C0F7FD20082ED54 /* WhoisConnection.swift in Sources */,
 				307CBC482BCC57D3004B68A8 /* PhishInfoFormatter.swift in Sources */,
 				30A80F982CC2C100004C46C7 /* PhishingEntry.swift in Sources */,
+				3045DA902D06163200B74608 /* WhoisServerInfo.swift in Sources */,
 				304BE3A92C7F1320001A2AB0 /* SQIModule.swift in Sources */,
 				30B1C5CF2BD020E000D275D4 /* ThrowingOPRInfoList.swift in Sources */,
 				303777562CA3DA65001B8D67 /* Semaphore.swift in Sources */,
@@ -441,6 +471,7 @@
 				3037D15A2B9B6C530012104E /* RequestError.swift in Sources */,
 				304BE3912C72F0B5001A2AB0 /* AnalyticsView.swift in Sources */,
 				304BE3A02C7DC983001A2AB0 /* BigToggleButton.swift in Sources */,
+				3045DA942D062C1B00B74608 /* WhoisCache.swift in Sources */,
 				3037774E2CA3BA34001B8D67 /* StrictURL.swift in Sources */,
 				30A80F922CB6DACA004C46C7 /* DependencyCollection.swift in Sources */,
 				30B1C5D72BD122AE00D275D4 /* SingleRequestVM.swift in Sources */,
@@ -459,9 +490,10 @@
 				3037775D2CA55C4D001B8D67 /* TagView.swift in Sources */,
 				303777522CA3BA93001B8D67 /* RegexModule.swift in Sources */,
 				303777452CA3B8C0001B8D67 /* BulkOPRModule.swift in Sources */,
-				304BE3A72C7F11D5001A2AB0 /* WhoisModule.swift in Sources */,
+				3045DA862D05DBE100B74608 /* WhoisModuleError.swift in Sources */,
 				3096550C2CEA3C90003806BC /* WhoisModule2.swift in Sources */,
 				303777612CA569B0001B8D67 /* ModuleTagBehaviorExtensions.swift in Sources */,
+				3045DA8A2D05DC2400B74608 /* WhoisData.swift in Sources */,
 				3037774C2CA3BA24001B8D67 /* RequestModule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

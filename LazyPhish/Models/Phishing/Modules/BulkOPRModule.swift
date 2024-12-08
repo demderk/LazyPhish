@@ -28,9 +28,6 @@ class BulkOPRModule: RequestModule {
     }
 
     func bulk(_ data: [StrictURL]) async {
-        print("bulk triggered")
-        print("Requested by data: \(data) \n")
-
         guard let apiKey = try? getOPRKey() else {
             status = .failed(OPRError.apiKeyUnreachable)
             return

@@ -40,9 +40,6 @@ class MultiRequestVM: ObservableObject {
     var ignoreWrongLines: Bool = true
 
     func onModuleFinished(remote: RemoteRequest, module: RequestModule) {
-//        if case .completedWithErrors = module.status {
-//            linesWithWarnings += 1
-//        }
         if let found = tableContent.firstIndex(where: { $0.id == remote.requestID }) {
             tableContent[found] = PhishingEntry(fromRemote: remote)
         } else {

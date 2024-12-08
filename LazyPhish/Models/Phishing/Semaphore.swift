@@ -7,7 +7,7 @@
 
 
 actor Semaphore {
-    private var count: Int
+    var count: Int
     private var waiters: [CheckedContinuation<Void, Never>] = []
 
     init(count: Int = 0) {
