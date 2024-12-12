@@ -110,7 +110,6 @@ class WhoisModule: RequestModule {
         }
         return nil
     }
-     
     
     func processWhoisRequest(server: String, host: String) async -> EventLoopFuture<String> {
         await WhoisModule.serverConductor.serverWait(server)
@@ -186,7 +185,6 @@ class WhoisModule: RequestModule {
     }
     
     deinit {
-//        print("deinit")
-//            try? group.syncShutdownGracefully()
+
     }
 }

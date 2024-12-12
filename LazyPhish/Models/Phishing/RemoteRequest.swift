@@ -114,7 +114,7 @@ class RemoteRequest: Identifiable {
             })
         
         let failedOn = failedOnModulesCount ?? modules.count
-        if moduleErrors.count >= failedOn {
+        if moduleErrors.count > 0 {
             return .failed(RemoteRequestError.anyModulesFailed(collection: moduleErrors))
         } else if moduleWarinigs.count > 0 {
             return .completedWithErrors(moduleWarinigs)
