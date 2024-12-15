@@ -10,7 +10,7 @@ class WhoisCache {
     let defaultServer: WhoisServerInfo = .default
     
     static var staticStorage: [WhoisServerInfo] = [
-//        WhoisServerInfo(tld: "com", server: "whois.verisign-grs.com"),
+        WhoisServerInfo(tld: "com", server: "whois.verisign-grs.com"),
         WhoisServerInfo(tld: "net", server: "whois.verisign-grs.com"),
         WhoisServerInfo(tld: "org", server: "whois.publicinterestregistry.org"),
         WhoisServerInfo(tld: "cn", server: "whois.cnnic.cn"),

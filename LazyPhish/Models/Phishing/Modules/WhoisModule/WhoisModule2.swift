@@ -150,7 +150,6 @@ class WhoisModule: RequestModule {
     
     func execute(remote: RemoteRequest) async {
         status = .executing
-        //MARK: AAAAA BLYA
         let server = await WhoisModule.serverConductor.wait(remote.host)
         guard !server.isBlinded else {
             whoisData = WhoisData(date: nil,
