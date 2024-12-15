@@ -7,10 +7,10 @@
 
 
 class WhoisCache {
-    let defaultServer = WhoisServerInfo(tld: "default", server: "whois.iana.org", maxConnections: 1)
+    let defaultServer: WhoisServerInfo = .default
     
     static var staticStorage: [WhoisServerInfo] = [
-        WhoisServerInfo(tld: "com", server: "whois.verisign-grs.com"),
+//        WhoisServerInfo(tld: "com", server: "whois.verisign-grs.com"),
         WhoisServerInfo(tld: "net", server: "whois.verisign-grs.com"),
         WhoisServerInfo(tld: "org", server: "whois.publicinterestregistry.org"),
         WhoisServerInfo(tld: "cn", server: "whois.cnnic.cn"),
@@ -80,7 +80,9 @@ class WhoisCache {
     
     private var cache: Set<WhoisServerInfo> = []
     
-    private func getTLD(_ host: String) -> String {
+    //MARK: Move to another place. FOR DEBUG ONLY
+    
+    public func getTLD(_ host: String) -> String {
         var tld: String = ""
         let toFind = Array(host.components(separatedBy: ".").reversed())
         tld = host.components(separatedBy: ".").last ?? ""
@@ -91,19 +93,20 @@ class WhoisCache {
         return tld
     }
     
-    // Returns the cached server address if it exists
+    /// Returns the cached server address if it exists
     func getCachedServer(_ host: String) -> WhoisServerInfo? {
         let tld: String = getTLD(host)
         return WhoisCache.staticStorage.first(where: { $0.tld == tld }) ?? cache.first(where: { $0.tld == tld })
     }
     
-    // Pushes the server address in the cache if it is not already present
-    func push(host: String, server: String) {
+    /// Pushes the server address in the cache if it is not already present and returns pushed info.
+    @discardableResult func push(host: String, server: String) -> (inserted: Bool, memberAfterInsert: WhoisServerInfo) {
         let tld = getTLD(host)
-        cache.insert(WhoisServerInfo(tld: tld, server: server))
+        let info = WhoisServerInfo(tld: tld, server: server)
+        return cache.insert(info)
     }
     
-    // Returns the cached server address if it present, otherwise returns the default server.
+    /// Returns the cached server address if it present, otherwise returns the default server.
     func pull(_ host: String) -> WhoisServerInfo {
         return getCachedServer(host) ?? defaultServer
     }

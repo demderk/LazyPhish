@@ -13,6 +13,8 @@ struct WhoisServerInfo: Hashable {
     var maxConnections: Int = 1000
     var isBlinded: Bool = false
     
+    static let `default` = WhoisServerInfo(tld: "default", server: "whois.iana.org", maxConnections: 1)
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(tld)
     }

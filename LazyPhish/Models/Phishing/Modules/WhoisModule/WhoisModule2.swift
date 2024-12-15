@@ -41,10 +41,11 @@ class WhoisModule: RequestModule {
     
     private let port = 43
     private var clientBootstrap: ClientBootstrap = ClientBootstrap(group: threadedGroup)
+        .connectTimeout(.seconds(3))
     
     private static var threadedGroup: MultiThreadedEventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
     private static var serverConductor = WhoisServerConductor()
-    private static var addressCache = WhoisCache()
+//    private static var addressCache = WhoisCache()
     
     var dependences: DependencyCollection = DependencyCollection()
     var status: RemoteJobStatus = .planned
@@ -111,8 +112,7 @@ class WhoisModule: RequestModule {
         return nil
     }
     
-    func processWhoisRequest(server: String, host: String) async -> EventLoopFuture<String> {
-        await WhoisModule.serverConductor.serverWait(server)
+    func processWhoisRequest(host: String, server: String, onFinish: @escaping () -> Void = { }) async -> EventLoopFuture<String> {
         return clientBootstrap.connect(host: server, port: self.port).flatMap({ channel in
             
             let promise = channel.eventLoop.makePromise(of: String.self)
@@ -126,27 +126,32 @@ class WhoisModule: RequestModule {
             _ = channel.writeAndFlush(buffer)
             
             return promise.futureResult.always({ _ in
-                Task {
-                    await WhoisModule.serverConductor.serverSignal(server)
-                }
+                onFinish()
             })
         })
     }
 
+    
+    
     func lookup(host: String, server: String) async throws -> String {
-        let response = try await processWhoisRequest(server: server, host: host).get()
+        let response = try await processWhoisRequest(host: host, server: server, onFinish: {
+            Task {
+                await WhoisModule.serverConductor.signal(host)
+            }
+        }).get()
                 
         if let refer = getRefer(raw: response) {
             return try await lookup(host: host, server: refer)
         } else {
-            WhoisModule.addressCache.push(host: host, server: server)
+            await WhoisModule.serverConductor.updateCache(host: host, server: server)
             return response
         }
     }
     
     func execute(remote: RemoteRequest) async {
         status = .executing
-        let server = WhoisModule.addressCache.pull(remote.host)
+        //MARK: AAAAA BLYA
+        let server = await WhoisModule.serverConductor.wait(remote.host)
         guard !server.isBlinded else {
             whoisData = WhoisData(date: nil,
                                   host: remote.host,
