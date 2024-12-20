@@ -16,7 +16,7 @@ enum DetectTool {
     case whois
     case regex
     case opr
-    case ml
+    case MLBundle
 
     func getModule() -> RequestModule {
         switch self {
@@ -28,7 +28,7 @@ enum DetectTool {
             return RegexModule()
         case .opr:
             return OPRModule()
-        case .ml:
+        case .MLBundle:
             return MLModule()
         }
     }

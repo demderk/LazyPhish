@@ -5,7 +5,7 @@
 //  Created by Roman Zheglov on 09.10.2024.
 //
 
-//TODO: [DOCUMENTATION REQUIRED]
+// TODO: [DOCUMENTATION REQUIRED]
 
 actor DependencyCollection {
     private var dependencyModules: [any RequestModule] = []

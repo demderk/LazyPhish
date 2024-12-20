@@ -29,7 +29,7 @@ class SingleRequestViewModel: ObservableObject {
                 }
                 let response = await phishRequest.executeRequest(
                     url: url,
-                    modules: [.opr, .regex, .sqi, .whois, .ml])
+                    modules: [.MLBundle])
                 await MainActor.run {
                     withAnimation {
                         requestIsPending = false
@@ -39,7 +39,7 @@ class SingleRequestViewModel: ObservableObject {
                             let succeedModules = successRequest.modules.count - failedModulesCount
                             statusText = "\(succeedModules) modules succeed, \(failedModulesCount) failed"
                         }
-                        var mlmod: MLModule = try! MLModule()
+                        var mlmod: MLModule = MLModule()
                         let x = mlmod.predictPhishing(input: PhishingEntry(fromRemote: response))
                         print(x.isPhishingProbability)
                     }

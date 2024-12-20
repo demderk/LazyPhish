@@ -38,8 +38,8 @@ actor ServerWaiter {
     func signal(_ count: Int = 1) {
         assert(count >= 1)
         for _ in 0..<count {
-            if waiters.isEmpty { return }
             self.avaliable += 1
+            if waiters.isEmpty { return }
             waiters.removeFirst().resume()
         }
     }

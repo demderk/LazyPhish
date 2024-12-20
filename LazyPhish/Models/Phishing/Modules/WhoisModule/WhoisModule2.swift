@@ -134,17 +134,21 @@ class WhoisModule: RequestModule {
     
     
     func lookup(host: String, server: String) async throws -> String {
-        let response = try await processWhoisRequest(host: host, server: server, onFinish: {
-            Task {
-                await WhoisModule.serverConductor.signal(host)
+        do {
+            let response = try await processWhoisRequest(host: host, server: server, onFinish: {
+                Task {
+                    await WhoisModule.serverConductor.signal(host)
+                }
+            }).get()
+            if let refer = getRefer(raw: response) {
+                return try await lookup(host: host, server: refer)
+            } else {
+                await WhoisModule.serverConductor.updateCache(host: host, server: server)
+                return response
             }
-        }).get()
-                
-        if let refer = getRefer(raw: response) {
-            return try await lookup(host: host, server: refer)
-        } else {
-            await WhoisModule.serverConductor.updateCache(host: host, server: server)
-            return response
+        } catch {
+            await WhoisModule.serverConductor.signal(host)
+            throw error
         }
     }
     

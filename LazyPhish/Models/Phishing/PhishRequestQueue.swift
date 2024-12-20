@@ -13,22 +13,6 @@ class PhishRequestQueue {
 
     private var lastRequests: [RemoteRequest]?
 
-    func setupModules(_ modules: [DetectTool]) async {
-        for module in modules {
-            switch module {
-            case .opr:
-                if !globalDependences.contains(where: { $0 is BulkOPRModule }) {
-                    let bulkModule = BulkOPRModule()
-                    await bulkModule.bulk(phishURLS)
-                    globalDependences.append(bulkModule)
-                }
-                fallthrough
-            default:
-                break
-            }
-        }
-    }
-
     @discardableResult
     func executeAll(modules: [DetectTool],
                     onModuleFinished: ((RemoteRequest, RequestModule) -> Void)? = nil,
@@ -36,8 +20,8 @@ class PhishRequestQueue {
                     onQueue: DispatchQueue = DispatchQueue.main
     ) async -> [RemoteRequest] {
         var result: [RemoteRequest] = []
-        let oprBulk = BulkOPRModule()
-        await oprBulk.bulk(phishURLS)
+//        let oprBulk = BulkOPRModule()
+//        await oprBulk.bulk(phishURLS)
         
         await withTaskGroup(of: Void.self) { tasks in
             
@@ -51,7 +35,7 @@ class PhishRequestQueue {
                     for item in modules {
                         info.addModule(item.getModule())
                     }
-                    await info.forcePushDependency(oprBulk)
+//                    await info.forcePushDependency(oprBulk)
                     await info.executeAll(
                         onRequestFinished: { request in
                             onQueue.async {
