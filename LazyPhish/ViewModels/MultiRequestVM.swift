@@ -88,7 +88,7 @@ class MultiRequestVM: ObservableObject {
 
         Task { [self] in
             await queue.executeAll(
-                modules: [.whois],
+                modules: [.whois, .sqi, .opr, .regex],
                 onModuleFinished: onModuleFinished,
                 onRequestFinished: onRequestFinished)
             await MainActor.run {

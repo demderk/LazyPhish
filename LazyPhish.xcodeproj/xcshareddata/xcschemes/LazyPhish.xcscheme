@@ -34,7 +34,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3003678D2B95D89700D3C84C"
+               BlueprintIdentifier = "30F7F5D62D15B27400BAE74A"
                BuildableName = "LazyPhishTests.xctest"
                BlueprintName = "LazyPhishTests"
                ReferencedContainer = "container:LazyPhish.xcodeproj">

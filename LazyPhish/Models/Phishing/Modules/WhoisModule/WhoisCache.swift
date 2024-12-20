@@ -7,20 +7,17 @@
 
 
 class WhoisCache {
-    let defaultServer: WhoisServerInfo = .default
-    
     static var staticStorage: [WhoisServerInfo] = [
         WhoisServerInfo(tld: "com", server: "whois.verisign-grs.com"),
         WhoisServerInfo(tld: "net", server: "whois.verisign-grs.com"),
         WhoisServerInfo(tld: "org", server: "whois.publicinterestregistry.org"),
-        WhoisServerInfo(tld: "cn", server: "whois.cnnic.cn"),
         WhoisServerInfo(tld: "ai", server: "whois.nic.ai"),
         WhoisServerInfo(tld: "co", server: "whois.nic.co"),
         WhoisServerInfo(tld: "ca", server: "whois.cira.ca"),
         WhoisServerInfo(tld: "do", server: "whois.nic.do"),
         WhoisServerInfo(tld: "gl", server: "whois.nic.gl"),
         WhoisServerInfo(tld: "in", server: "whois.registry.in"),
-        WhoisServerInfo(tld: "io", server: "whois.nic.io"),
+        WhoisServerInfo(tld: "io", server: "whois.nic.io", maxConnections: 1),
         WhoisServerInfo(tld: "it", server: "whois.nic.it"),
         WhoisServerInfo(tld: "me", server: "whois.nic.me"),
         WhoisServerInfo(tld: "rs", server: "whois.rnids.rs"),
@@ -47,6 +44,7 @@ class WhoisCache {
         WhoisServerInfo(tld: "gov", server: "whois.dotgov.gov"),
         WhoisServerInfo(tld: "uk", server: "whois.nic.uk"),
         WhoisServerInfo(tld: "ac.uk", server: "whois.ac.uk"),
+        WhoisServerInfo(tld: "co.uk", server: "whois.nic.uk", maxConnections: 1),
         WhoisServerInfo(tld: "cz", server: "whois.nic.cz"),
         WhoisServerInfo(tld: "edu", server: "whois.educause.edu"),
         WhoisServerInfo(tld: "fr", server: "whois.nic.fr"),
@@ -57,30 +55,41 @@ class WhoisCache {
         WhoisServerInfo(tld: "la", server: "whois.nic.la"),
         WhoisServerInfo(tld: "ly", server: "whois.nic.ly"),
         WhoisServerInfo(tld: "be", server: "whois.dns.be"),
-        WhoisServerInfo(name: "de", blinded: true),
-        WhoisServerInfo(name: "eu", blinded: true),
-        WhoisServerInfo(name: "es", blinded: true),
-        WhoisServerInfo(name: "au", blinded: true),
-        WhoisServerInfo(name: "mil", blinded: true),
-        WhoisServerInfo(name: "gov.cn", blinded: true),
-        WhoisServerInfo(name: "ae", blinded: true),
-        WhoisServerInfo(name: "sa", blinded: true),
-        WhoisServerInfo(name: "ro", blinded: true),
-        WhoisServerInfo(name: "vn", blinded: true),
-        WhoisServerInfo(name: "ir", blinded: true),
-        WhoisServerInfo(name: "gr", blinded: true),
-        WhoisServerInfo(name: "za", blinded: true),
-        WhoisServerInfo(name: "bz", blinded: true),
-        WhoisServerInfo(name: "pe", blinded: true),
-        WhoisServerInfo(name: "az", blinded: true),
-        WhoisServerInfo(name: "bd", blinded: true),
-        WhoisServerInfo(name: "li", blinded: true),
-        WhoisServerInfo(name: "lv", blinded: true)
+        WhoisServerInfo(name: "*cn", blinded: true),
+        WhoisServerInfo(name: "*de", blinded: true),
+        WhoisServerInfo(name: "*eu", blinded: true),
+        WhoisServerInfo(name: "*es", blinded: true),
+        WhoisServerInfo(name: "*au", blinded: true),
+        WhoisServerInfo(name: "*mil", blinded: true),
+        WhoisServerInfo(name: "*gov.cn", blinded: true),
+        WhoisServerInfo(name: "*ae", blinded: true),
+        WhoisServerInfo(name: "*sa", blinded: true),
+        WhoisServerInfo(name: "*ro", blinded: true),
+        WhoisServerInfo(name: "*vn", blinded: true),
+        WhoisServerInfo(name: "*ir", blinded: true),
+        WhoisServerInfo(name: "*gr", blinded: true),
+        WhoisServerInfo(name: "*za", blinded: true),
+        WhoisServerInfo(name: "*bz", blinded: true),
+        WhoisServerInfo(name: "*pe", blinded: true),
+        WhoisServerInfo(name: "*az", blinded: true),
+        WhoisServerInfo(name: "*bd", blinded: true),
+        WhoisServerInfo(name: "*li", blinded: true),
+        WhoisServerInfo(name: "*lv", blinded: true)
     ]
     
     private var cache: Set<WhoisServerInfo> = []
     
     //MARK: Move to another place. FOR DEBUG ONLY
+    
+    private func TLDEquals(base: String, pattern: String) -> Bool {
+        if pattern.hasPrefix("*") {
+            let rhs = pattern.replacingOccurrences(of: "*", with: "")
+            return base.hasSuffix(rhs)
+        } else {
+            let rhs = pattern.replacingOccurrences(of: "*", with: "")
+            return base == pattern
+        }
+    }
     
     public func getTLD(_ host: String) -> String {
         var tld: String = ""
@@ -96,7 +105,7 @@ class WhoisCache {
     /// Returns the cached server address if it exists
     func getCachedServer(_ host: String) -> WhoisServerInfo? {
         let tld: String = getTLD(host)
-        return WhoisCache.staticStorage.first(where: { $0.tld == tld }) ?? cache.first(where: { $0.tld == tld })
+        return WhoisCache.staticStorage.first(where: { TLDEquals(base: tld, pattern: $0.tld) }) ?? cache.first(where: { TLDEquals(base: tld, pattern: $0.tld) })
     }
     
     /// Pushes the server address in the cache if it is not already present and returns pushed info.
@@ -108,6 +117,6 @@ class WhoisCache {
     
     /// Returns the cached server address if it present, otherwise returns the default server.
     func pull(_ host: String) -> WhoisServerInfo {
-        return getCachedServer(host) ?? defaultServer
+        return getCachedServer(host) ?? .default
     }
 }

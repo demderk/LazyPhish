@@ -20,8 +20,8 @@ class PhishRequestQueue {
                     onQueue: DispatchQueue = DispatchQueue.main
     ) async -> [RemoteRequest] {
         var result: [RemoteRequest] = []
-//        let oprBulk = BulkOPRModule()
-//        await oprBulk.bulk(phishURLS)
+        let oprBulk = BulkOPRModule()
+        await oprBulk.bulk(phishURLS)
         
         await withTaskGroup(of: Void.self) { tasks in
             
@@ -35,7 +35,7 @@ class PhishRequestQueue {
                     for item in modules {
                         info.addModule(item.getModule())
                     }
-//                    await info.forcePushDependency(oprBulk)
+                    await info.forcePushDependency(oprBulk)
                     await info.executeAll(
                         onRequestFinished: { request in
                             onQueue.async {

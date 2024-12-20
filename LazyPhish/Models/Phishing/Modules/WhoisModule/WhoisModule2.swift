@@ -112,7 +112,12 @@ class WhoisModule: RequestModule {
         return nil
     }
     
-    func processWhoisRequest(host: String, server: String, onFinish: @escaping () -> Void = { }) async -> EventLoopFuture<String> {
+    func processWhoisRequest(
+        host: String,
+        server: String,
+        onFinish: @escaping () -> Void = { }
+    ) async -> EventLoopFuture<String> {
+        
         return clientBootstrap.connect(host: server, port: self.port).flatMap({ channel in
             
             let promise = channel.eventLoop.makePromise(of: String.self)
@@ -130,8 +135,6 @@ class WhoisModule: RequestModule {
             })
         })
     }
-
-    
     
     func lookup(host: String, server: String) async throws -> String {
         do {
@@ -176,6 +179,8 @@ class WhoisModule: RequestModule {
             switch error {
             case .NIOInternal(let error):
                 print("OWNER \(remote.host) : \(error)")
+            case .timeout:
+                print("\(remote.host) timed out")
             default:
                 break
             }

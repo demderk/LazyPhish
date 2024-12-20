@@ -27,7 +27,6 @@ actor ServerWaiter {
     }
     
     func wait() async {
-        
         avaliable -= 1
         if avaliable >= 0 { return }
         await withCheckedContinuation {
@@ -45,10 +44,6 @@ actor ServerWaiter {
     }
     
     func updateBase(_ newBase: WhoisServerInfo) throws {
-//        guard base == newBase else {
-//            throw ConductorError.waiterErrorBase
-//        }
-        
         let currentMaxConnections = maxConnections
         let newMaxConnections = newBase.maxConnections
         let newThreadSlots = newMaxConnections - currentMaxConnections
@@ -59,10 +54,6 @@ actor ServerWaiter {
             signal(newThreadSlots)
         }
     }
-    
-//    static func ==(lhs: ServerWaiter, rhs: ServerWaiter) async -> Bool {
-//        await lhs.tld == rhs.tld
-//    }
 }
 
 class WaiterLink: Hashable {

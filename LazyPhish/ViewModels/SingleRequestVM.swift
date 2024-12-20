@@ -29,7 +29,7 @@ class SingleRequestViewModel: ObservableObject {
                 }
                 let response = await phishRequest.executeRequest(
                     url: url,
-                    modules: [.MLBundle])
+                    modules: [.whois, .sqi, .regex, .opr, .MLBundle])
                 await MainActor.run {
                     withAnimation {
                         requestIsPending = false
