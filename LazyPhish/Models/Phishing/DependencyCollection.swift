@@ -5,6 +5,8 @@
 //  Created by Roman Zheglov on 09.10.2024.
 //
 
+//TODO: [DOCUMENTATION REQUIRED]
+
 actor DependencyCollection {
     private var dependencyModules: [any RequestModule] = []
 
@@ -67,6 +69,9 @@ actor DependencyCollection {
         return dependencyModules.firstIndex(where: {type(of: $0) == type(of: module)})
     }
 
+    
+    /// Replaces the specified module with a new one.
+    /// - Returns: True if the replacement was successful; otherwise, returns false.
     @discardableResult
     func putDependency(oldModule: RequestModule, newModule: RequestModule) -> Bool {
         if let foundIndex = getDependencyIndex(module: oldModule) {

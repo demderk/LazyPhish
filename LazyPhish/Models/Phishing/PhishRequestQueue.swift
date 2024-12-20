@@ -51,7 +51,7 @@ class PhishRequestQueue {
                     for item in modules {
                         info.addModule(item.getModule())
                     }
-                    await info.addBroadcastModule(oprBulk)
+                    await info.forcePushDependency(oprBulk)
                     await info.executeAll(
                         onRequestFinished: { request in
                             onQueue.async {

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -71,6 +71,16 @@
 		30E724BD2C11BC6B0082ED54 /* LoggerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E724BC2C11BC6B0082ED54 /* LoggerExtension.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		30F7F5DB2D15B27400BAE74A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3003676B2B95CC1F00D3C84C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 300367722B95CC1F00D3C84C;
+			remoteInfo = LazyPhish;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		300367732B95CC1F00D3C84C /* LazyPhish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LazyPhish.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		300367762B95CC1F00D3C84C /* LazyPhishApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyPhishApp.swift; sourceTree = "<group>"; };
@@ -131,7 +141,12 @@
 		30CE1AAA2BD58A8B001B022F /* GlobalVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalVM.swift; sourceTree = "<group>"; };
 		30E724A72C0F7FD20082ED54 /* WhoisConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoisConnection.swift; sourceTree = "<group>"; };
 		30E724BC2C11BC6B0082ED54 /* LoggerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerExtension.swift; sourceTree = "<group>"; };
+		30F7F5D72D15B27400BAE74A /* LazyPhishTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LazyPhishTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		30F7F5D82D15B27400BAE74A /* LazyPhishTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LazyPhishTests; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		300367702B95CC1F00D3C84C /* Frameworks */ = {
@@ -146,6 +161,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		30F7F5D42D15B27400BAE74A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -153,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				300367752B95CC1F00D3C84C /* LazyPhish */,
+				30F7F5D82D15B27400BAE74A /* LazyPhishTests */,
 				300367742B95CC1F00D3C84C /* Products */,
 				3003679A2B97452500D3C84C /* Frameworks */,
 			);
@@ -162,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				300367732B95CC1F00D3C84C /* LazyPhish.app */,
+				30F7F5D72D15B27400BAE74A /* LazyPhishTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -362,6 +386,29 @@
 			productReference = 300367732B95CC1F00D3C84C /* LazyPhish.app */;
 			productType = "com.apple.product-type.application";
 		};
+		30F7F5D62D15B27400BAE74A /* LazyPhishTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 30F7F5DF2D15B27400BAE74A /* Build configuration list for PBXNativeTarget "LazyPhishTests" */;
+			buildPhases = (
+				30F7F5D32D15B27400BAE74A /* Sources */,
+				30F7F5D42D15B27400BAE74A /* Frameworks */,
+				30F7F5D52D15B27400BAE74A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				30F7F5DC2D15B27400BAE74A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				30F7F5D82D15B27400BAE74A /* LazyPhishTests */,
+			);
+			name = LazyPhishTests;
+			packageProductDependencies = (
+			);
+			productName = LazyPhishTests;
+			productReference = 30F7F5D72D15B27400BAE74A /* LazyPhishTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -369,11 +416,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1520;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					300367722B95CC1F00D3C84C = {
 						CreatedOnToolsVersion = 15.2;
+					};
+					30F7F5D62D15B27400BAE74A = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 300367722B95CC1F00D3C84C;
 					};
 				};
 			};
@@ -398,6 +449,7 @@
 			projectRoot = "";
 			targets = (
 				300367722B95CC1F00D3C84C /* LazyPhish */,
+				30F7F5D62D15B27400BAE74A /* LazyPhishTests */,
 			);
 		};
 /* End PBXProject section */
@@ -409,6 +461,13 @@
 			files = (
 				300367802B95CC2400D3C84C /* Preview Assets.xcassets in Resources */,
 				3003677D2B95CC2400D3C84C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30F7F5D52D15B27400BAE74A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,7 +557,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		30F7F5D32D15B27400BAE74A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		30F7F5DC2D15B27400BAE74A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 300367722B95CC1F00D3C84C /* LazyPhish */;
+			targetProxy = 30F7F5DB2D15B27400BAE74A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		300367822B95CC2400D3C84C /* Debug */ = {
@@ -685,6 +759,44 @@
 			};
 			name = Release;
 		};
+		30F7F5DD2D15B27400BAE74A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BX3ASU46J7;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = LazyFusion.LazyPhishTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LazyPhish.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LazyPhish";
+			};
+			name = Debug;
+		};
+		30F7F5DE2D15B27400BAE74A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BX3ASU46J7;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = LazyFusion.LazyPhishTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LazyPhish.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LazyPhish";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -702,6 +814,15 @@
 			buildConfigurations = (
 				300367852B95CC2400D3C84C /* Debug */,
 				300367862B95CC2400D3C84C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		30F7F5DF2D15B27400BAE74A /* Build configuration list for PBXNativeTarget "LazyPhishTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30F7F5DD2D15B27400BAE74A /* Debug */,
+				30F7F5DE2D15B27400BAE74A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

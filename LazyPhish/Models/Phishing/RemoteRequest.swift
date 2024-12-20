@@ -9,7 +9,14 @@ import Foundation
 
 enum RemoteRequestError: RemoteJobError {
     case anyModulesFailed(collection: [ModuleError])
+    case injectionModuleExecutionFailed
 }
+
+enum UnknownModuleError: ModuleError {
+    case unknown(_ underlyingError: Error?)
+}
+
+// TODO: [DOCS REQUIRED]
 
 class RemoteRequest: Identifiable {
     // TODO: Make private(set)
@@ -31,7 +38,8 @@ class RemoteRequest: Identifiable {
         self.url = url
     }
     
-    @available(*, deprecated)
+    // А написать почему оно депрекейтед?
+//    @available(*, deprecated)
     func executeAll(
         onRequestFinished: ((RemoteRequest) -> Void)? = nil,
         onModuleFinished: ((RemoteRequest, RequestModule) -> Void)? = nil
@@ -57,6 +65,11 @@ class RemoteRequest: Identifiable {
         }
     }
     
+    /// Executes all modules and dependencies.
+    ///
+    /// Modules that are not passed through the dependency injection mechanism will not be passed further down the pipeline.
+    /// Since each module is executed in a separate thread, there is no guarantee that they will execute sequentially.
+    /// Therefore, it is not possible to explicitly pass the previous module to the next one.
     private func executeModules (
         onModuleFinished: ((RemoteRequest, RequestModule) -> Void)?,
         skipCompleted: Bool = false
@@ -100,7 +113,7 @@ class RemoteRequest: Identifiable {
         let moduleErrors = modules
             .compactMap({
                 if case .failed(let error) = $0.status {
-                    return error as? ModuleError
+                    return error as? ModuleError ?? UnknownModuleError.unknown(error)
                 }
                 return nil
             })
@@ -113,7 +126,6 @@ class RemoteRequest: Identifiable {
                 return []
             })
         
-        let failedOn = failedOnModulesCount ?? modules.count
         if moduleErrors.count > 0 {
             return .failed(RemoteRequestError.anyModulesFailed(collection: moduleErrors))
         } else if moduleWarinigs.count > 0 {
@@ -123,8 +135,20 @@ class RemoteRequest: Identifiable {
         }
     }
     
-    func addBroadcastModule(_ module: any RequestModule) async {
-        //        await module.execute(remote: self)
+    /// Adds the provided module as a dependency without executing it. The dependency is directly injected into all related modules.
+    ///
+    /// Be careful: the dependency will be executed automatically, but if the dependency fails, it will be passed through the pipeline as failed without any warning.
+    func forcePushDependency(_ module: any RequestModule) async {
+        await dependencyModules.pushDependency(module)
+    }
+    
+    /// Performs dependency injection. Executes the provided module, and if the module completes successfully,
+    /// injects the dependency into all related modules. If the execution fails, an error is returned.
+    func injectDependency(_ module: any RequestModule) async throws {
+        await module.execute(remote: self)
+        guard module.status.isFinished else {
+            throw RemoteRequestError.injectionModuleExecutionFailed
+        }
         await dependencyModules.pushDependency(module)
     }
     

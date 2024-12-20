@@ -88,7 +88,7 @@ class MultiRequestVM: ObservableObject {
 
         Task { [self] in
             await queue.executeAll(
-                modules: [DetectTool.whois],
+                modules: [.sqi, .ml],
                 onModuleFinished: onModuleFinished,
                 onRequestFinished: onRequestFinished)
             await MainActor.run {

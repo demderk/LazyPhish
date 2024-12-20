@@ -14,9 +14,6 @@ final class WhoisRequestHandler: ChannelInboundHandler {
     
     var promise: EventLoopPromise<String>
     var finished: Bool = false
-//    func setPromise(promise: EventLoopPromise<String>) {
-//        self.promise = promise
-//    }
     
     init(promise: EventLoopPromise<String>) {
         self.promise = promise
@@ -51,7 +48,7 @@ final class WhoisRequestHandler: ChannelInboundHandler {
     }
     
     func userInboundEventTriggered(context: ChannelHandlerContext, event: Any) {
-        if let timeout = event as? IdleStateHandler.IdleStateEvent {
+        if let _ = event as? IdleStateHandler.IdleStateEvent {
             promise.fail(WhoisModuleError.timeout)
             context.close(promise: nil)
         }

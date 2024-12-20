@@ -28,6 +28,8 @@ extension RequestModule {
         onFinish?(remote, self)
     }
     
+    // TODO: Only completed request support is Required.
+    // If the dependency fails it will be passed through the pipeline failed without any warning
     @discardableResult
     func processDependences(
         remote: RemoteRequest,
@@ -38,11 +40,17 @@ extension RequestModule {
             if dependency.completed {
                 continue
             }
-            if let executed = await parentDependences.getDependency(module: dependency),
-               executed.completed {
-                await dependences.putDependency(
-                    oldModule: dependency,
-                    newModule: executed)
+            if let foundDependency = await parentDependences.getDependency(module: dependency) {
+                if foundDependency.completed {
+                    await dependences.putDependency(
+                        oldModule: dependency,
+                        newModule: foundDependency)
+                } else {
+                    await foundDependency.execute(remote: remote)
+                    await dependences.putDependency(
+                        oldModule: dependency,
+                        newModule: foundDependency)
+                }
             } else {
                 await internalDependences.pushUniqueDependencies(
                     dependency.processDependences(
