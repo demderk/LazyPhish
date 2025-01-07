@@ -14,6 +14,7 @@ struct VisualPhishingEntry: Identifiable {
     var sqi: String
     var opr: String
     var length: String
+    var hostLength: String
     var subDomains: String
     var prefixCount: String
     var isIP: String
@@ -25,28 +26,10 @@ struct VisualPhishingEntry: Identifiable {
         self.opr = entry.opr.description
         self.date = entry.dateText ?? (entry.whoisBlinded ? "Domain zone is blinded" : "Date parsing error")
         self.length = entry.urlLength.description
+        self.hostLength = entry.hostLength.description
         self.subDomains = entry.subDomains.description
         self.prefixCount = entry.prefixCount.description
         self.isIP = entry.isIP ? "Yes" : "No"
-    }
-
-    static var csvHeader: String {
-        let result = [
-            "id",
-            "host",
-            "hostLength",
-            "url",
-            "urlLength",
-            "sqi",
-            "subDomains",
-            "prefixCount",
-            "isIP",
-            "date",
-            "dateFromNow",
-            "opr",
-            "isPhishing"
-        ]
-        return result.joined(separator: ",")
     }
 }
 
@@ -122,6 +105,7 @@ extension PhishingEntry {
                 self.whoisFound = current.whoisFound
             case let current as RegexModule:
                 self.urlLength = current.urlLength
+                self.hostLength = current.hostLength
                 self.subDomains = current.subdomainCount
                 self.prefixCount = current.prefixCount
                 self.isIP = current.isIP

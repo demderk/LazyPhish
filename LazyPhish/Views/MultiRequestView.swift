@@ -62,6 +62,9 @@ struct MultiRequestView: View {
                     TableColumn("Length") { item in
                         Text(item.length)
                     }
+                    TableColumn("Host Length") { item in
+                        Text(item.hostLength)
+                    }
 
                 } rows: {
                     ForEach(vm.tableContent) { data in
@@ -80,7 +83,7 @@ struct MultiRequestView: View {
                     HStack {
                         Button {
                             if !vm.busy {
-                                vm.reviseRequestQuerry()
+                                vm.revise()
                             }
                         } label: {
                             Image(systemName: "bandage.fill")
@@ -91,15 +94,16 @@ struct MultiRequestView: View {
                         .help("Revise Querry")
                         Button {
                             if !vm.busy {
-                                vm.sendRequestQuerry()
+                                vm.start()
+                            } else {
+                                vm.stop()
                             }
                         } label: {
                             Image(systemName: vm.busy ? "stop.fill" : "play.fill")
                                 .padding(.horizontal, 8)
                                 .frame(width: 48)
                         }
-                        .disabled(vm.busy)
-                        .help("Execute Querry")
+                        .help(vm.busy ? "Cancel Execution" : "Execute Querry")
                         .keyboardShortcut(.return)
                         StatusView(busy: $vm.busy,
                                    iconName: $vm.statusIconName,

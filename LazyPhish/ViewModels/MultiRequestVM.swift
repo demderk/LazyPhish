@@ -35,19 +35,92 @@ class MultiRequestVM: ObservableObject {
     var reviseable: Bool {
         lastUrlsCount > 0
     }
-
+    
+    private var currentTask: Task<(), Never>? = nil
+    
 //    var resultingDocument: PhishFile = PhishFile([])
     var ignoreWrongLines: Bool = true
 
-    func onModuleFinished(remote: RemoteRequest, module: RequestModule) {
+    @MainActor
+    func start() {
+        let urls: [String] = requestText
+            .components(separatedBy: .newlines)
+            .compactMap({ $0.isEmpty ? nil : $0 })
+
+        var correctURLS: [StrictURL] =  []
+        for (n, item) in urls.enumerated() {
+            do {
+                let correctDomain = try StrictURL(url: item, preActions: [.makeHttp])
+                correctURLS.append(correctDomain)
+            } catch _ as ParserError {
+                UIBadRequest(n+1)
+                return
+            } catch {
+                UIBadRequest(n+1)
+            }
+        }
+        queue.phishURLS = correctURLS
+
+        withAnimation {
+            UIStartProcessing()
+        }
+
+        lastUrlsCount = correctURLS.count
+
+        currentTask = Task { [self] in
+            await queue.executeAll(
+                modules: [.whois, .sqi, .opr, .regex],
+                onModuleFinished: onModuleFinished,
+                onRequestFinished: onRequestFinished)
+            await MainActor.run {
+                withAnimation {
+                    self.UIFinishProcessing()
+                }
+            }
+        }
+    }
+    
+    func stop() {
+        currentTask?.cancel()
+        isCanceled = true
+    }
+    
+    func revise() {
+        UIStartRevise()
+        Task { [self] in
+            await queue.reviseLastRequest(
+                onModuleFinished: onReviseModuleFinished,
+                onRequestFinished: onReviseRequestFinished)
+            await MainActor.run {
+                UIEndRevise()
+            }
+        }
+    }
+    
+
+    func exportEducationalFile() {
+        educationalFile = EducationFile(tableContent)
+        educationalExportIsPresented = true
+    }
+    
+    private func exportCSV() {
+        //   resultingDocument = PhishFile(engine.phishInfo.map({ $0.getMLEntry()! }))
+        CSVExportIsPresented = true
+    }
+    
+    
+    
+    // MARK: Request Handlers
+    
+    private func onModuleFinished(remote: RemoteRequest, module: RequestModule) {
         if let found = tableContent.firstIndex(where: { $0.id == remote.requestID }) {
             tableContent[found] = PhishingEntry(fromRemote: remote)
         } else {
             tableContent.append(PhishingEntry(fromRemote: remote))
         }
     }
-
-    func onRequestFinished(remote: RemoteRequest) {
+    
+    private func onRequestFinished(remote: RemoteRequest) {
         switch remote.status {
         case .completedWithErrors:
             linesWithWarnings += 1
@@ -59,55 +132,16 @@ class MultiRequestVM: ObservableObject {
         totalParsed += 1
         statusText = "Processing | \(totalParsed) of \(lastUrlsCount)"
     }
-
-    @MainActor
-    func sendRequestQuerry() {
-        let urls: [String] = requestText
-            .components(separatedBy: .newlines)
-            .compactMap({ $0.isEmpty ? nil : $0 })
-
-        var correctURLS: [StrictURL] =  []
-        for (n, item) in urls.enumerated() {
-            do {
-                let correctDomain = try StrictURL(url: item, preActions: [.makeHttp])
-                correctURLS.append(correctDomain)
-            } catch _ as ParserError {
-                badRequest(n+1)
-                return
-            } catch {
-                badRequest(n+1)
-            }
-        }
-        queue.phishURLS = correctURLS
-
-        withAnimation {
-            processUI()
-        }
-
-        lastUrlsCount = correctURLS.count
-
-        Task { [self] in
-            await queue.executeAll(
-                modules: [.whois, .sqi, .opr, .regex],
-                onModuleFinished: onModuleFinished,
-                onRequestFinished: onRequestFinished)
-            await MainActor.run {
-                withAnimation {
-                    self.completeUI()
-                }
-            }
-        }
-    }
-
-    func reviseModuleFinished (remote: RemoteRequest, module: RequestModule) {
+    
+    private func onReviseModuleFinished (remote: RemoteRequest, module: RequestModule) {
 
     }
 
-    func reviseRequestFinished(remote: RemoteRequest) {
+    private func onReviseRequestFinished(remote: RemoteRequest) {
         totalParsed += 1
         statusText = "Revising | \(totalParsed) of \(lastUrlsCount)"
         if let found = tableContent.firstIndex(where: { $0.id == remote.requestID }) {
-            if case .completed = remote.status {
+            if remote.status.isCompleted {
                 linesWithWarnings -= 1
                 tableContent[found] = PhishingEntry(fromRemote: remote)
             }
@@ -116,19 +150,16 @@ class MultiRequestVM: ObservableObject {
         }
     }
 
-    func reviseRequestQuerry() {
-        startReviseUI()
-        Task { [self] in
-            await queue.reviseLastRequest(
-                onModuleFinished: reviseModuleFinished,
-                onRequestFinished: reviseRequestFinished)
-            await MainActor.run {
-                endReviseUI()
-            }
-        }
+    // MARK: UI Functions
+    
+    private func UICancel() {
+        self.busy = false
+        self.isCanceled = true
+        self.statusText = "Execution Stoped"
+        self.statusIconName = "stop.fill"
     }
-
-    private func startReviseUI() {
+    
+    private func UIStartRevise() {
         self.busy = true
         self.isCanceled = false
         totalParsed = 0
@@ -137,14 +168,14 @@ class MultiRequestVM: ObservableObject {
         self.statusIconName = "timer"
     }
 
-    private func endReviseUI() {
+    private func UIEndRevise() {
         self.busy = false
         self.isCanceled = false
         self.statusText = "Revision complete"
         self.statusIconName = "checkmark.circle.fill"
     }
 
-    private func processUI() {
+    private func UIStartProcessing() {
         readyForExport = false
         tableContent.removeAll()
         linesWithWarnings = 0
@@ -157,11 +188,7 @@ class MultiRequestVM: ObservableObject {
         self.statusIconName = "timer"
     }
 
-    private func cancel() {
-        isCanceled = true
-    }
-
-    private func completeUI() {
+    private func UIFinishProcessing() {
         self.busy = false
         if isCanceled {
             self.status = .canceled
@@ -169,9 +196,9 @@ class MultiRequestVM: ObservableObject {
             self.statusIconName = "play.slash.fill"
         } else {
             if linesWithErrors > 0 {
-                failedUI()
+                UIFail()
             } else if linesWithWarnings > 0 {
-                completeWithErrorsUI()
+                UICompleteWithErrors()
             } else {
                 self.status = .completed
                 self.statusText = "Completed Successfully"
@@ -181,7 +208,7 @@ class MultiRequestVM: ObservableObject {
         if tableContent.count > 0 { readyForExport = true }
     }
 
-    private func completeWithErrorsUI() {
+    private func UICompleteWithErrors() {
         self.busy = false
         self.status = .completedWithErrors()
         self.statusText = "Completed With Warnings"
@@ -189,25 +216,15 @@ class MultiRequestVM: ObservableObject {
 
     }
 
-    private func failedUI() {
+    private func UIFail() {
 //        self.status = .failed()
         self.statusText = "Completed With Errors"
     }
 
-    private func badRequest(_ lineNumber: Int) {
+    private func UIBadRequest(_ lineNumber: Int) {
 //        self.status = .failed
         self.statusIconName = "xmark.circle.fill"
         self.statusText = "Wrong url at line \(lineNumber)"
-    }
-
-    private func exportCSV() {
-     //   resultingDocument = PhishFile(engine.phishInfo.map({ $0.getMLEntry()! }))
-        CSVExportIsPresented = true
-    }
-
-    func exportEducationalFile() {
-        educationalFile = EducationFile(tableContent)
-        educationalExportIsPresented = true
     }
 
 }
