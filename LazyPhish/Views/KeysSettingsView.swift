@@ -46,7 +46,7 @@ struct KeysSettingsView: View {
                         TextField("OPR", text: $OPRKey)
                             .frame(width: 512)
                             .textFieldStyle(.squareBorder)
-                            .focused($vtFieldFocus)
+                            .focused($oprFieldFocus)
                             .onChange(of: oprFieldFocus) { _ in
                                 if !saveMode {
                                     saveMode = !saveMode
@@ -57,6 +57,19 @@ struct KeysSettingsView: View {
                     .focused($vtFieldFocus)
                     .padding(.bottom, 8)
                 Spacer()
+                #if RELEASE
+                HStack {
+                    Spacer()
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .imageScale(.medium)
+                        .symbolRenderingMode(.hierarchical)
+                        .fontWeight(.black)
+                    Spacer().frame(width: 4)
+                    Text("You are using the community version of LazyPhish that does not support encryption for keys.")
+                    Spacer()
+                }.foregroundStyle(.secondary)
+                Spacer().frame(height: 16)
+                #endif
                 Divider()
                 HStack {
                     Button(action: {
@@ -117,6 +130,10 @@ struct KeysSettingsView: View {
                 securedBody
             }
         }.onChange(of: state) { _ in
+            if saveMode {
+                KeyService.saveAllKeys(virusTotal: VTKey, opr: OPRKey)
+            }
+        }.onDisappear {
             if saveMode {
                 KeyService.saveAllKeys(virusTotal: VTKey, opr: OPRKey)
             }

@@ -12,7 +12,24 @@ enum KeyServicePath: String, CaseIterable {
     case opr = "OPRKey"
 }
 
-class KeyService {
+protocol KeyServiceBehavior: AnyObject {
+    static var inited: Bool { get }
+    static var VTKey: String? { get }
+    static var OPRKey: String? { get }
+
+    static func saveAllKeys(virusTotal: String, opr: String)
+
+    static func saveKeychainKey(data: String, path: KeyServicePath)
+
+    static func readKeychainKey(path: KeyServicePath,
+                                action: @escaping (String?) -> Void)
+
+    static func refreshAllKeys()
+}
+
+#if DEBUG
+
+class KeyService: KeyServiceBehavior {
     public static var inited: Bool = false
     public static var VTKey: String? {
         lastSucceedVTKey
@@ -66,7 +83,7 @@ class KeyService {
             let query = buildWriteQuery(data: data, path: keyChain)
 
             if force {
-                SecItemDelete(query as CFDictionary) // Удаление существующего элемента (если есть)
+                SecItemDelete(query as CFDictionary)
                 SecItemAdd(query as CFDictionary, nil)
             } else {
                 var found = false
@@ -77,7 +94,7 @@ class KeyService {
                     found = lastSucceedOPR == data
                 }
                 if !found {
-                    SecItemDelete(query as CFDictionary) // Удаление существующего элемента (если есть)
+                    SecItemDelete(query as CFDictionary)
                     SecItemAdd(query as CFDictionary, nil)
                     switch keyChain {
                     case .virusTotal:
@@ -140,3 +157,44 @@ class KeyService {
         readKeychain(path: .opr) { key in lastSucceedOPR = key }
     }
 }
+
+#endif
+
+#if RELEASE
+
+// MARK: KeyService for LazyPhish Community
+
+class KeyService: KeyServiceBehavior {
+    static var inited: Bool { true }
+    static var VTKey: String? {
+        value(.virusTotal)
+    }
+    static var OPRKey: String? { value(.opr) }
+        
+    static private func value(_ path: KeyServicePath) -> String? {
+        let data = UserDefaults.standard.string(forKey: path.rawValue)
+        return data
+    }
+    
+    static func saveAllKeys(virusTotal: String, opr: String) {
+        saveKeychainKey(data: virusTotal, path: .virusTotal)
+        saveKeychainKey(data: opr, path: .opr)
+    }
+    
+    static func saveKeychainKey(data: String, path: KeyServicePath) {
+        UserDefaults.standard.set(data, forKey: path.rawValue)
+    }
+    
+    // Used for new KeyChain Code compatibility
+    static func readKeychainKey(path: KeyServicePath, action: @escaping (String?) -> Void) {
+        action(value(path))
+    }
+    
+    static func refreshAllKeys() {
+        readKeychainKey(path: .opr, action: { _ in })
+        readKeychainKey(path: .virusTotal, action: { _ in })
+    }
+    
+}
+
+#endif
