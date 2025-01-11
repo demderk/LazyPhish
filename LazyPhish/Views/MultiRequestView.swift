@@ -105,9 +105,11 @@ struct MultiRequestView: View {
                         }
                         .help(vm.busy ? "Cancel Execution" : "Execute Querry")
                         .keyboardShortcut(.return)
+                        Spacer().frame(width: 16)
                         StatusView(busy: $vm.busy,
                                    iconName: $vm.statusIconName,
                                    status: $vm.statusText)
+                        Spacer()
                     }.padding(.trailing, 8)
                 }
                 if vm.linesWithErrors > 0 || vm.linesWithWarnings > 0 {
