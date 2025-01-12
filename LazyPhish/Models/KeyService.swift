@@ -16,6 +16,7 @@ protocol KeyServiceBehavior: AnyObject {
     static var inited: Bool { get }
     static var VTKey: String? { get }
     static var OPRKey: String? { get }
+    static var setupComplete: Bool { get }
 
     static func saveAllKeys(virusTotal: String, opr: String)
 
@@ -37,7 +38,13 @@ class KeyService: KeyServiceBehavior {
     public static var OPRKey: String? {
         lastSucceedOPR
     }
-
+    public static var setupComplete: Bool {
+        if let opr = OPRKey, !opr.isEmpty {
+            return true
+        }
+        return false
+    }
+    
     private static let serviceName = "com.LazyFusion.LazyPhish.Keys"
     private static var lastSucceedVTKey: String? {
         didSet {
@@ -166,10 +173,16 @@ class KeyService: KeyServiceBehavior {
 
 class KeyService: KeyServiceBehavior {
     static var inited: Bool { true }
+    static var OPRKey: String? { value(.opr) }
     static var VTKey: String? {
         value(.virusTotal)
     }
-    static var OPRKey: String? { value(.opr) }
+    static var setupComplete: Bool {
+        if let opr = OPRKey, !opr.isEmpty {
+            return true
+        }
+        return false
+    }
         
     static private func value(_ path: KeyServicePath) -> String? {
         let data = UserDefaults.standard.string(forKey: path.rawValue)

@@ -11,6 +11,7 @@ import SwiftUI
 class SingleRequestViewModel: ObservableObject {
     @Published var request: String = ""
     @Published var errorText: String?
+    @Published var incompleteSetup: Bool = false
     @Published var lastRequest: RemoteRequest?
     @Published var requestIsPending: Bool = false
     @Published var statusText: String = ""
@@ -18,6 +19,11 @@ class SingleRequestViewModel: ObservableObject {
     private var cardIsPresented: Bool = false
 
     func makeRequest() {
+        guard KeyService.setupComplete else {
+            incompleteSetup = true
+            return
+        }
+        
         let phishRequest = PhishRequest()
         statusText = ""
         if let url = try? StrictURL(url: request, preActions: [.makeHttp]) {
@@ -41,7 +47,6 @@ class SingleRequestViewModel: ObservableObject {
                         }
                         var mlmod: MLModule = MLModule()
                         let x = mlmod.predictPhishing(input: PhishingEntry(fromRemote: response))
-                        print(x.isPhishingProbability)
                     }
                 }
             }

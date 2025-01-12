@@ -20,6 +20,7 @@ class MultiRequestVM: ObservableObject {
     @Published var educationalExportIsPresented = false
     @Published var readyForExport = false
     @Published var busy = false
+    @Published var incompleteSetup = false
     @Published var isCanceled = false
     @Published var status: RemoteJobStatus = .planned
     @Published var statusIconName = "checkmark.circle.fill"
@@ -43,6 +44,11 @@ class MultiRequestVM: ObservableObject {
 
     @MainActor
     func start() {
+        guard KeyService.setupComplete else {
+            incompleteSetup = true
+            return
+        }
+        
         let urls: [String] = requestText
             .components(separatedBy: .newlines)
             .compactMap({ $0.isEmpty ? nil : $0 })

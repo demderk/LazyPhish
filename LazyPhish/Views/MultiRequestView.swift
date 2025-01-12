@@ -10,7 +10,7 @@ import SwiftUI
 struct MultiRequestView: View {
     @ObservedObject var vm = MultiRequestVM()
     @State var showExport = false
-
+    
     @ViewBuilder
     var body: some View {
         HSplitView {
@@ -65,7 +65,7 @@ struct MultiRequestView: View {
                     TableColumn("Host Length") { item in
                         Text(item.hostLength)
                     }
-
+                    
                 } rows: {
                     ForEach(vm.tableContent) { data in
                         TableRow(data.visual)
@@ -135,7 +135,7 @@ struct MultiRequestView: View {
                 ToolbarItem(placement: .primaryAction) {
                     Menu {
                         Button("Export RAW ML Data") {
-//                            vm.exportCSVRAW()
+                            //                            vm.exportCSVRAW()
                         }
                         Button("Export Results") {
                             vm.exportEducationalFile()
@@ -147,12 +147,29 @@ struct MultiRequestView: View {
                     .disabled(!vm.readyForExport)
                     .help("Export as CSV")
                 }
-            }
+            }.alert("Setup incomplete", isPresented: $vm.incompleteSetup, actions: {
+                if #available(macOS 14.0, *) {
+                    SettingsLink {
+                        Text("Go To Settings")
+                    }
+                } else {
+                    Button("Go To Settings") {
+                        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                    }
+                }
+                Button("Cancel", role: .cancel) { vm.incompleteSetup = false }
+            }, message: {
+                Text("""
+                     LazyPhish can't process the request because the setup is incomplete.
+                     Go to Settings -> Keys and configure the required keys.
+                     """)
+            })
     }
+    
 }
 
 #Preview {
     MultiRequestView()
         .frame(minWidth: 1000, minHeight: 600)
-
+    
 }

@@ -43,7 +43,7 @@ struct KeysSettingsView: View {
                     HStack {
                         Spacer()
                         Text("Open Page Rank Key:")
-                        TextField("OPR", text: $OPRKey)
+                        TextField("6biG9Bnc8EUU6rFH123F7TsDm69bazElgM6M65i", text: $OPRKey)
                             .frame(width: 512)
                             .textFieldStyle(.squareBorder)
                             .focused($oprFieldFocus)
@@ -52,6 +52,20 @@ struct KeysSettingsView: View {
                                     saveMode = !saveMode
                                 }
                             }
+                        Link(destination: URL(string: "https://www.domcop.com/openpagerank/what-is-openpagerank")!) {
+                            Image(systemName: "questionmark.circle")
+                                .imageScale(.medium)
+                                .fontWeight(.semibold)
+                        }
+                        .foregroundStyle(.secondary)
+                        .onHover { inside in
+                            if inside {
+                                NSCursor.pointingHand.push()
+                            } else {
+                                NSCursor.pop()
+                            }
+                        }
+                        .help("What is OpenPageRank?")
                     }
                 }.padding(.horizontal, 32)
                     .focused($vtFieldFocus)
@@ -151,7 +165,7 @@ struct KeysSettingsView: View {
 
         if authObject.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
             authObject.evaluatePolicy(.deviceOwnerAuthentication,
-                                      localizedReason: "Access") { success, _ in
+                                      localizedReason: "access keys") { success, _ in
                 if success {
                     access = true
                 }

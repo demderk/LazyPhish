@@ -38,7 +38,6 @@ struct EducationFile: FileDocument {
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         let encoder = CSVEncoder { $0.headers = PhishingEntry.csvHeader }
         let encodedData = try encoder.encode(educationData)
-        print(String(decoding: encodedData, as: UTF8.self))
         return FileWrapper(regularFileWithContents: encodedData)
     }
 

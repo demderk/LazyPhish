@@ -175,19 +175,9 @@ class WhoisModule: RequestModule {
             status = .completed
         } catch let error as WhoisModuleError {
             status = .failed(error)
-            
-            switch error {
-            case .NIOInternal(let error):
-                print("OWNER \(remote.host) : \(error)")
-            case .timeout:
-                print("\(remote.host) timed out")
-            default:
-                break
-            }
             return
         } catch {
             status = .failed(WhoisModuleError.unknown(error))
-            print("UNKNOWN ERR: \(error)")
             return
         }
         if whoisData?.date != nil {
