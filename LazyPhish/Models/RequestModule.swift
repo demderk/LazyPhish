@@ -76,6 +76,13 @@ extension RequestModule {
         } else { return false }
     }
     
+    /// Returns true if module status is completed with errors
+    var completedWithErrors: Bool {
+        if case .completedWithErrors = status {
+            return true
+        } else { return false }
+    }
+    
     /// Returns true if module status is completed or completed with errors
     var finished: Bool {
         switch status {

@@ -15,6 +15,7 @@ struct SingleRequestView: View {
     @EnvironmentObject var globalVM: GlobalVM
 
     @State var deepMode: Bool = false
+    @State var errorsSheetPresented: Bool = false
 
     var body: some View {
         ScrollView {
@@ -109,9 +110,13 @@ struct SingleRequestView: View {
                             HStack {
                                 Spacer()
                                 Text(vm.statusText)
+                                    .foregroundStyle(Color(.lightGray))
+                                    .onTapGesture {
+                                        errorsSheetPresented = true
+                                    }
+                                    .popover(isPresented: $errorsSheetPresented, content: { PopupErrorView(request: vm.lastRequest!) })
                             }.padding([.top], 2)
                                 .padding([.horizontal], 4)
-                                .foregroundStyle(Color(.lightGray))
                         }
                     }
                     VStack {
@@ -137,7 +142,8 @@ struct SingleRequestView: View {
                     .padding([.vertical], 32)
                 Spacer()
             }.navigationTitle("Home")
-        }.alert("Setup incomplete", isPresented: $vm.incompleteSetup, actions: {
+        }
+        .alert("Setup incomplete", isPresented: $vm.incompleteSetup, actions: {
             if #available(macOS 14.0, *) {
                 SettingsLink {
                     Text("Go To Settings")
@@ -156,6 +162,138 @@ struct SingleRequestView: View {
         })
     }
 }
+
+struct PopupErrorView: View {
+    var request: RemoteRequest
+    
+    private var failedModules: [RequestModule] {
+        request.modules.filter({ x in x.failed })
+    }
+    
+    private var completedWithErrorsModules: [RequestModule] {
+        request.modules.filter({ x in x.completedWithErrors })
+    }
+    
+    struct ErrorText: Identifiable {
+        var id: UUID { UUID() }
+        
+        var name: String
+        var errorText: String
+    }
+    
+    private var moduleErrorsText: [ErrorText] {
+        var result: [ErrorText] = []
+        for failedModule in failedModules {
+            var name = String(describing: failedModule)
+            var errors: [String] = []
+            switch failedModule.status {
+            case .failed(let error):
+                errors.append(error.localizedDescription)
+            case .completedWithErrors(let moduleErrors):
+                if let moduleErrors = moduleErrors {
+                    errors.append(contentsOf: moduleErrors.map({ $0.localizedDescription }))
+                } else {
+                    errors.append("empty error (nil)")
+                }
+            default:
+                break
+            }
+            result.append(ErrorText(name: name, errorText: errors.joined(separator: "\n")))
+        }
+        return result
+    }
+    
+    private var moduleWarningsText: [ErrorText] {
+        var result: [ErrorText] = []
+        for failedModule in completedWithErrorsModules {
+            var name = String(describing: failedModule)
+            var errors: [String] = []
+            switch failedModule.status {
+            case .completedWithErrors(let moduleErrors):
+                if let moduleErrors = moduleErrors {
+                    errors.append(contentsOf: moduleErrors.map({ $0.localizedDescription }))
+                } else {
+                    errors.append("empty error (nil)")
+                }
+            default:
+                break
+            }
+            result.append(ErrorText(name: name, errorText: errors.joined(separator: "\n")))
+        }
+        return result
+    }
+    
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading) {
+                Spacer().frame(height: 8)
+                if moduleErrorsText.isEmpty && moduleWarningsText.isEmpty {
+                    Spacer().frame(height: 12)
+                    HStack(alignment: .center) {
+                        Image(systemName: "checkmark.circle.fill")
+                            .symbolRenderingMode(.hierarchical)
+                            .fontWeight(.black)
+                        Spacer().frame(width: 8)
+                        Text("No errors found")
+                    }
+                }
+                if !moduleErrorsText.isEmpty {
+                    Spacer().frame(height: 16)
+                    HStack(alignment: .center) {
+                        Image(systemName: "xmark.circle.fill")
+                            .fontWeight(.semibold)
+                            .symbolRenderingMode(.multicolor)
+                        Spacer().frame(width: 6)
+                        Text("\(moduleErrorsText.count) Errors")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    }.offset(x: -6)
+                    HStack {
+                        Spacer().frame(width: 32)
+                        VStack(alignment: .leading) {
+                            ForEach(moduleErrorsText) { modErr in
+                                Spacer().frame(height: 8)
+                                Text(modErr.name)
+                                    .lineLimit(3)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+                                Text(modErr.errorText)
+                            }
+                        }
+                    }
+                }
+                if !moduleWarningsText.isEmpty {
+                    Spacer().frame(height: 16)
+                    HStack(alignment: .center) {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .fontWeight(.semibold)
+                            .symbolRenderingMode(.multicolor)
+                        Spacer().frame(width: 6)
+                        Text("\(moduleWarningsText.count) Warnings")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    }.offset(x: -6)
+                    HStack {
+                        Spacer().frame(width: 32)
+                        VStack(alignment: .leading) {
+                            ForEach(moduleWarningsText) { modErr in
+                                Spacer().frame(height: 8)
+                                Text(modErr.name)
+                                    .lineLimit(3)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+                                Text(modErr.errorText)
+                            }
+                        }
+                    }
+                }
+            }.padding([.horizontal, .bottom], 24)
+        }.frame(maxWidth: 600, maxHeight: 600)
+    }
+}
+
 
 #Preview {
     SingleRequestView()
