@@ -15,7 +15,7 @@ actor ServerWaiter {
     private(set) var base: WhoisServerInfo
     
     var server: String { base.server }
-    var isBlinded: Bool  { base.isBlinded }
+    var isBlinded: Bool { base.isBlinded }
     var maxConnections: Int { base.maxConnections }
     
     private var avaliable: Int
@@ -43,13 +43,13 @@ actor ServerWaiter {
         }
     }
     
-    func updateBase(_ newBase: WhoisServerInfo) throws {
+    func updateBase(_ newBase: WhoisServerInfo) {
         let currentMaxConnections = maxConnections
         let newMaxConnections = newBase.maxConnections
         let newThreadSlots = newMaxConnections - currentMaxConnections
         
         base = newBase
-        if (newThreadSlots > 0) {
+        if newThreadSlots > 0 {
             avaliable = newThreadSlots
             signal(newThreadSlots)
         }
@@ -75,7 +75,7 @@ class WaiterLink: Hashable {
         hasher.combine(tld)
     }
     
-    static func ==(lhs: WaiterLink, rhs: WaiterLink) -> Bool {
+    static func == (lhs: WaiterLink, rhs: WaiterLink) -> Bool {
         lhs.tld == rhs.tld
     }
 }
@@ -118,13 +118,10 @@ actor WhoisServerConductor {
         let newEntry = pushInfo.memberAfterInsert
         
         if let found = waiters.first(where: { $0.tld == newEntry.tld }) {
-            try! await found.waiter.updateBase(newEntry)
+            await found.waiter.updateBase(newEntry)
         } else {
             let newWaiter = ServerWaiter(newEntry)
             waiters.insert(WaiterLink(tld: newEntry.tld, base: newWaiter))
         }
-        
-        
-        
     }
 }

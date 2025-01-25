@@ -26,7 +26,7 @@ class BulkOPRModule: RequestModule {
     func execute(remote: RemoteRequest) async {
         await bulk([remote.url])
     }
-
+    
     func bulk(_ data: [StrictURL]) async {
         guard let apiKey = try? getOPRKey() else {
             status = .failed(OPRError.apiKeyUnreachable)

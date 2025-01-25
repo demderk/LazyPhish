@@ -19,7 +19,7 @@ struct WhoisServerInfo: Hashable {
         hasher.combine(tld)
     }
     
-    static func ==(lhs: WhoisServerInfo, rhs: WhoisServerInfo) -> Bool {
+    static func == (lhs: WhoisServerInfo, rhs: WhoisServerInfo) -> Bool {
         lhs.tld == rhs.tld
     }
 }

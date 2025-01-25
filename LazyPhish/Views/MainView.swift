@@ -23,9 +23,6 @@ struct MainView: View {
                         case .single:
                             vm.pageHolder.single
                                 .environmentObject(globalVM)
-                        case .analysis:
-                            vm.pageHolder.analysis
-                                .environmentObject(globalVM)
                         }
                     }.frame(
                         minWidth: 0,

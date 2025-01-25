@@ -81,8 +81,7 @@ struct PhishingCard: View {
         } else {
             for module in request.modules where module is MLModule {
                 if let tag = module as? ModuleTagBehavior,
-                   let text = tag.tags.first
-                {
+                   let text = tag.tags.first {
                     return text
                 }
             }

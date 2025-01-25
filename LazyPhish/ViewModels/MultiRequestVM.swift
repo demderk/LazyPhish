@@ -37,7 +37,7 @@ class MultiRequestVM: ObservableObject {
         lastUrlsCount > 0
     }
     
-    private var currentTask: Task<(), Never>? = nil
+    private var currentTask: Task<(), Never>?
     
 //    var resultingDocument: PhishFile = PhishFile([])
     var ignoreWrongLines: Bool = true
@@ -103,7 +103,6 @@ class MultiRequestVM: ObservableObject {
         }
     }
     
-
     func exportEducationalFile() {
         educationalFile = EducationFile(tableContent)
         educationalExportIsPresented = true
@@ -113,8 +112,6 @@ class MultiRequestVM: ObservableObject {
         //   resultingDocument = PhishFile(engine.phishInfo.map({ $0.getMLEntry()! }))
         CSVExportIsPresented = true
     }
-    
-    
     
     // MARK: Request Handlers
     

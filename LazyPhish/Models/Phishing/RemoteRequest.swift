@@ -17,7 +17,6 @@ enum UnknownModuleError: ModuleError {
 }
 
 // TODO: [DOCS REQUIRED]
-
 class RemoteRequest: Identifiable {
     // TODO: Make private(set)
     var id: Int? { self.requestID }

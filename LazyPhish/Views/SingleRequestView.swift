@@ -17,6 +17,9 @@ struct SingleRequestView: View {
     @State var deepMode: Bool = false
     @State var errorsSheetPresented: Bool = false
     
+    private let releaseColor: Color = .purple
+    private let releaseName: String = "Release Candidate"
+    
     var body: some View {
         ScrollView {
             // 100% horizontal space for scroll
@@ -33,14 +36,15 @@ struct SingleRequestView: View {
                     Text("LazyPhish")
                         .font(.system(size: 48, weight: .heavy, design: .default))
                         .padding(.leading, 8)
-                    Text("Release Candidate 1")
-                        .padding(4)
-                        .foregroundStyle(.gray)
+                    Text(releaseName)
+                        .padding(.vertical, 4)
+                        .padding(.horizontal, 8)
+                        .foregroundStyle(releaseColor)
                         .overlay {
                             RoundedRectangle(cornerRadius: 16)
-                                .stroke(.gray)
-
+                                .stroke(releaseColor)
                         }
+                        .offset(y: -4)
                 }
                 VStack {
                     HStack {
@@ -121,7 +125,10 @@ struct SingleRequestView: View {
                                     .onTapGesture {
                                         errorsSheetPresented = true
                                     }
-                                    .popover(isPresented: $errorsSheetPresented, content: { PopupErrorView(request: vm.lastRequest!) })
+                                    .popover(
+                                        isPresented: $errorsSheetPresented,
+                                        content: { PopupErrorView(request: vm.lastRequest!) }
+                                    )
                             }.padding([.top], 2)
                                 .padding([.horizontal], 4)
                         }
@@ -190,7 +197,7 @@ struct PopupErrorView: View {
     private var moduleErrorsText: [ErrorText] {
         var result: [ErrorText] = []
         for failedModule in failedModules {
-            var name = String(describing: failedModule)
+            let name = String(describing: failedModule)
             var errors: [String] = []
             switch failedModule.status {
             case .failed(let error):
@@ -212,7 +219,7 @@ struct PopupErrorView: View {
     private var moduleWarningsText: [ErrorText] {
         var result: [ErrorText] = []
         for failedModule in completedWithErrorsModules {
-            var name = String(describing: failedModule)
+            let name = String(describing: failedModule)
             var errors: [String] = []
             switch failedModule.status {
             case .completedWithErrors(let moduleErrors):
@@ -299,7 +306,6 @@ struct PopupErrorView: View {
         }.frame(maxWidth: 600, maxHeight: 600)
     }
 }
-
 
 #Preview {
     SingleRequestView()

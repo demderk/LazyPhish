@@ -45,8 +45,6 @@ class SingleRequestViewModel: ObservableObject {
                             let succeedModules = successRequest.modules.count - failedModulesCount
                             statusText = "\(succeedModules) modules succeed, \(failedModulesCount) failed"
                         }
-                        var mlmod: MLModule = MLModule()
-                        let x = mlmod.predictPhishing(input: PhishingEntry(fromRemote: response))
                     }
                 }
             }

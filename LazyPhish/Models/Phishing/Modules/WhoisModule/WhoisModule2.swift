@@ -16,7 +16,7 @@ import OSLog
 // Нужно удалить синглтоны, потому что если у нас будет 2 окна, все может пойти не по плану
 
 class WhoisModule: RequestModule {
-    // swiftlint:disable line_length
+    // swiftlint:disable line_length force_try
     private var dateRegexParsers: [NSRegularExpression] = [
         try! NSRegularExpression(pattern: #"registered\son:\s(?<day>\d{1,2})-(?<monthTextShort>\w{3})-(?<year>\d{4})"#),
         try! NSRegularExpression(pattern: #"entry created:\n\t\w+\s(?<day>\d{1,2})(th)\s(?<monthText>\w+)\s(?<year>\d{1,4})"#),
@@ -35,17 +35,19 @@ class WhoisModule: RequestModule {
         try! NSRegularExpression(pattern: #"registered:\s+(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})"#),
         try! NSRegularExpression(pattern: #"created date:\s+(?<day>\d{1,2})\s(?<monthTextShort>\w{3})\s(?<year>\d{4})"#)
     ]
-    // swiftlint:enable line_length
+    // swiftlint:enable line_length force_try
     
+    // swiftlint:disable:next line_length force_try
     private var referRegexParser: NSRegularExpression = try! NSRegularExpression(pattern: #"refer:\s*(?<refer>[\w1-9.-]+)(\n|\r)"#)
     
     private let port = 43
     private var clientBootstrap: ClientBootstrap = ClientBootstrap(group: threadedGroup)
         .connectTimeout(.seconds(3))
     
-    private static var threadedGroup: MultiThreadedEventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
+    private static var threadedGroup: MultiThreadedEventLoopGroup =
+        MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
+    
     private static var serverConductor = WhoisServerConductor()
-//    private static var addressCache = WhoisCache()
     
     var dependences: DependencyCollection = DependencyCollection()
     var status: RemoteJobStatus = .planned

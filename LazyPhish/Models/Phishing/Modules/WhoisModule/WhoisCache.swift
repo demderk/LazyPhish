@@ -5,7 +5,6 @@
 //  Created by Roman Zheglov on 09.12.2024.
 //
 
-
 class WhoisCache {
     static var staticStorage: [WhoisServerInfo] = [
         WhoisServerInfo(tld: "com", server: "whois.verisign-grs.com"),
@@ -78,15 +77,12 @@ class WhoisCache {
     ]
     
     private var cache: Set<WhoisServerInfo> = []
-    
-    //MARK: Move to another place. FOR DEBUG ONLY
-    
+        
     private func TLDEquals(base: String, pattern: String) -> Bool {
         if pattern.hasPrefix("*") {
             let rhs = pattern.replacingOccurrences(of: "*", with: "")
             return base.hasSuffix(rhs)
         } else {
-            let rhs = pattern.replacingOccurrences(of: "*", with: "")
             return base == pattern
         }
     }
@@ -105,11 +101,18 @@ class WhoisCache {
     /// Returns the cached server address if it exists
     func getCachedServer(_ host: String) -> WhoisServerInfo? {
         let tld: String = getTLD(host)
-        return WhoisCache.staticStorage.first(where: { TLDEquals(base: tld, pattern: $0.tld) }) ?? cache.first(where: { TLDEquals(base: tld, pattern: $0.tld) })
+        if let staticCacheFound = WhoisCache.staticStorage
+            .first(where: { TLDEquals(base: tld, pattern: $0.tld) }
+        ) {
+            return staticCacheFound
+        } else {
+            return cache.first(where: { TLDEquals(base: tld, pattern: $0.tld) })
+        }
     }
     
     /// Pushes the server address in the cache if it is not already present and returns pushed info.
-    @discardableResult func push(host: String, server: String) -> (inserted: Bool, memberAfterInsert: WhoisServerInfo) {
+    @discardableResult
+    func push(host: String, server: String) -> (inserted: Bool, memberAfterInsert: WhoisServerInfo) {
         let tld = getTLD(host)
         let info = WhoisServerInfo(tld: tld, server: server)
         return cache.insert(info)

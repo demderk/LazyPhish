@@ -79,6 +79,7 @@ struct KeysSettingsView: View {
                         .symbolRenderingMode(.hierarchical)
                         .fontWeight(.black)
                     Spacer().frame(width: 4)
+                    // swiftlint:disable:next line_length
                     Text("You are using the community version of LazyPhish that does not support encryption for keys.")
                     Spacer()
                 }.foregroundStyle(.secondary)

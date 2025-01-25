@@ -11,7 +11,6 @@ import SwiftUI
 class MainViewPageHolder: ObservableObject {
     var multi: some View = MultiRequestView()
     var single: some View = SingleRequestView()
-    var analysis: some View = AnalyticsView()
 
     @ViewBuilder func getView(selected: MainSelectedPage) -> some View {
         switch selected {
@@ -19,8 +18,6 @@ class MainViewPageHolder: ObservableObject {
             single
         case .multi:
             multi
-        case .analysis:
-            analysis
         }
     }
 }

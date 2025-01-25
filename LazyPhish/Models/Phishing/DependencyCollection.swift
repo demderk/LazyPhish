@@ -21,10 +21,8 @@ actor DependencyCollection {
     var collection: [any RequestModule] { dependencyModules }
     
     var finished: Bool {
-        for dependencyModule in dependencyModules {
-            if !dependencyModule.finished {
-                return false
-            }
+        for dependencyModule in dependencyModules where !dependencyModule.finished {
+            return false
         }
         return true
     }
@@ -68,7 +66,6 @@ actor DependencyCollection {
     func getDependencyIndex(module: any RequestModule) -> Int? {
         return dependencyModules.firstIndex(where: {type(of: $0) == type(of: module)})
     }
-
     
     /// Replaces the specified module with a new one.
     /// - Returns: True if the replacement was successful; otherwise, returns false.

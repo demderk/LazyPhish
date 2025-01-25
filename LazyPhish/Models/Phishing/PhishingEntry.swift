@@ -81,7 +81,20 @@ struct PhishingEntry: Identifiable, Codable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case id, host, hostLength, url, urlLength, whoisFound, whoisBlinded, date, dateText, sqi, opr, subDomains, prefixCount, isPhishing
+        case id
+        case host
+        case hostLength
+        case url
+        case urlLength
+        case whoisFound
+        case whoisBlinded
+        case date
+        case dateText
+        case sqi
+        case opr
+        case subDomains
+        case prefixCount
+        case isPhishing
     }
 }
 

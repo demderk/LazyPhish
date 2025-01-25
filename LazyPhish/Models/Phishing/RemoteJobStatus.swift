@@ -17,9 +17,7 @@ enum RemoteJobStatus {
     /// The job is finished if it is either `.completed` or `.completedWithErrors`.
     var isFinished: Bool {
         switch self {
-        case .completedWithErrors(let errors):
-            fallthrough
-        case .completed:
+        case .completed, .completedWithErrors:
             return true
         default:
             return false

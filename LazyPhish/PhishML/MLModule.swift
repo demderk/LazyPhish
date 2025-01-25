@@ -28,7 +28,6 @@ enum MLError: ModuleError {
     case modelInitFailed
 }
 
-
 class MLModule: RequestModule {
     var dependences: DependencyCollection = DependencyCollection([
         SQIModule(),
@@ -54,7 +53,7 @@ class MLModule: RequestModule {
             status = .failed(MLError.modulesNotFinished)
             return
         }
-        guard let model = model else {
+        guard model != nil else {
             status = .failed(MLError.modelInitFailed)
             return
         }

@@ -40,7 +40,6 @@
 		3045DA902D06163200B74608 /* WhoisServerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3045DA8F2D06163200B74608 /* WhoisServerInfo.swift */; };
 		3045DA922D061EAD00B74608 /* WhoisServerConductor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3045DA912D061EAD00B74608 /* WhoisServerConductor.swift */; };
 		3045DA942D062C1B00B74608 /* WhoisCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3045DA932D062C1B00B74608 /* WhoisCache.swift */; };
-		304BE3912C72F0B5001A2AB0 /* AnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3902C72F0B4001A2AB0 /* AnalyticsView.swift */; };
 		304BE3942C73173C001A2AB0 /* PageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3932C73173C001A2AB0 /* PageButton.swift */; };
 		304BE3962C73819C001A2AB0 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3952C73819C001A2AB0 /* StatusView.swift */; };
 		304BE3982C7389EC001A2AB0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BE3972C7389EC001A2AB0 /* SettingsView.swift */; };
@@ -67,7 +66,6 @@
 		30B9B9A72B9A13410063ADB3 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 30B9B9A62B9A13410063ADB3 /* Alamofire */; };
 		30CE1AAB2BD58A8B001B022F /* GlobalVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CE1AAA2BD58A8B001B022F /* GlobalVM.swift */; };
 		30CE1AB02BD66CD9001B022F /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 30CE1AAF2BD66CD9001B022F /* WrappingHStack */; };
-		30E724A82C0F7FD20082ED54 /* WhoisConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E724A72C0F7FD20082ED54 /* WhoisConnection.swift */; };
 		30E724BD2C11BC6B0082ED54 /* LoggerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E724BC2C11BC6B0082ED54 /* LoggerExtension.swift */; };
 /* End PBXBuildFile section */
 
@@ -116,7 +114,6 @@
 		3045DA8F2D06163200B74608 /* WhoisServerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoisServerInfo.swift; sourceTree = "<group>"; };
 		3045DA912D061EAD00B74608 /* WhoisServerConductor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoisServerConductor.swift; sourceTree = "<group>"; };
 		3045DA932D062C1B00B74608 /* WhoisCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoisCache.swift; sourceTree = "<group>"; };
-		304BE3902C72F0B4001A2AB0 /* AnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsView.swift; sourceTree = "<group>"; };
 		304BE3932C73173C001A2AB0 /* PageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageButton.swift; sourceTree = "<group>"; };
 		304BE3952C73819C001A2AB0 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		304BE3972C7389EC001A2AB0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -139,7 +136,6 @@
 		30B1C5D82BD122F300D275D4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		30B1C5DA2BD1231400D275D4 /* MainViewVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewVM.swift; sourceTree = "<group>"; };
 		30CE1AAA2BD58A8B001B022F /* GlobalVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalVM.swift; sourceTree = "<group>"; };
-		30E724A72C0F7FD20082ED54 /* WhoisConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoisConnection.swift; sourceTree = "<group>"; };
 		30E724BC2C11BC6B0082ED54 /* LoggerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerExtension.swift; sourceTree = "<group>"; };
 		30F7F5D72D15B27400BAE74A /* LazyPhishTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LazyPhishTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -248,7 +244,6 @@
 				30B1C5D42BD122A000D275D4 /* SingleRequestView.swift */,
 				3003966B2BA7489F001B6C2C /* MultiRequestView.swift */,
 				30B1C5D82BD122F300D275D4 /* MainView.swift */,
-				304BE3902C72F0B4001A2AB0 /* AnalyticsView.swift */,
 				304BE3972C7389EC001A2AB0 /* SettingsView.swift */,
 				304BE39A2C7C5A9A001A2AB0 /* KeysSettingsView.swift */,
 			);
@@ -293,7 +288,6 @@
 				3003965F2BA5BC1F001B6C2C /* Phishing */,
 				300396622BA5BD00001B6C2C /* RiskLevel.swift */,
 				30B1C5CE2BD020E000D275D4 /* ThrowingOPRInfoList.swift */,
-				30E724A72C0F7FD20082ED54 /* WhoisConnection.swift */,
 				30E724BC2C11BC6B0082ED54 /* LoggerExtension.swift */,
 				304BE39C2C7C5AE3001A2AB0 /* KeyService.swift */,
 				3037774D2CA3BA34001B8D67 /* StrictURL.swift */,
@@ -514,7 +508,6 @@
 				30137C442BD4108C00905B15 /* MainViewPageHolder.swift in Sources */,
 				300396632BA5BD00001B6C2C /* RiskLevel.swift in Sources */,
 				3037D15C2B9B6CA00012104E /* OPRInfo.swift in Sources */,
-				30E724A82C0F7FD20082ED54 /* WhoisConnection.swift in Sources */,
 				307CBC482BCC57D3004B68A8 /* PhishInfoFormatter.swift in Sources */,
 				30A80F982CC2C100004C46C7 /* PhishingEntry.swift in Sources */,
 				3045DA902D06163200B74608 /* WhoisServerInfo.swift in Sources */,
@@ -528,7 +521,6 @@
 				30B1C5D52BD122A000D275D4 /* SingleRequestView.swift in Sources */,
 				3045DA842D04926C00B74608 /* RemoteJobStatus.swift in Sources */,
 				3037D15A2B9B6C530012104E /* RequestError.swift in Sources */,
-				304BE3912C72F0B5001A2AB0 /* AnalyticsView.swift in Sources */,
 				304BE3A02C7DC983001A2AB0 /* BigToggleButton.swift in Sources */,
 				3045DA942D062C1B00B74608 /* WhoisCache.swift in Sources */,
 				3037774E2CA3BA34001B8D67 /* StrictURL.swift in Sources */,
@@ -705,7 +697,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LazyPhish/Preview Content\"";
 				DEVELOPMENT_TEAM = BX3ASU46J7;
@@ -738,7 +730,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LazyPhish/Preview Content\"";
 				DEVELOPMENT_TEAM = BX3ASU46J7;

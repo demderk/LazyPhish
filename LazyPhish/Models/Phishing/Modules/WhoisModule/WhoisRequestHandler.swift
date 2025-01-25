@@ -18,7 +18,9 @@ final class WhoisRequestHandler: ChannelInboundHandler {
     init(promise: EventLoopPromise<String>) {
         self.promise = promise
         Task {
-            try! await Task.sleep(for: .seconds(3))
+            do {
+                try await Task.sleep(for: .seconds(3))
+            }
             if !finished {
                 eventTimeout()
             }
@@ -26,7 +28,7 @@ final class WhoisRequestHandler: ChannelInboundHandler {
     }
     
     func channelRead(context: ChannelHandlerContext, data: NIOAny) {
-        var dataBuffer = self.unwrapInboundIn(data)
+        let dataBuffer = self.unwrapInboundIn(data)
         if let returnedString = dataBuffer.getString(at: 0, length: dataBuffer.readableBytes) {
             promise.succeed(returnedString)
         } else {
@@ -48,7 +50,7 @@ final class WhoisRequestHandler: ChannelInboundHandler {
     }
     
     func userInboundEventTriggered(context: ChannelHandlerContext, event: Any) {
-        if let _ = event as? IdleStateHandler.IdleStateEvent {
+        if event is IdleStateHandler.IdleStateEvent {
             promise.fail(WhoisModuleError.timeout)
             context.close(promise: nil)
         }
