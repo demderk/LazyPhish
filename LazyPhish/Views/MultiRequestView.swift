@@ -133,19 +133,14 @@ struct MultiRequestView: View {
                     }
                 }
                 ToolbarItem(placement: .primaryAction) {
-                    Menu {
-                        Button("Export RAW ML Data") {
-                            //                            vm.exportCSVRAW()
-                        }
-                        Button("Export Results") {
-                            vm.exportEducationalFile()
-                        }
+                    Button {
+                        vm.exportEducationalFile()
                     } label: {
                         Image(systemName: "square.and.arrow.up")
                             .padding(.horizontal, 8)
                     }
                     .disabled(!vm.readyForExport)
-                    .help("Export as CSV")
+                    .help("Export Results")
                 }
             }.alert("Setup incomplete", isPresented: $vm.incompleteSetup, actions: {
                 if #available(macOS 14.0, *) {

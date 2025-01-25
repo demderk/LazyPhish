@@ -22,22 +22,6 @@ struct KeysSettingsView: View {
 
     var securedBody: some View {
         VStack(alignment: .trailing) {
-//            VStack {
-//                HStack {
-//                    Spacer()
-//                    Text("VirusTotal API Key:")
-//                    TextField("VirusTotal", text: $VTKey)
-//                        .textFieldStyle(.squareBorder)
-//                        .frame(width: 512)
-//                        .focused($vtFieldFocus)
-//                        .onChange(of: vtFieldFocus) { _ in
-//                            if !saveMode {
-//                                saveMode = !saveMode
-//                            }
-//                        }
-//                }
-//            }.padding(.horizontal, 32)
-//            Spacer().frame(height: 8)
             VStack {
                 VStack {
                     HStack {
@@ -69,8 +53,7 @@ struct KeysSettingsView: View {
                     }
                 }.padding(.horizontal, 32)
                     .focused($vtFieldFocus)
-                    .padding(.bottom, 8)
-                Spacer()
+                    .padding(.bottom, 16)
                 #if RELEASE
                 HStack {
                     Spacer()
@@ -88,7 +71,7 @@ struct KeysSettingsView: View {
                 Divider()
                 HStack {
                     Button(action: {
-                        deauth()
+                        lockKeys()
                     }, label: {
                         HStack {
                             Image(systemName: "lock.fill")
@@ -155,7 +138,7 @@ struct KeysSettingsView: View {
         }
     }
 
-    func deauth() {
+    func lockKeys() {
         access = false
         saveMode = false
     }
