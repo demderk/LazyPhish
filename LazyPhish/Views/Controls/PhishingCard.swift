@@ -40,9 +40,9 @@ struct PhishingCard: View {
 
                             WrappingHStack(getTags(), id: \.self) { tag in
                                 tag
-                            }.frame(minWidth: 512, minHeight: 64)
+                            }
+                            .frame(minWidth: 512)
                         }.padding(16)
-                        //                                Spacer()
                     }
                 }
             }

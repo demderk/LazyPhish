@@ -13,10 +13,10 @@ struct SingleRequestView: View {
     @ObservedObject var vm = SingleRequestViewModel()
     @FocusState var isEditing: Bool
     @EnvironmentObject var globalVM: GlobalVM
-
+    
     @State var deepMode: Bool = false
     @State var errorsSheetPresented: Bool = false
-
+    
     var body: some View {
         ScrollView {
             // 100% horizontal space for scroll
@@ -26,14 +26,21 @@ struct SingleRequestView: View {
             VStack {
                 Spacer()
                     .frame(height: 112)
-                VStack {
-                    VStack {
-                        Text("LazyPhish")
-                            .font(.system(size: 48, weight: .heavy, design: .default))
-                            .padding([.bottom], 2)
-                        Text("Phishing Security. Evolved.")
-                            .font(.title2)
-                    }
+                HStack {
+                    Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
+                        .resizable()
+                        .frame(width: 64, height: 64)
+                    Text("LazyPhish")
+                        .font(.system(size: 48, weight: .heavy, design: .default))
+                        .padding(.leading, 8)
+                    Text("Release Candidate 1")
+                        .padding(4)
+                        .foregroundStyle(.gray)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(.gray)
+
+                        }
                 }
                 VStack {
                     HStack {
@@ -44,8 +51,8 @@ struct SingleRequestView: View {
                             .fontWeight(.semibold)
                             .opacity(0.9)
                             .lineLimit(1)
-                            .padding([.leading], 24)
-                            .padding([.vertical], 21)
+                            .padding(.leading, 24)
+                            .padding(.vertical, 21)
                             .onHover(perform: { hovering in
                                 if hovering {
                                     NSCursor.iBeam.push()
@@ -125,21 +132,20 @@ struct SingleRequestView: View {
                                 .font(.title)
                                 .fontWeight(.semibold)
                             Spacer()
-                        }.padding([.top], 16)
-                            .padding([.bottom], 8)
-                            .padding([.leading], 8)
+                        }.padding(.top, 16)
+                            .padding(.bottom, 8)
+                            .padding(.leading, 8)
                         HStack {
                             PageButton(action: {
                                 globalVM.navigation.append(MainSelectedPage.multi)
                             }, title: "Bulk Request", imageSystemName: "tablecells")
                             .padding([.horizontal], 16)
-
+                            
                             Spacer()
-                        }.padding([.horizontal], 16)
+                        }.padding(.horizontal, 16)
                     }
-                }.frame(maxWidth: 640)
-                    .padding([.horizontal], 64)
-                    .padding([.vertical], 32)
+                }
+                    .padding(.horizontal, 128)
                 Spacer()
             }.navigationTitle("Home")
         }
